@@ -7,53 +7,13 @@ import {
   Globe,
   ArrowRight,
 } from "lucide-react";
-import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { Navbar } from "@/components/ui/Navbar";
+import { Footer } from "@/components/ui/Footer";
 
 export default function Home() {
   return (
     <div className="flex-1">
-      {/* Header */}
-      <header className="bg-background/80 backdrop-blur-sm border-b border-border sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div className="flex items-center space-x-2">
-              <Sprout className="h-8 w-8 text-primary" />
-              <h1 className="text-2xl font-bold text-primary">
-                Digital Krishi Officer
-              </h1>
-            </div>
-            <nav className="flex items-center space-x-4">
-              <div className="hidden md:flex space-x-8">
-                <Link
-                  href="#features"
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  Features
-                </Link>
-                <Link
-                  href="#about"
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  About
-                </Link>
-                <Link
-                  href="/chat"
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  Chat
-                </Link>
-                <Link
-                  href="/login"
-                  className="bg-primary text-primary-foreground px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors"
-                >
-                  Get Started
-                </Link>
-              </div>
-              <ThemeToggle />
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Navbar />
 
       {/* Hero Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
@@ -187,93 +147,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-secondary text-secondary-foreground py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-8">
-            <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <Sprout className="h-6 w-6 text-primary" />
-                <span className="text-xl font-bold">
-                  Digital Krishi Officer
-                </span>
-              </div>
-              <p className="text-muted-foreground">
-                AI-powered agricultural advisory system for Kerala farmers.
-              </p>
-            </div>
-            <div>
-              <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
-              <ul className="space-y-2 text-muted-foreground">
-                <li>
-                  <Link
-                    href="/about"
-                    className="hover:text-secondary-foreground transition-colors"
-                  >
-                    About
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/features"
-                    className="hover:text-secondary-foreground transition-colors"
-                  >
-                    Features
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/contact"
-                    className="hover:text-secondary-foreground transition-colors"
-                  >
-                    Contact
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/privacy"
-                    className="hover:text-secondary-foreground transition-colors"
-                  >
-                    Privacy
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-lg font-semibold mb-4">Support</h4>
-              <ul className="space-y-2 text-muted-foreground">
-                <li>
-                  <Link
-                    href="/help"
-                    className="hover:text-secondary-foreground transition-colors"
-                  >
-                    Help Center
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/faq"
-                    className="hover:text-secondary-foreground transition-colors"
-                  >
-                    FAQ
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/feedback"
-                    className="hover:text-secondary-foreground transition-colors"
-                  >
-                    Feedback
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-border mt-8 pt-8 text-center text-muted-foreground">
-            <p>&copy; 2025 Digital Krishi Officer. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
