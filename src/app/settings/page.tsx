@@ -323,20 +323,20 @@ export default function SettingsPage() {
   return (
     <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
       <Navbar />
-      <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-green-900/20 dark:to-gray-900 p-3 sm:p-4 md:p-6 lg:p-8 xl:p-24 relative overflow-hidden">
+      <div className="min-h-screen bg-gradient-to-br from-green-50/80 via-blue-50/60 to-indigo-100/70 dark:from-gray-900 dark:via-green-900/20 dark:to-gray-900 p-3 sm:p-4 md:p-6 lg:p-8 xl:p-24 relative overflow-hidden">
         {/* Animated background particles */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-20 -right-20 sm:-top-40 sm:-right-40 w-40 h-40 sm:w-80 sm:h-80 bg-green-300/20 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute -bottom-20 -left-20 sm:-bottom-40 sm:-left-40 w-40 h-40 sm:w-80 sm:h-80 bg-blue-300/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 sm:w-96 sm:h-96 bg-purple-300/10 rounded-full blur-3xl animate-pulse delay-500"></div>
+          <div className="absolute -top-20 -right-20 sm:-top-40 sm:-right-40 w-40 h-40 sm:w-80 sm:h-80 bg-green-200/15 dark:bg-green-300/20 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute -bottom-20 -left-20 sm:-bottom-40 sm:-left-40 w-40 h-40 sm:w-80 sm:h-80 bg-blue-200/15 dark:bg-blue-300/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 sm:w-96 sm:h-96 bg-purple-200/10 dark:bg-purple-300/10 rounded-full blur-3xl animate-pulse delay-500"></div>
         </div>
 
         <div className="max-w-4xl xl:max-w-2xl mx-auto relative z-10">
           {/* Header */}
           <div className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl p-4 sm:p-6 rounded-2xl shadow-lg shadow-gray-200/50 dark:shadow-gray-900/50 border border-gray-200/50 dark:border-gray-700/50 mb-6 sm:mb-8 relative overflow-hidden">
             {/* Subtle background pattern */}
-            <div className="absolute inset-0 bg-gradient-to-br from-green-50/30 via-transparent to-blue-50/30 dark:from-green-900/10 dark:via-transparent dark:to-blue-900/10"></div>
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(34,197,94,0.05),transparent_50%)] dark:bg-[radial-gradient(circle_at_20%_80%,rgba(34,197,94,0.08),transparent_50%)]"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-green-50/40 via-transparent to-blue-50/30 dark:from-green-900/10 dark:via-transparent dark:to-blue-900/10"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(34,197,94,0.06),transparent_50%)] dark:bg-[radial-gradient(circle_at_20%_80%,rgba(34,197,94,0.08),transparent_50%)]"></div>
             
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between relative z-10 space-y-4 sm:space-y-0">
               <div className="flex items-center space-x-3 sm:space-x-4">
@@ -404,14 +404,14 @@ export default function SettingsPage() {
           {/* Profile Content */}
           <div className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl rounded-2xl shadow-lg shadow-gray-200/50 dark:shadow-gray-900/50 border border-gray-200/50 dark:border-gray-700/50 overflow-hidden relative">
             {/* Subtle background pattern */}
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-50/20 via-transparent to-indigo-50/20 dark:from-blue-900/5 dark:via-transparent dark:to-indigo-900/5"></div>
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(59,130,246,0.04),transparent_50%)] dark:bg-[radial-gradient(circle_at_80%_20%,rgba(59,130,246,0.06),transparent_50%)]"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 via-transparent to-indigo-50/25 dark:from-blue-900/5 dark:via-transparent dark:to-indigo-900/5"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(59,130,246,0.05),transparent_50%)] dark:bg-[radial-gradient(circle_at_80%_20%,rgba(59,130,246,0.06),transparent_50%)]"></div>
             
             <div className="relative z-10 divide-y divide-gray-200/50 dark:divide-gray-700/50">
               {/* Personal Information */}
               <div className="p-4 sm:p-6 relative overflow-hidden">
                 {/* Section background pattern */}
-                <div className="absolute inset-0 bg-gradient-to-r from-green-50/30 to-transparent dark:from-green-900/10 dark:to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-green-50/40 to-transparent dark:from-green-900/10 dark:to-transparent"></div>
                 
                 <div className="relative z-10">
                   <h2 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 flex items-center space-x-2 sm:space-x-3">
@@ -427,8 +427,8 @@ export default function SettingsPage() {
                         Full Name
                       </label>
                       {isEditing ? (
-                        <div className="relative">
-                          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                        <div className="relative group">
+                          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 transition-all duration-300 group-focus-within:text-primary group-focus-within:drop-shadow-[0_0_6px_rgba(34,197,94,0.5)]">
                             <User className="h-4 w-4" />
                           </div>
                           <input
@@ -437,7 +437,7 @@ export default function SettingsPage() {
                             value={editData.username}
                             onChange={handleInputChange}
                             placeholder="Enter your full name"
-                            className="w-full h-10 sm:h-12 pl-10 pr-3 sm:pr-4 bg-white dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white font-semibold focus:border-primary focus:outline-none transition-all duration-300 hover:border-gray-300 dark:hover:border-gray-500 text-sm sm:text-base placeholder:text-gray-400"
+                            className="w-full h-10 sm:h-12 pl-10 pr-3 sm:pr-4 bg-white dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white font-semibold focus:border-primary focus:outline-none focus:shadow-[0_0_0_4px_rgba(34,197,94,0.2)] transition-all duration-300 hover:border-gray-300 dark:hover:border-gray-500 text-sm sm:text-base placeholder:text-gray-400"
                           />
                         </div>
                       ) : (
@@ -454,7 +454,7 @@ export default function SettingsPage() {
               {/* Farm Information */}
               <div className="p-4 sm:p-6 relative overflow-hidden">
                 {/* Section background pattern */}
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-50/30 to-transparent dark:from-blue-900/10 dark:to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-50/40 to-transparent dark:from-blue-900/10 dark:to-transparent"></div>
                 
                 <div className="relative z-10">
                   <h2 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 flex items-center space-x-2 sm:space-x-3">
@@ -470,8 +470,8 @@ export default function SettingsPage() {
                         Location
                       </label>
                       {isEditing ? (
-                        <div className="relative">
-                          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10">
+                        <div className="relative group">
+                          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10 transition-all duration-300 group-focus-within:text-primary group-focus-within:drop-shadow-[0_0_6px_rgba(34,197,94,0.5)]">
                             <MapPin className="h-4 w-4" />
                           </div>
                           <input
@@ -480,7 +480,7 @@ export default function SettingsPage() {
                             value={editData.location}
                             onChange={handleInputChange}
                             placeholder="Enter your location"
-                            className="w-full h-10 sm:h-12 pl-10 pr-10 sm:pr-12 bg-white dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white font-semibold focus:border-primary focus:outline-none transition-all duration-300 hover:border-gray-300 dark:hover:border-gray-500 text-sm sm:text-base placeholder:text-gray-400"
+                            className="w-full h-10 sm:h-12 pl-10 pr-10 sm:pr-12 bg-white dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white font-semibold focus:border-primary focus:outline-none focus:shadow-[0_0_0_4px_rgba(34,197,94,0.2)] transition-all duration-300 hover:border-gray-300 dark:hover:border-gray-500 text-sm sm:text-base placeholder:text-gray-400"
                             title={editData.location}
                           />
                           <button
@@ -525,15 +525,15 @@ export default function SettingsPage() {
                         Farm Size
                       </label>
                       {isEditing ? (
-                        <div className="relative">
-                          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10">
+                        <div className="relative group">
+                          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10 transition-all duration-300 group-focus-within:text-primary group-focus-within:drop-shadow-[0_0_6px_rgba(34,197,94,0.5)]">
                             <BarChart3 className="h-4 w-4" />
                           </div>
                           <select
                             name="farmsize"
                             value={editData.farmsize}
                             onChange={handleInputChange}
-                            className="w-full h-10 sm:h-12 pl-10 pr-8 bg-white dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white font-semibold focus:border-primary focus:outline-none transition-all duration-300 hover:border-gray-300 dark:hover:border-gray-500 text-sm sm:text-base"
+                            className="w-full h-10 sm:h-12 pl-10 pr-8 bg-white dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white font-semibold focus:border-primary focus:outline-none focus:shadow-[0_0_0_4px_rgba(34,197,94,0.2)] transition-all duration-300 hover:border-gray-300 dark:hover:border-gray-500 text-sm sm:text-base"
                           >
                             <option value="">Select farm size</option>
                             {FARM_SIZES.map((size) => (
@@ -560,15 +560,15 @@ export default function SettingsPage() {
                         Experience Level
                       </label>
                       {isEditing ? (
-                        <div className="relative">
-                          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10">
+                        <div className="relative group">
+                          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10 transition-all duration-300 group-focus-within:text-primary group-focus-within:drop-shadow-[0_0_6px_rgba(34,197,94,0.5)]">
                             <Calendar className="h-4 w-4" />
                           </div>
                           <select
                             name="experience"
                             value={editData.experience}
                             onChange={handleInputChange}
-                            className="w-full h-10 sm:h-12 pl-10 pr-8 bg-white dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white font-semibold focus:border-primary focus:outline-none transition-all duration-300 hover:border-gray-300 dark:hover:border-gray-500 text-sm sm:text-base"
+                            className="w-full h-10 sm:h-12 pl-10 pr-8 bg-white dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white font-semibold focus:border-primary focus:outline-none focus:shadow-[0_0_0_4px_rgba(34,197,94,0.2)] transition-all duration-300 hover:border-gray-300 dark:hover:border-gray-500 text-sm sm:text-base"
                           >
                             <option value="">Select experience level</option>
                             {EXPERIENCE_LEVELS.map((exp) => (
@@ -595,15 +595,15 @@ export default function SettingsPage() {
                         Preferred Language
                       </label>
                       {isEditing ? (
-                        <div className="relative">
-                          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10">
+                        <div className="relative group">
+                          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10 transition-all duration-300 group-focus-within:text-primary group-focus-within:drop-shadow-[0_0_6px_rgba(34,197,94,0.5)]">
                             <Globe className="h-4 w-4" />
                           </div>
                           <select
                             name="language"
                             value={editData.language}
                             onChange={handleInputChange}
-                            className="w-full h-10 sm:h-12 pl-10 pr-8 bg-white dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white font-semibold focus:border-primary focus:outline-none transition-all duration-300 hover:border-gray-300 dark:hover:border-gray-500 text-sm sm:text-base"
+                            className="w-full h-10 sm:h-12 pl-10 pr-8 bg-white dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white font-semibold focus:border-primary focus:outline-none focus:shadow-[0_0_0_4px_rgba(34,197,94,0.2)] transition-all duration-300 hover:border-gray-300 dark:hover:border-gray-500 text-sm sm:text-base"
                           >
                             {LANGUAGES.map((lang) => (
                               <option key={lang.value} value={lang.value}>
@@ -629,7 +629,7 @@ export default function SettingsPage() {
               {/* Crops */}
               <div className="p-4 sm:p-6 relative overflow-hidden">
                 {/* Section background pattern */}
-                <div className="absolute inset-0 bg-gradient-to-r from-emerald-50/30 to-transparent dark:from-emerald-900/10 dark:to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-emerald-50/40 to-transparent dark:from-emerald-900/10 dark:to-transparent"></div>
                 
                 <div className="relative z-10">
                   <h2 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 flex items-center space-x-2 sm:space-x-3">
