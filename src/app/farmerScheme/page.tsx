@@ -70,29 +70,65 @@ export default function FarmerSchemePage() {
       <Navbar />
 
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-green-600 to-blue-600 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Government Schemes for Farmers
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 opacity-90">
-              Discover and apply for government schemes designed to support
-              farmers across India
-            </p>
-            <div className="flex items-center justify-center space-x-6 text-lg">
-              <div className="flex items-center">
-                <CheckCircle className="h-6 w-6 mr-2" />
-                <span>{schemeData.metadata.total_schemes} Active Schemes</span>
+      <section className="relative min-h-[70vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden mt-16">
+        {/* Background Elements */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-secondary/5" />
+        <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] dark:opacity-[0.05]" />
+
+        {/* Floating Elements */}
+        <div className="absolute top-20 left-10 animate-float-slow">
+          <CheckCircle className="h-8 w-8 text-primary/20" />
+        </div>
+        <div className="absolute top-40 right-20 animate-float-slower">
+          <AlertCircle className="h-6 w-6 text-primary/30" />
+        </div>
+        <div className="absolute bottom-40 left-20 animate-float">
+          <div className="h-3 w-3 bg-primary/20 rounded-full" />
+        </div>
+
+        <div className="max-w-7xl mx-auto text-center relative z-10 mt-8">
+          {/* Main Heading */}
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
+            Government Schemes for
+            <span className="block bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+              Farmers
+            </span>
+          </h1>
+
+          {/* Subtitle */}
+          <p className="text-md sm:text-lg md:text-xl text-muted-foreground mb-12 max-w-4xl mx-auto leading-relaxed">
+            Discover and apply for government schemes designed to support
+            farmers across India with comprehensive benefits and easy
+            application process.
+          </p>
+
+          {/* Statistics Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-xl mx-auto">
+            <div className="group cursor-pointer bg-card border border-border rounded-xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 backdrop-blur-sm">
+              <div className="flex items-center justify-center mb-2">
+                <CheckCircle className="h-8 w-8 text-primary mr-3" />
+                <div className="text-4xl font-bold text-primary">
+                  {schemeData.metadata.total_schemes}
+                </div>
               </div>
-              <div className="flex items-center">
-                <AlertCircle className="h-6 w-6 mr-2" />
-                <span>Last Updated: {schemeData.metadata.last_updated}</span>
+              <div className="text-muted-foreground text-md font-semibold">
+                Active Schemes
+              </div>
+            </div>
+
+            <div className="group cursor-pointer bg-card border border-border rounded-xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 backdrop-blur-sm">
+              <div className="flex items-center justify-center mb-2">
+                <div className="text-3xl font-bold text-primary">
+                  {schemeData.metadata.last_updated}
+                </div>
+              </div>
+              <div className="text-muted-foreground text-md font-semibold">
+                Last Updated
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Search and Filter Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
