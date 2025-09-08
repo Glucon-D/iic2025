@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
-import { generateText } from "ai";
+import { NextRequest } from "next/server";
+import { streamText } from "ai";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { openRouterConfig } from "@/utils/openrouter/config";
 
@@ -50,20 +50,20 @@ export async function POST(req: NextRequest) {
     const { messages } = await req.json();
 
     if (!messages || !Array.isArray(messages) || messages.length === 0) {
-      return NextResponse.json(
-        { error: "Messages array is required" },
-        { status: 400 }
+      return new Response(
+        JSON.stringify({ error: "Messages array is required" }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
       );
     }
 
     const contextMessages = prepareContextMessages(messages);
     
-    const result = await generateText({
+    const result = streamText({
       model: openrouter("google/gemini-2.5-flash-lite"),
       messages: [
         {
           role: "system",
-          content: "You are a helpful AI assistant. Respond in the same language as the user's input. Provide clear, concise responses."
+          content: "You are a helpful AI assistant for agricultural queries. Respond in the same language as the user's input. Provide clear, concise responses about farming, crops, diseases, and agricultural practices."
         },
         ...contextMessages
       ],
@@ -71,15 +71,19 @@ export async function POST(req: NextRequest) {
       maxRetries: 2,
     });
 
-    return NextResponse.json({
-      content: result.text,
-      usage: result.usage,
+    // Return the streaming response with proper headers
+    return result.toTextStreamResponse({
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
+      }
     });
   } catch (error) {
     console.error("Error:", error);
-    return NextResponse.json(
-      { error: "Failed to generate response" },
-      { status: 500 }
+    return new Response(
+      JSON.stringify({ error: "Failed to generate response" }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }
 }

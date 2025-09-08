@@ -52,7 +52,7 @@ export default function ChatLayout({
 
   useEffect(() => {
     if (isAuthenticated && user) {
-      loadThreads();
+      loadThreads(true);
     }
   }, [isAuthenticated, user, loadThreads]);
 

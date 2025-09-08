@@ -12,26 +12,42 @@ import { useSidebar } from "./layout";
 export default function ChatHomePage() {
   const router = useRouter();
   const { createThread, isLoading } = useChatStore();
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated, user, isLoading: authLoading } = useAuthStore();
   const { sidebarOpen, toggleSidebar } = useSidebar();
   const [isCreatingThread, setIsCreatingThread] = useState(false);
 
   useEffect(() => {
-    // If user is not authenticated, redirect to login
-    if (!isAuthenticated) {
-      router.push("/login");
+    // Only redirect if auth is not loading and user is not authenticated
+    if (!authLoading && !isAuthenticated && !user) {
+      router.replace("/login");
       return;
     }
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated, user, authLoading, router]);
+
+  // Show loading while auth is being initialized
+  if (authLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
+  // Show nothing while redirecting
+  if (!isAuthenticated) {
+    return null;
+  }
 
   const handleSendMessage = async (content: string) => {
     if (!content.trim() || isCreatingThread) return;
 
     setIsCreatingThread(true);
     try {
+      // Create thread instantly (optimistic UI)
       const newThread = await createThread("New Chat", "General farming query");
-      // Navigate to the new thread and pass the initial message
-      router.push(
+      
+      // Navigate to the new thread with the initial message
+      router.replace(
         `/chat/${newThread.$id}?initialMessage=${encodeURIComponent(content)}`
       );
     } catch (error) {

@@ -18,6 +18,8 @@ export function ThreadItem({ thread, isActive, onClick }: ThreadItemProps) {
   const [editTitle, setEditTitle] = useState(thread.title);
   const { updateThread, deleteThread } = useChatStore();
 
+
+
   const handleEdit = async () => {
     if (!thread.$id) return;
     if (editTitle.trim() && editTitle !== thread.title) {
