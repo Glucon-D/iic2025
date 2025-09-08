@@ -1,0 +1,837 @@
+[
+  {
+    "cropId": 1,
+    "cropName": "Barley",
+    "cropIcon": "🌾",
+    "weather": {
+      "minTemperatureC": 5,
+      "maxTemperatureC": 25,
+      "rainfallMinMm": 300,
+      "rainfallMaxMm": 700
+    },
+    "suitability": [
+      {
+        "state": "Rajasthan",
+        "months": [10, 11, 12, 1, 2, 3, 4],
+        "cities": ["Jaipur", "Jodhpur", "Udaipur"]
+      },
+      {
+        "state": "Uttar Pradesh",
+        "months": [10, 11, 12, 1, 2, 3],
+        "cities": ["Lucknow", "Kanpur", "Agra"]
+      },
+      {
+        "state": "Punjab",
+        "months": [10, 11, 12, 1, 2, 3],
+        "cities": ["Chandigarh", "Ludhiana", "Amritsar"]
+      }
+    ]
+  },
+  {
+    "cropId": 2,
+    "cropName": "Oats",
+    "cropIcon": "🌾",
+    "weather": {
+      "minTemperatureC": 5,
+      "maxTemperatureC": 22,
+      "rainfallMinMm": 400,
+      "rainfallMaxMm": 800
+    },
+    "suitability": [
+      {
+        "state": "Himachal Pradesh",
+        "months": [9, 10, 11, 12, 1, 2, 3, 4],
+        "cities": ["Shimla", "Manali", "Dharamshala"]
+      },
+      {
+        "state": "Uttarakhand",
+        "months": [9, 10, 11, 12, 1, 2, 3, 4],
+        "cities": ["Dehradun", "Nainital", "Rishikesh"]
+      },
+      {
+        "state": "Karnataka",
+        "months": [9, 10, 11, 12, 1, 2],
+        "cities": ["Bengaluru", "Mysuru", "Hassan"]
+      }
+    ]
+  },
+  {
+    "cropId": 3,
+    "cropName": "Rye",
+    "cropIcon": "🌾",
+    "weather": {
+      "minTemperatureC": -5,
+      "maxTemperatureC": 20,
+      "rainfallMinMm": 300,
+      "rainfallMaxMm": 600
+    },
+    "suitability": [
+      {
+        "state": "Jammu and Kashmir",
+        "months": [9, 10, 11, 12, 1, 2, 3, 4],
+        "cities": ["Srinagar", "Jammu", "Anantnag"]
+      },
+      {
+        "state": "Himachal Pradesh",
+        "months": [9, 10, 11, 12, 1, 2, 3, 4],
+        "cities": ["Shimla", "Kullu", "Chamba"]
+      }
+    ]
+  },
+  {
+    "cropId": 4,
+    "cropName": "Sorghum",
+    "cropIcon": "🌾",
+    "weather": {
+      "minTemperatureC": 20,
+      "maxTemperatureC": 35,
+      "rainfallMinMm": 300,
+      "rainfallMaxMm": 700
+    },
+    "suitability": [
+      {
+        "state": "Maharashtra",
+        "months": [6, 7, 8, 9, 10],
+        "cities": ["Pune", "Nashik", "Solapur"]
+      },
+      {
+        "state": "Karnataka",
+        "months": [6, 7, 8, 9, 10],
+        "cities": ["Bengaluru", "Hubballi", "Kalaburagi"]
+      },
+      {
+        "state": "Madhya Pradesh",
+        "months": [6, 7, 8, 9, 10],
+        "cities": ["Indore", "Bhopal", "Gwalior"]
+      }
+    ]
+  },
+  {
+    "cropId": 5,
+    "cropName": "Millet",
+    "cropIcon": "🌾",
+    "weather": {
+      "minTemperatureC": 20,
+      "maxTemperatureC": 38,
+      "rainfallMinMm": 200,
+      "rainfallMaxMm": 600
+    },
+    "suitability": [
+      {
+        "state": "Rajasthan",
+        "months": [6, 7, 8, 9, 10],
+        "cities": ["Jaipur", "Jodhpur", "Bikaner"]
+      },
+      {
+        "state": "Gujarat",
+        "months": [6, 7, 8, 9, 10],
+        "cities": ["Ahmedabad", "Surat", "Rajkot"]
+      },
+      {
+        "state": "Haryana",
+        "months": [6, 7, 8, 9, 10],
+        "cities": ["Gurgaon", "Faridabad", "Hisar"]
+      }
+    ]
+  },
+  {
+    "cropId": 6,
+    "cropName": "Maize (Corn)",
+    "cropIcon": "🌽",
+    "weather": {
+      "minTemperatureC": 18,
+      "maxTemperatureC": 32,
+      "rainfallMinMm": 500,
+      "rainfallMaxMm": 1000
+    },
+    "suitability": [
+      {
+        "state": "Uttar Pradesh",
+        "months": [6, 7, 8, 9],
+        "cities": ["Lucknow", "Meerut", "Bareilly"]
+      },
+      {
+        "state": "Bihar",
+        "months": [6, 7, 8, 9],
+        "cities": ["Patna", "Gaya", "Muzaffarpur"]
+      },
+      {
+        "state": "Rajasthan",
+        "months": [6, 7, 8, 9],
+        "cities": ["Jaipur", "Kota", "Udaipur"]
+      }
+    ]
+  },
+  {
+    "cropId": 7,
+    "cropName": "Soybean",
+    "cropIcon": "🌱",
+    "weather": {
+      "minTemperatureC": 20,
+      "maxTemperatureC": 30,
+      "rainfallMinMm": 600,
+      "rainfallMaxMm": 1200
+    },
+    "suitability": [
+      {
+        "state": "Madhya Pradesh",
+        "months": [6, 7, 8, 9, 10],
+        "cities": ["Indore", "Bhopal", "Jabalpur"]
+      },
+      {
+        "state": "Maharashtra",
+        "months": [6, 7, 8, 9, 10],
+        "cities": ["Nagpur", "Aurangabad", "Amravati"]
+      },
+      {
+        "state": "Gujarat",
+        "months": [6, 7, 8, 9, 10],
+        "cities": ["Ahmedabad", "Vadodara", "Surat"]
+      }
+    ]
+  },
+  {
+    "cropId": 8,
+    "cropName": "Groundnut (Peanut)",
+    "cropIcon": "🥜",
+    "weather": {
+      "minTemperatureC": 20,
+      "maxTemperatureC": 30,
+      "rainfallMinMm": 400,
+      "rainfallMaxMm": 900
+    },
+    "suitability": [
+      {
+        "state": "Gujarat",
+        "months": [6, 7, 8, 9, 10],
+        "cities": ["Junagadh", "Rajkot", "Ahmedabad"]
+      },
+      {
+        "state": "Andhra Pradesh",
+        "months": [6, 7, 8, 9, 10],
+        "cities": ["Tirupati", "Visakhapatnam", "Vijayawada"]
+      },
+      {
+        "state": "Tamil Nadu",
+        "months": [7, 8, 9, 10, 11],
+        "cities": ["Chennai", "Coimbatore", "Madurai"]
+      }
+    ]
+  },
+  {
+    "cropId": 9,
+    "cropName": "Sunflower",
+    "cropIcon": "🌻",
+    "weather": {
+      "minTemperatureC": 15,
+      "maxTemperatureC": 30,
+      "rainfallMinMm": 400,
+      "rainfallMaxMm": 800
+    },
+    "suitability": [
+      {
+        "state": "Karnataka",
+        "months": [6, 7, 8, 9, 10],
+        "cities": ["Bengaluru", "Hubballi", "Mysuru"]
+      },
+      {
+        "state": "Maharashtra",
+        "months": [6, 7, 8, 9, 10],
+        "cities": ["Pune", "Nashik", "Solapur"]
+      },
+      {
+        "state": "Andhra Pradesh",
+        "months": [6, 7, 8, 9, 10],
+        "cities": ["Guntur", "Kurnool", "Nellore"]
+      }
+    ]
+  },
+  {
+    "cropId": 10,
+    "cropName": "Rapeseed (Canola)",
+    "cropIcon": "🪻",
+    "weather": {
+      "minTemperatureC": 5,
+      "maxTemperatureC": 25,
+      "rainfallMinMm": 300,
+      "rainfallMaxMm": 700
+    },
+    "suitability": [
+      {
+        "state": "Rajasthan",
+        "months": [10, 11, 12, 1, 2, 3, 4],
+        "cities": ["Jaipur", "Sriganganagar", "Bikaner"]
+      },
+      {
+        "state": "Madhya Pradesh",
+        "months": [10, 11, 12, 1, 2, 3],
+        "cities": ["Bhopal", "Indore", "Gwalior"]
+      },
+      {
+        "state": "Uttar Pradesh",
+        "months": [10, 11, 12, 1, 2, 3],
+        "cities": ["Lucknow", "Kanpur", "Agra"]
+      }
+    ]
+  },
+  {
+    "cropId": 11,
+    "cropName": "Jute",
+    "cropIcon": "🌿",
+    "weather": {
+      "minTemperatureC": 20,
+      "maxTemperatureC": 35,
+      "rainfallMinMm": 800,
+      "rainfallMaxMm": 1500
+    },
+    "suitability": [
+      {
+        "state": "West Bengal",
+        "months": [3, 4, 5, 6, 7, 8, 9],
+        "cities": ["Kolkata", "Howrah", "Murshidabad"]
+      },
+      {
+        "state": "Assam",
+        "months": [3, 4, 5, 6, 7, 8],
+        "cities": ["Guwahati", "Jorhat", "Dhubri"]
+      },
+      {
+        "state": "Bihar",
+        "months": [3, 4, 5, 6, 7, 8],
+        "cities": ["Purnia", "Katihar", "Bhagalpur"]
+      }
+    ]
+  },
+  {
+    "cropId": 12,
+    "cropName": "Coffee",
+    "cropIcon": "☕",
+    "weather": {
+      "minTemperatureC": 15,
+      "maxTemperatureC": 28,
+      "rainfallMinMm": 1000,
+      "rainfallMaxMm": 2500
+    },
+    "suitability": [
+      {
+        "state": "Karnataka",
+        "months": [9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8],
+        "cities": ["Chikmagalur", "Kodagu", "Hassan"]
+      },
+      {
+        "state": "Kerala",
+        "months": [9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8],
+        "cities": ["Wayanad", "Idukki", "Kollam"]
+      },
+      {
+        "state": "Tamil Nadu",
+        "months": [9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8],
+        "cities": ["Nilgiris", "Shevaroys", "Kodaikanal"]
+      }
+    ]
+  },
+  {
+    "cropId": 13,
+    "cropName": "Cocoa",
+    "cropIcon": "🍫",
+    "weather": {
+      "minTemperatureC": 20,
+      "maxTemperatureC": 32,
+      "rainfallMinMm": 1500,
+      "rainfallMaxMm": 3000
+    },
+    "suitability": [
+      {
+        "state": "Kerala",
+        "months": [9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8],
+        "cities": ["Kozhikode", "Malappuram", "Idukki"]
+      },
+      {
+        "state": "Karnataka",
+        "months": [9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8],
+        "cities": ["Dakshina Kannada", "Udupi", "Chikmagalur"]
+      },
+      {
+        "state": "Andaman and Nicobar Islands",
+        "months": [9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8],
+        "cities": ["Port Blair", "Car Nicobar"]
+      }
+    ]
+  },
+  {
+    "cropId": 14,
+    "cropName": "Rubber",
+    "cropIcon": "🌳",
+    "weather": {
+      "minTemperatureC": 20,
+      "maxTemperatureC": 35,
+      "rainfallMinMm": 2000,
+      "rainfallMaxMm": 4000
+    },
+    "suitability": [
+      {
+        "state": "Kerala",
+        "months": [9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8],
+        "cities": ["Kottayam", "Pathanamthitta", "Ernakulam"]
+      },
+      {
+        "state": "Tamil Nadu",
+        "months": [9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8],
+        "cities": ["Kanyakumari", "Tirunelveli", "Coimbatore"]
+      },
+      {
+        "state": "Assam",
+        "months": [9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8],
+        "cities": ["Dibrugarh", "Tinsukia", "Karimganj"]
+      }
+    ]
+  },
+  {
+    "cropId": 15,
+    "cropName": "Tobacco",
+    "cropIcon": "🚬",
+    "weather": {
+      "minTemperatureC": 15,
+      "maxTemperatureC": 30,
+      "rainfallMinMm": 500,
+      "rainfallMaxMm": 1200
+    },
+    "suitability": [
+      {
+        "state": "Gujarat",
+        "months": [9, 10, 11, 12, 1, 2, 3, 4],
+        "cities": ["Anand", "Kheda", "Ahmedabad"]
+      },
+      {
+        "state": "Andhra Pradesh",
+        "months": [9, 10, 11, 12, 1, 2, 3, 4],
+        "cities": ["Guntur", "Prakasam", "Krishna"]
+      },
+      {
+        "state": "Karnataka",
+        "months": [9, 10, 11, 12, 1, 2, 3, 4],
+        "cities": ["Mysuru", "Chamarajanagar", "Hassan"]
+      }
+    ]
+  },
+  {
+    "cropId": 16,
+    "cropName": "Potato",
+    "cropIcon": "🥔",
+    "weather": {
+      "minTemperatureC": 10,
+      "maxTemperatureC": 25,
+      "rainfallMinMm": 500,
+      "rainfallMaxMm": 800
+    },
+    "suitability": [
+      {
+        "state": "Uttar Pradesh",
+        "months": [9, 10, 11, 12, 1, 2, 3],
+        "cities": ["Agra", "Farrukhabad", "Kannauj"]
+      },
+      {
+        "state": "West Bengal",
+        "months": [10, 11, 12, 1, 2, 3],
+        "cities": ["Hooghly", "Nadia", "Bardhaman"]
+      },
+      {
+        "state": "Bihar",
+        "months": [10, 11, 12, 1, 2, 3],
+        "cities": ["Patna", "Muzaffarpur", "Gaya"]
+      }
+    ]
+  },
+  {
+    "cropId": 17,
+    "cropName": "Tomato",
+    "cropIcon": "🍅",
+    "weather": {
+      "minTemperatureC": 15,
+      "maxTemperatureC": 35,
+      "rainfallMinMm": 500,
+      "rainfallMaxMm": 1000
+    },
+    "suitability": [
+      {
+        "state": "Andhra Pradesh",
+        "months": [7, 8, 9, 10, 11, 12, 1, 2, 3, 4],
+        "cities": ["Kurnool", "Chittoor", "Kadapa"]
+      },
+      {
+        "state": "Karnataka",
+        "months": [7, 8, 9, 10, 11, 12, 1, 2, 3, 4],
+        "cities": ["Kolar", "Bengaluru Rural", "Mysuru"]
+      },
+      {
+        "state": "Maharashtra",
+        "months": [7, 8, 9, 10, 11, 12, 1, 2, 3, 4],
+        "cities": ["Pune", "Nashik", "Satara"]
+      }
+    ]
+  },
+  {
+    "cropId": 18,
+    "cropName": "Onion",
+    "cropIcon": "🧅",
+    "weather": {
+      "minTemperatureC": 10,
+      "maxTemperatureC": 30,
+      "rainfallMinMm": 400,
+      "rainfallMaxMm": 800
+    },
+    "suitability": [
+      {
+        "state": "Maharashtra",
+        "months": [10, 11, 12, 1, 2, 3, 4, 5],
+        "cities": ["Nashik", "Pune", "Satara"]
+      },
+      {
+        "state": "Gujarat",
+        "months": [10, 11, 12, 1, 2, 3, 4, 5],
+        "cities": ["Ahmedabad", "Surat", "Bhavnagar"]
+      },
+      {
+        "state": "Madhya Pradesh",
+        "months": [9, 10, 11, 12, 1, 2, 3, 4],
+        "cities": ["Indore", "Ujjain", "Dewas"]
+      }
+    ]
+  },
+  {
+    "cropId": 19,
+    "cropName": "Garlic",
+    "cropIcon": "🧄",
+    "weather": {
+      "minTemperatureC": 10,
+      "maxTemperatureC": 25,
+      "rainfallMinMm": 300,
+      "rainfallMaxMm": 700
+    },
+    "suitability": [
+      {
+        "state": "Gujarat",
+        "months": [9, 10, 11, 12, 1, 2, 3, 4],
+        "cities": ["Junagadh", "Rajkot", "Jamnagar"]
+      },
+      {
+        "state": "Madhya Pradesh",
+        "months": [9, 10, 11, 12, 1, 2, 3, 4],
+        "cities": ["Mandsaur", "Neemuch", "Ratlam"]
+      },
+      {
+        "state": "Rajasthan",
+        "months": [9, 10, 11, 12, 1, 2, 3, 4],
+        "cities": ["Chittorgarh", "Udaipur", "Bhilwara"]
+      }
+    ]
+  },
+  {
+    "cropId": 20,
+    "cropName": "Cabbage",
+    "cropIcon": "🥬",
+    "weather": {
+      "minTemperatureC": 10,
+      "maxTemperatureC": 25,
+      "rainfallMinMm": 400,
+      "rainfallMaxMm": 800
+    },
+    "suitability": [
+      {
+        "state": "West Bengal",
+        "months": [9, 10, 11, 12, 1, 2, 3],
+        "cities": ["Darjeeling", "Kalimpong", "Jalpaiguri"]
+      },
+      {
+        "state": "Himachal Pradesh",
+        "months": [4, 5, 6, 7, 8, 9],
+        "cities": ["Shimla", "Solan", "Mandi"]
+      },
+      {
+        "state": "Karnataka",
+        "months": [8, 9, 10, 11, 12, 1, 2],
+        "cities": ["Bengaluru", "Hassan", "Mysuru"]
+      }
+    ]
+  },
+  {
+    "cropId": 21,
+    "cropName": "Cauliflower",
+    "cropIcon": "🥦",
+    "weather": {
+      "minTemperatureC": 10,
+      "maxTemperatureC": 25,
+      "rainfallMinMm": 400,
+      "rainfallMaxMm": 800
+    },
+    "suitability": [
+      {
+        "state": "West Bengal",
+        "months": [9, 10, 11, 12, 1, 2, 3],
+        "cities": ["Kolkata", "Hooghly", "Nadia"]
+      },
+      {
+        "state": "Bihar",
+        "months": [9, 10, 11, 12, 1, 2, 3],
+        "cities": ["Patna", "Muzaffarpur", "Gaya"]
+      },
+      {
+        "state": "Uttar Pradesh",
+        "months": [9, 10, 11, 12, 1, 2, 3],
+        "cities": ["Lucknow", "Kanpur", "Meerut"]
+      }
+    ]
+  },
+  {
+    "cropId": 22,
+    "cropName": "Broccoli",
+    "cropIcon": "🥦",
+    "weather": {
+      "minTemperatureC": 10,
+      "maxTemperatureC": 22,
+      "rainfallMinMm": 400,
+      "rainfallMaxMm": 700
+    },
+    "suitability": [
+      {
+        "state": "Himachal Pradesh",
+        "months": [4, 5, 6, 7, 8, 9],
+        "cities": ["Shimla", "Kullu", "Mandi"]
+      },
+      {
+        "state": "Uttarakhand",
+        "months": [4, 5, 6, 7, 8, 9],
+        "cities": ["Dehradun", "Nainital", "Mussoorie"]
+      },
+      {
+        "state": "Karnataka",
+        "months": [8, 9, 10, 11, 12, 1, 2],
+        "cities": ["Bengaluru", "Hassan", "Mysuru"]
+      }
+    ]
+  },
+  {
+    "cropId": 23,
+    "cropName": "Spinach",
+    "cropIcon": "🥬",
+    "weather": {
+      "minTemperatureC": 10,
+      "maxTemperatureC": 28,
+      "rainfallMinMm": 300,
+      "rainfallMaxMm": 700
+    },
+    "suitability": [
+      {
+        "state": "Rajasthan",
+        "months": [9, 10, 11, 12, 1, 2, 3, 4],
+        "cities": ["Jaipur", "Udaipur", "Ajmer"]
+      },
+      {
+        "state": "Uttar Pradesh",
+        "months": [9, 10, 11, 12, 1, 2, 3, 4],
+        "cities": ["Lucknow", "Kanpur", "Agra"]
+      },
+      {
+        "state": "Haryana",
+        "months": [9, 10, 11, 12, 1, 2, 3, 4],
+        "cities": ["Gurgaon", "Faridabad", "Hisar"]
+      }
+    ]
+  },
+  {
+    "cropId": 24,
+    "cropName": "Lettuce",
+    "cropIcon": "🥬",
+    "weather": {
+      "minTemperatureC": 10,
+      "maxTemperatureC": 25,
+      "rainfallMinMm": 300,
+      "rainfallMaxMm": 700
+    },
+    "suitability": [
+      {
+        "state": "Himachal Pradesh",
+        "months": [4, 5, 6, 7, 8, 9],
+        "cities": ["Shimla", "Solan", "Kasauli"]
+      },
+      {
+        "state": "Uttarakhand",
+        "months": [4, 5, 6, 7, 8, 9],
+        "cities": ["Dehradun", "Nainital", "Mussoorie"]
+      },
+      {
+        "state": "Karnataka",
+        "months": [8, 9, 10, 11, 12, 1, 2],
+        "cities": ["Bengaluru", "Mysuru", "Hassan"]
+      }
+    ]
+  },
+  {
+    "cropId": 25,
+    "cropName": "Carrot",
+    "cropIcon": "🥕",
+    "weather": {
+      "minTemperatureC": 10,
+      "maxTemperatureC": 25,
+      "rainfallMinMm": 400,
+      "rainfallMaxMm": 800
+    },
+    "suitability": [
+      {
+        "state": "Uttar Pradesh",
+        "months": [9, 10, 11, 12, 1, 2, 3],
+        "cities": ["Noida", "Ghaziabad", "Meerut"]
+      },
+      {
+        "state": "Punjab",
+        "months": [9, 10, 11, 12, 1, 2, 3],
+        "cities": ["Ludhiana", "Jalandhar", "Amritsar"]
+      },
+      {
+        "state": "Haryana",
+        "months": [9, 10, 11, 12, 1, 2, 3],
+        "cities": ["Ambala", "Panipat", "Rohtak"]
+      }
+    ]
+  },
+  {
+    "cropId": 26,
+    "cropName": "Radish",
+    "cropIcon": "🥕",
+    "weather": {
+      "minTemperatureC": 10,
+      "maxTemperatureC": 28,
+      "rainfallMinMm": 300,
+      "rainfallMaxMm": 700
+    },
+    "suitability": [
+      {
+        "state": "Uttar Pradesh",
+        "months": [9, 10, 11, 12, 1, 2, 3, 4],
+        "cities": ["Lucknow", "Kanpur", "Agra"]
+      },
+      {
+        "state": "West Bengal",
+        "months": [9, 10, 11, 12, 1, 2, 3, 4],
+        "cities": ["Kolkata", "Howrah", "Bardhaman"]
+      },
+      {
+        "state": "Bihar",
+        "months": [9, 10, 11, 12, 1, 2, 3, 4],
+        "cities": ["Patna", "Gaya", "Muzaffarpur"]
+      }
+    ]
+  },
+  {
+    "cropId": 27,
+    "cropName": "Beetroot",
+    "cropIcon": "🌰",
+    "weather": {
+      "minTemperatureC": 10,
+      "maxTemperatureC": 25,
+      "rainfallMinMm": 400,
+      "rainfallMaxMm": 700
+    },
+    "suitability": [
+      {
+        "state": "Himachal Pradesh",
+        "months": [4, 5, 6, 7, 8, 9],
+        "cities": ["Shimla", "Solan", "Mandi"]
+      },
+      {
+        "state": "Uttarakhand",
+        "months": [4, 5, 6, 7, 8, 9],
+        "cities": ["Dehradun", "Nainital", "Haridwar"]
+      },
+      {
+        "state": "Punjab",
+        "months": [9, 10, 11, 12, 1, 2, 3],
+        "cities": ["Ludhiana", "Jalandhar", "Patiala"]
+      }
+    ]
+  },
+  {
+    "cropId": 28,
+    "cropName": "Cucumber",
+    "cropIcon": "🥒",
+    "weather": {
+      "minTemperatureC": 18,
+      "maxTemperatureC": 35,
+      "rainfallMinMm": 400,
+      "rainfallMaxMm": 800
+    },
+    "suitability": [
+      {
+        "state": "Uttar Pradesh",
+        "months": [2, 3, 4, 5, 6, 7, 8, 9],
+        "cities": ["Lucknow", "Kanpur", "Agra"]
+      },
+      {
+        "state": "Maharashtra",
+        "months": [2, 3, 4, 5, 6, 7, 8, 9],
+        "cities": ["Pune", "Nashik", "Nagpur"]
+      },
+      {
+        "state": "Bihar",
+        "months": [2, 3, 4, 5, 6, 7, 8, 9],
+        "cities": ["Patna", "Gaya", "Muzaffarpur"]
+      }
+    ]
+  },
+  {
+    "cropId": 29,
+    "cropName": "Bell Pepper (Capsicum)",
+    "cropIcon": "🫑",
+    "weather": {
+      "minTemperatureC": 15,
+      "maxTemperatureC": 30,
+      "rainfallMinMm": 500,
+      "rainfallMaxMm": 1000
+    },
+    "suitability": [
+      {
+        "state": "Karnataka",
+        "months": [7, 8, 9, 10, 11, 12, 1, 2, 3, 4],
+        "cities": ["Bengaluru", "Kolar", "Mysuru"]
+      },
+      {
+        "state": "Maharashtra",
+        "months": [7, 8, 9, 10, 11, 12, 1, 2, 3, 4],
+        "cities": ["Pune", "Nashik", "Satara"]
+      },
+      {
+        "state": "Andhra Pradesh",
+        "months": [7, 8, 9, 10, 11, 12, 1, 2, 3, 4],
+        "cities": ["Chittoor", "Kurnool", "Kadapa"]
+      }
+    ]
+  },
+  {
+    "cropId": 30,
+    "cropName": "Chili Pepper",
+    "cropIcon": "🌶️",
+    "weather": {
+      "minTemperatureC": 18,
+      "maxTemperatureC": 35,
+      "rainfallMinMm": 500,
+      "rainfallMaxMm": 1000
+    },
+    "suitability": [
+      {
+        "state": "Andhra Pradesh",
+        "months": [6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4],
+        "cities": ["Guntur", "Kurnool", "Prakasam"]
+      },
+      {
+        "state": "Telangana",
+        "months": [6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4],
+        "cities": ["Warangal", "Khammam", "Nalgonda"]
+      },
+      {
+        "state": "Maharashtra",
+        "months": [6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4],
+        "cities": ["Nagpur", "Jalgaon", "Solapur"]
+      }
+    ]
+  }
+]

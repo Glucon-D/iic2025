@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { AuthProvider } from "@/components/providers/AuthProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,7 +40,9 @@ export default function RootLayout({
         suppressHydrationWarning={true}
       >
         <ThemeProvider defaultTheme="system" storageKey="digital-krishi-theme">
-          <div className="flex flex-col min-h-screen">{children}</div>
+          <AuthProvider>
+            <div className="flex flex-col min-h-screen">{children}</div>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

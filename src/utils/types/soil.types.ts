@@ -10,6 +10,10 @@ export interface SoilProperties {
 
 export interface SoilResponse {
   type: string;
+  geometry: {
+    coordinates: [number, number];
+    type: string;
+  };
   properties: SoilProperties;
 }
 

@@ -17,12 +17,12 @@ export default function ChatHomePage() {
   const [isCreatingThread, setIsCreatingThread] = useState(false);
 
   useEffect(() => {
-    // Only redirect if auth is not loading and user is not authenticated
-    if (!authLoading && !isAuthenticated && !user) {
+    // Only redirect if auth is fully loaded and user is definitely not authenticated
+    if (!authLoading && !isAuthenticated) {
       router.replace("/login");
       return;
     }
-  }, [isAuthenticated, user, authLoading, router]);
+  }, [isAuthenticated, authLoading, router]);
 
   // Show loading while auth is being initialized
   if (authLoading) {
@@ -33,8 +33,8 @@ export default function ChatHomePage() {
     );
   }
 
-  // Show nothing while redirecting
-  if (!isAuthenticated) {
+  // Show nothing while redirecting or if not authenticated
+  if (!authLoading && !isAuthenticated) {
     return null;
   }
 

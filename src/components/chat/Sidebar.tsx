@@ -54,7 +54,7 @@ export function Sidebar({ onToggle }: SidebarProps) {
   );
 
   return (
-    <div className="flex flex-col h-full bg-card border-r border-border">
+    <div className="flex flex-col h-full bg-background border-r border-border">
       {/* Header */}
 
       {/* New Chat Button */}

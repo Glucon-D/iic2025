@@ -42,20 +42,110 @@ interface LocationData {
   country?: string;
 }
 
-// Mock nudges service for IP-based location
+// Location service using OpenCage for GPS and IP-based location
 const nudgesService = {
+  // Get location using GPS + OpenCage geocoding
+  getLocationFromGPS: async (): Promise<LocationData> => {
+    return new Promise((resolve) => {
+      if (!navigator.geolocation) {
+        resolve({});
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          try {
+            const { latitude, longitude } = position.coords;
+            const opencageKey = process.env.NEXT_PUBLIC_OPENCAGE_API;
+
+            if (!opencageKey) {
+              console.warn(
+                "OpenCage API key not found, falling back to IP location"
+              );
+              const ipLocation = await nudgesService.getLocationFromIP();
+              resolve(ipLocation);
+              return;
+            }
+
+            const response = await fetch(
+              `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${opencageKey}`
+            );
+
+            if (response.ok) {
+              const data = await response.json();
+              if (data.results && data.results.length > 0) {
+                const result = data.results[0];
+                const city =
+                  result.components.city ||
+                  result.components.town ||
+                  result.components.village ||
+                  result.components.county;
+                const country = result.components.country;
+
+                if (city) {
+                  resolve({ city, country });
+                  return;
+                }
+              }
+            }
+
+            // Fallback to IP location if geocoding fails
+            const ipLocation = await nudgesService.getLocationFromIP();
+            resolve(ipLocation);
+          } catch (error) {
+            console.warn("GPS geocoding failed:", error);
+            const ipLocation = await nudgesService.getLocationFromIP();
+            resolve(ipLocation);
+          }
+        },
+        async () => {
+          // GPS permission denied or failed
+          const ipLocation = await nudgesService.getLocationFromIP();
+          resolve(ipLocation);
+        },
+        { timeout: 10000 }
+      );
+    });
+  },
+
   getLocationFromIP: async (): Promise<LocationData> => {
     try {
-      // Using a free IP geolocation service
-      const response = await fetch("https://ipapi.co/json/");
-      if (response.ok) {
-        const data = await response.json();
-        return { city: data.city, country: data.country };
+      // Try multiple IP location services for better reliability
+      let locationData: LocationData = {};
+
+      // Try ipapi.co first
+      try {
+        const response = await fetch("https://ipapi.co/json/");
+        if (response.ok) {
+          const data = await response.json();
+          if (data.city && data.country) {
+            locationData = { city: data.city, country: data.country };
+          }
+        }
+      } catch (error) {
+        console.log("ipapi.co failed, trying alternative...");
       }
+
+      // Fallback to ip-api.com if first service fails
+      if (!locationData.city) {
+        try {
+          const response = await fetch("http://ip-api.com/json/");
+          if (response.ok) {
+            const data = await response.json();
+            if (data.city && data.country) {
+              locationData = { city: data.city, country: data.country };
+            }
+          }
+        } catch (error) {
+          console.log("ip-api.com also failed");
+        }
+      }
+
+      return locationData;
     } catch (error) {
       console.warn("Failed to get location from IP:", error);
+      return {};
     }
-    return {};
   },
 };
 
@@ -201,6 +291,14 @@ export const weatherService = {
     if (saved) return saved;
 
     try {
+      // Try GPS + OpenCage geocoding first for better accuracy
+      const gpsLoc = await nudgesService.getLocationFromGPS();
+      if (gpsLoc?.city) {
+        saveCity(gpsLoc.city);
+        return gpsLoc.city;
+      }
+
+      // Fallback to IP-based location
       const ipLoc = await nudgesService.getLocationFromIP();
       if (ipLoc?.city) {
         saveCity(ipLoc.city);
@@ -210,7 +308,7 @@ export const weatherService = {
       console.warn("Failed to get location:", error);
     }
 
-    // Fallback
+    // Final fallback
     const fallback = "New Delhi";
     saveCity(fallback);
     return fallback;
