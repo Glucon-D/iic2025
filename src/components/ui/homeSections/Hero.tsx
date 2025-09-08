@@ -81,8 +81,8 @@ export function Hero() {
           }`}
         >
           Get expert farming advice in{" "}
-          <span className="text-primary font-semibold">Malayalam</span>, 24/7.
-          From crop diseases to weather decisions, our AI understands Kerala
+          <span className="text-primary font-semibold">Hindi</span>, 24/7.
+          From crop diseases to weather decisions, our AI understands Indian
           farming like a local Krishi Officer.
         </p>
 
@@ -119,16 +119,14 @@ export function Hero() {
         >
           <div className="text-center">
             <div className="text-3xl font-bold text-primary mb-2">24/7</div>
-            <div className="text-muted-foreground text-sm">
-              Available Support
-            </div>
+            <div className="text-muted-foreground text-sm">Available Support</div>
           </div>
           <div className="text-center">
             <div className="text-3xl font-bold text-primary mb-2">100+</div>
             <div className="text-muted-foreground text-sm">Crop Types</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">Malayalam</div>
+            <div className="text-3xl font-bold text-primary mb-2">Hindi</div>
             <div className="text-muted-foreground text-sm">Native Language</div>
           </div>
         </div>

@@ -36,9 +36,9 @@ export function Features() {
   const features = [
     {
       icon: MessageCircle,
-      title: "Malayalam Support",
+      title: "Hindi Support",
       description:
-        "Ask questions in Malayalam and get responses in your native language. No language barriers in farming advice.",
+        "Ask questions in Hindi and get responses in your native language. No language barriers in farming advice.",
       color: "blue",
     },
     {
@@ -52,7 +52,7 @@ export function Features() {
       icon: Globe,
       title: "Local Weather Insights",
       description:
-        "Get weather-based farming advice tailored to Kerala's climate and seasonal patterns.",
+        "Get weather-based farming advice tailored to India's climates and seasonal patterns.",
       color: "purple",
     },
     {
@@ -66,7 +66,7 @@ export function Features() {
       icon: Sprout,
       title: "Crop-Specific Advice",
       description:
-        "Tailored recommendations for rice, coconut, spices, and other crops common in Kerala.",
+        "Tailored recommendations for rice, wheat, pulses, spices, and other crops across India.",
       color: "emerald",
     },
     {
@@ -87,7 +87,7 @@ export function Features() {
       icon: CloudRain,
       title: "Monsoon Planning",
       description:
-        "Specialized guidance for pre-monsoon, monsoon, and post-monsoon farming activities.",
+        "Specialized guidance for pre-monsoon, monsoon, and post-monsoon farming activities across India.",
       color: "cyan",
     },
   ];

@@ -27,16 +27,16 @@ export function FAQs() {
 
   const faqs = [
     {
-      question: "How does the AI understand Malayalam queries?",
-      answer: "Our AI is specifically trained on Malayalam agricultural terminology and local farming contexts. It uses advanced natural language processing to understand your questions in Malayalam and provide accurate, contextually relevant answers about Kerala's farming practices.",
+      question: "How does the AI understand Hindi queries?",
+      answer: "Our AI is trained on Hindi agricultural terminology and Indian farming contexts. It uses advanced natural language processing to understand your questions in Hindi and provide accurate, contextually relevant answers.",
     },
     {
       question: "What types of crops can the system help with?",
-      answer: "The Digital Krishi Officer supports all major Kerala crops including rice (നെല്ല്), coconut (തെങ്ങ്), rubber (റബ്ബർ), spices like cardamom and pepper, coffee, tea, fruits like mango and jackfruit, and various vegetables. The system is continuously updated with new crop information.",
+      answer: "The Digital Krishi Officer supports major Indian crops including rice, wheat, pulses, oilseeds, sugarcane, cotton, spices, coffee, tea, fruits and vegetables. The system is continuously updated with new crop information.",
     },
     {
       question: "How accurate is the crop disease identification?",
-      answer: "Our AI has been trained on thousands of images of crop diseases common in Kerala and achieves over 90% accuracy in disease identification. However, for complex cases, the system automatically escalates to local agricultural experts for verification.",
+      answer: "Our AI has been trained on thousands of images of crop diseases common in India and achieves over 90% accuracy in disease identification. However, for complex cases, the system automatically escalates to agricultural experts for verification.",
     },
     {
       question: "Is the service available 24/7?",
@@ -44,11 +44,11 @@ export function FAQs() {
     },
     {
       question: "How does weather integration work?",
-      answer: "The system integrates real-time weather data specific to Kerala's districts and provides personalized advice based on current and forecasted weather conditions. This includes monsoon predictions, temperature variations, and humidity levels that affect your specific crops.",
+      answer: "The system integrates real-time weather data across Indian regions and provides personalized advice based on current and forecasted weather conditions, including monsoon predictions and temperature/humidity variations.",
     },
     {
       question: "Can I get advice for organic farming methods?",
-      answer: "Absolutely! The system includes comprehensive knowledge about organic farming practices, natural pest control methods, organic fertilizers, and sustainable farming techniques that are suitable for Kerala's climate and soil conditions.",
+      answer: "Absolutely! The system includes comprehensive knowledge about organic farming practices, natural pest control methods, organic fertilizers, and sustainable farming techniques suitable for Indian climates and soils.",
     },
     {
       question: "What if the AI can't answer my specific question?",

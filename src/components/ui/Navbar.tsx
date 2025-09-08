@@ -52,8 +52,8 @@ export function Navbar() {
   };
 
   const navLinks = [
-    { href: "#features", label: "Features" },
-    { href: "#about", label: "About" },
+    { href: "/#features", label: "Features" },
+    { href: "about", label: "About" },
   ];
 
   return (
@@ -163,7 +163,6 @@ export function Navbar() {
 
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center space-x-3">
-            <WeatherWidget />
             <ThemeToggle />
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -193,6 +192,14 @@ export function Navbar() {
                   {link.label}
                 </Link>
               ))}
+
+              {/* Weather Widget in Mobile Menu */}
+              <div className="border-t border-border/30 pt-3 mt-2">
+                <div className="flex items-center justify-between px-4 py-3 rounded-lg hover:bg-accent/30 transition-all duration-200">
+                  <span className="text-sm font-medium text-muted-foreground">Weather</span>
+                  <WeatherWidget />
+                </div>
+              </div>
 
               {isAuthenticated && user ? (
                 <>

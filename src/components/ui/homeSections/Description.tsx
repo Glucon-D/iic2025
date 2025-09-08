@@ -28,22 +28,22 @@ export function Description() {
     {
       icon: Brain,
       title: "AI Intelligence",
-      description: "Advanced machine learning models trained specifically for Kerala's agricultural conditions and practices.",
+      description: "Advanced machine learning models trained for India's diverse agricultural conditions and practices.",
     },
     {
       icon: MessageCircle,
-      title: "Malayalam Support",
-      description: "Communicate naturally in your native language for better understanding and accurate advice.",
+      title: "Hindi Support",
+      description: "Communicate naturally in Hindi for better understanding and accurate advice.",
     },
     {
       icon: Leaf,
       title: "Crop Expertise",
-      description: "Specialized knowledge for rice, coconut, spices, and other crops common in Kerala's climate.",
+      description: "Specialized knowledge for rice, wheat, pulses, spices, and other crops across India.",
     },
     {
       icon: Shield,
       title: "Reliable Guidance",
-      description: "Backed by agricultural science and validated by local farming experts and practices.",
+      description: "Backed by agricultural science and validated by Indian farming experts and practices.",
     },
   ];
 
@@ -73,7 +73,7 @@ export function Description() {
             }`}
           >
             Our Digital Krishi Officer combines cutting-edge artificial intelligence 
-            with deep understanding of Kerala's unique agricultural landscape to provide 
+            with deep understanding of India's diverse agricultural landscape to provide 
             personalized, actionable farming advice.
           </p>
         </div>
@@ -118,11 +118,11 @@ export function Description() {
         >
           <div className="bg-gradient-to-r from-primary/5 to-secondary/5 rounded-3xl p-8 sm:p-12 border border-border/30">
             <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">
-              Built for Kerala Farmers, by Agricultural Experts
+              Built for Indian Farmers, by Agricultural Experts
             </h3>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
-              Every recommendation is tailored to Kerala's unique monsoon patterns, 
-              soil conditions, and traditional farming wisdom passed down through generations.
+              Every recommendation is tailored to India's unique monsoons, 
+              soils and regional practices across states.
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-sm text-muted-foreground">
               <span className="px-3 py-1 bg-primary/10 rounded-full">Monsoon-Aware</span>

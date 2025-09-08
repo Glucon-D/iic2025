@@ -90,6 +90,11 @@ body {
   50% { transform: translateY(-8px); }
 }
 
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 .animate-float {
   animation: float 3s ease-in-out infinite;
 }
@@ -100,6 +105,10 @@ body {
 
 .animate-float-slower {
   animation: float-slower 5s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 3s linear infinite;
 }
 
 /* Grid pattern background */

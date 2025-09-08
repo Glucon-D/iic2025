@@ -102,7 +102,7 @@ export function Testimonials() {
                 : "opacity-0 translate-y-8"
             }`}
           >
-            What Kerala Farmers Are Saying
+            What Indian Farmers Are Saying
           </h2>
           <p
             className={`text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto transition-all duration-1000 delay-200 ${
@@ -111,7 +111,7 @@ export function Testimonials() {
                 : "opacity-0 translate-y-8"
             }`}
           >
-            Real stories from farmers across Kerala who have transformed their 
+            Real stories from farmers across India who have transformed their 
             agricultural practices with our AI-powered platform.
           </p>
         </div>
@@ -196,7 +196,7 @@ export function Testimonials() {
                 Join the Agricultural Revolution
               </h3>
               <p className="text-muted-foreground">
-                Be part of Kerala's farming transformation with AI-powered insights.
+                Be part of India's farming transformation with AI-powered insights.
               </p>
             </div>
           </div>
