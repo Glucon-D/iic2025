@@ -73,26 +73,35 @@ const WeatherWidget = () => {
   // Helper function to get weather-based gradient
   const getWeatherGradient = (weather: string) => {
     switch (weather?.toLowerCase()) {
-      case 'clear': return 'from-gradient-to-br from-amber-400/30 via-yellow-300/20 to-orange-400/30';
-      case 'clouds': return 'from-slate-400/30 via-gray-300/20 to-slate-500/30';
-      case 'rain': return 'from-blue-500/30 via-indigo-400/20 to-cyan-500/30';
-      case 'snow': return 'from-blue-100/30 via-white/20 to-blue-200/30';
-      default: return 'from-violet-500/20 via-purple-400/10 to-indigo-500/20';
+      case "clear":
+        return "from-gradient-to-br from-amber-400/30 via-yellow-300/20 to-orange-400/30";
+      case "clouds":
+        return "from-slate-400/30 via-gray-300/20 to-slate-500/30";
+      case "rain":
+        return "from-blue-500/30 via-indigo-400/20 to-cyan-500/30";
+      case "snow":
+        return "from-blue-100/30 via-white/20 to-blue-200/30";
+      default:
+        return "from-violet-500/20 via-purple-400/10 to-indigo-500/20";
     }
   };
 
   // Helper function to get weather animation
   const getWeatherAnimation = (weather: string) => {
     switch (weather?.toLowerCase()) {
-      case 'rain': return 'animate-bounce';
-      case 'clouds': return 'animate-pulse';
-      case 'clear': return 'animate-pulse';
-      default: return '';
+      case "rain":
+        return "animate-bounce";
+      case "clouds":
+        return "animate-pulse";
+      case "clear":
+        return "animate-pulse";
+      default:
+        return "";
     }
   };
 
   // Mobile detection
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
   // Touch handlers for mobile swipe
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -117,7 +126,7 @@ const WeatherWidget = () => {
       setData(payload);
       setEditCity(payload.city);
       setIsEditing(false);
-      
+
       // Save to local cache
       weatherService.saveCity(payload.city);
     } catch (e: any) {
@@ -137,7 +146,7 @@ const WeatherWidget = () => {
     if (loading) {
       setLoadingProgress(0);
       const interval = setInterval(() => {
-        setLoadingProgress(prev => prev < 90 ? prev + 10 : prev);
+        setLoadingProgress((prev) => (prev < 90 ? prev + 10 : prev));
       }, 100);
       return () => clearInterval(interval);
     } else {
@@ -195,7 +204,10 @@ const WeatherWidget = () => {
         <div className="h-16 bg-gradient-to-r from-muted/60 to-muted rounded-2xl w-1/2"></div>
         <div className="grid grid-cols-2 gap-4 w-full max-w-lg">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="h-24 bg-gradient-to-br from-muted/40 to-muted/60 rounded-2xl"></div>
+            <div
+              key={i}
+              className="h-24 bg-gradient-to-br from-muted/40 to-muted/60 rounded-2xl"
+            ></div>
           ))}
         </div>
       </div>
@@ -203,7 +215,13 @@ const WeatherWidget = () => {
   );
 
   // Error State Component
-  const ErrorState = ({ error, onRetry }: { error: string; onRetry: () => void }) => (
+  const ErrorState = ({
+    error,
+    onRetry,
+  }: {
+    error: string;
+    onRetry: () => void;
+  }) => (
     <div className="text-center py-16">
       <div className="relative w-20 h-20 mx-auto mb-6">
         <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 to-orange-500/20 rounded-full animate-pulse"></div>
@@ -211,9 +229,11 @@ const WeatherWidget = () => {
           <CloudOff className="w-10 h-10 text-red-500" />
         </div>
       </div>
-      <h3 className="text-2xl font-bold mb-3 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">Weather Unavailable</h3>
+      <h3 className="text-2xl font-bold mb-3 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+        Weather Unavailable
+      </h3>
       <p className="text-muted-foreground mb-8 text-lg">{error}</p>
-      <button 
+      <button
         onClick={onRetry}
         className="px-8 py-4 bg-gradient-to-r from-primary to-primary/80 text-primary-foreground rounded-2xl hover:from-primary/90 hover:to-primary/70 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 font-semibold"
       >
@@ -223,9 +243,17 @@ const WeatherWidget = () => {
   );
 
   // Weather Icon Component
-  const WeatherIcon = ({ iconUrl, main, size = "w-16 h-16" }: { iconUrl?: string; main?: string; size?: string }) => {
-    const animation = getWeatherAnimation(main || '');
-    
+  const WeatherIcon = ({
+    iconUrl,
+    main,
+    size = "w-16 h-16",
+  }: {
+    iconUrl?: string;
+    main?: string;
+    size?: string;
+  }) => {
+    const animation = getWeatherAnimation(main || "");
+
     return iconUrl ? (
       <div className="relative">
         <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-full blur-md opacity-60"></div>
@@ -236,7 +264,9 @@ const WeatherWidget = () => {
         />
       </div>
     ) : (
-      <div className={`${size} bg-gradient-to-br from-primary/30 to-accent/30 rounded-full flex items-center justify-center backdrop-blur-sm shadow-lg`}>
+      <div
+        className={`${size} bg-gradient-to-br from-primary/30 to-accent/30 rounded-full flex items-center justify-center backdrop-blur-sm shadow-lg`}
+      >
         <span className="text-3xl filter drop-shadow-lg">☀</span>
       </div>
     );
@@ -247,16 +277,16 @@ const WeatherWidget = () => {
       <div className="">
         <button
           onClick={() => setOpen(true)}
-          className="group relative p-2 sm:p-3 rounded-2xl border-2 border-border/30 bg-gradient-to-br from-background/90 to-muted/50 hover:from-accent/60 hover:to-accent/40 text-foreground transition-all duration-300 hover:shadow-xl hover:scale-110 backdrop-blur-md"
+          className="group relative p-0.5 rounded-xl border-2 border-border/30 bg-gradient-to-br from-background/90 to-muted/50 hover:from-accent/60 hover:to-accent/40 text-foreground transition-all duration-300 backdrop-blur-md"
           aria-label="Open weather app"
           title={cityLabel ? `Weather • ${cityLabel}` : "Weather"}
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           {todayIconUrl ? (
             <img
               src={todayIconUrl}
               alt="Weather"
-              className="relative w-6 h-6 sm:w-8 sm:h-8 shrink-0 drop-shadow-lg group-hover:scale-110 transition-transform duration-300"
+              className="relative w-6 h-6 sm:w-8 sm:h-8 shrink-0 drop-shadow-lg transition-transform duration-300"
               onError={(e) => {
                 e.currentTarget.style.display = "none";
               }}
@@ -274,11 +304,19 @@ const WeatherWidget = () => {
           mounted &&
           createPortal(
             <div
-              className={`fixed inset-0 z-[60] flex ${isMobile ? 'items-end' : 'items-center'} justify-center ${isMobile ? 'p-0' : 'p-4 sm:p-6'} backdrop-blur-xl bg-black/30`}
+              className={`fixed inset-0 z-[60] flex ${
+                isMobile ? "items-end" : "items-center"
+              } justify-center ${
+                isMobile ? "p-0" : "p-4 sm:p-6"
+              } backdrop-blur-xl bg-black/30`}
               onClick={() => setOpen(false)}
             >
               <div
-                className={`relative w-full max-w-6xl bg-gradient-to-br from-card/95 to-background/95 border-2 border-border/50 shadow-2xl ${isMobile ? 'rounded-t-3xl max-h-[90vh]' : 'rounded-3xl max-h-[85vh]'} overflow-hidden backdrop-blur-xl`}
+                className={`relative w-full max-w-6xl bg-gradient-to-br from-card/95 to-background/95 border-2 border-border/50 shadow-2xl ${
+                  isMobile
+                    ? "rounded-t-3xl max-h-[90vh]"
+                    : "rounded-3xl max-h-[85vh]"
+                } overflow-hidden backdrop-blur-xl`}
                 onClick={(e) => e.stopPropagation()}
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
@@ -286,37 +324,39 @@ const WeatherWidget = () => {
               >
                 {/* Animated background overlay */}
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-50"></div>
-                
+
                 {/* Mobile swipe indicator */}
                 {isMobile && (
                   <div className="relative flex justify-center pt-3 pb-2">
                     <div className="w-16 h-1.5 bg-gradient-to-r from-muted to-muted/50 rounded-full"></div>
                   </div>
                 )}
-                
+
                 {loading ? (
                   <div className="relative flex flex-col items-center justify-center h-full min-h-[500px] p-8">
                     {/* Animated loading background */}
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/5 animate-pulse"></div>
-                    
+
                     {/* Loading Progress Bar */}
                     <div className="relative w-full max-w-md mb-8">
                       <div className="w-full bg-gradient-to-r from-muted/50 to-muted/30 rounded-full h-2 overflow-hidden">
-                        <div 
+                        <div
                           className="bg-gradient-to-r from-primary via-accent to-primary h-2 rounded-full transition-all duration-500 shadow-lg"
                           style={{ width: `${loadingProgress}%` }}
                         />
                       </div>
                     </div>
-                    
+
                     <div className="relative flex items-center gap-4 text-muted-foreground mb-12">
                       <div className="relative">
                         <div className="absolute inset-0 bg-primary/20 rounded-full blur-md animate-pulse"></div>
                         <Loader2 className="relative w-8 h-8 animate-spin text-primary drop-shadow-lg" />
                       </div>
-                      <span className="text-xl font-medium bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">Loading weather data...</span>
+                      <span className="text-xl font-medium bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+                        Loading weather data...
+                      </span>
                     </div>
-                    
+
                     <WeatherSkeleton />
                   </div>
                 ) : error ? (
@@ -326,11 +366,15 @@ const WeatherWidget = () => {
                 ) : (
                   <div className="relative flex flex-col lg:flex-row h-full">
                     {/* Left Panel - Current Weather */}
-                    <div className={`lg:w-2/5 bg-gradient-to-br ${getWeatherGradient(data?.ui?.today?.main || '')} p-6 sm:p-8 flex flex-col justify-between backdrop-blur-sm relative overflow-hidden`}>
+                    <div
+                      className={`lg:w-2/5 bg-gradient-to-br ${getWeatherGradient(
+                        data?.ui?.today?.main || ""
+                      )} p-6 sm:p-8 flex flex-col justify-between backdrop-blur-sm relative overflow-hidden`}
+                    >
                       {/* Animated background elements */}
                       <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-white/10 to-transparent rounded-full blur-2xl"></div>
                       <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-primary/10 to-transparent rounded-full blur-xl"></div>
-                      
+
                       {/* City Edit */}
                       <div className="relative flex items-center bg-white/20 backdrop-blur-md rounded-2xl overflow-hidden mb-6 shadow-lg border border-white/30">
                         {isEditing ? (
@@ -351,7 +395,9 @@ const WeatherWidget = () => {
                             >
                               <div className="flex items-center space-x-2">
                                 <Check className="w-5 h-5 text-white group-hover:scale-110 transition-transform duration-200" />
-                                <span className="text-white font-semibold text-sm">Save</span>
+                                <span className="text-white font-semibold text-sm">
+                                  Save
+                                </span>
                               </div>
                             </button>
                           </>
@@ -375,7 +421,7 @@ const WeatherWidget = () => {
                       <div className="relative text-center flex-1 flex flex-col justify-center">
                         {/* Weather Icon */}
                         <div className="flex justify-center mb-6">
-                          <WeatherIcon 
+                          <WeatherIcon
                             iconUrl={todayIconUrl}
                             main={data?.ui?.today?.main}
                             size="w-28 h-28"
@@ -556,14 +602,14 @@ const WeatherWidget = () => {
                                 className="group relative bg-gradient-to-br from-card/80 to-background/60 p-4 sm:p-5 rounded-2xl hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer border border-border/50 backdrop-blur-sm overflow-hidden"
                               >
                                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                
+
                                 <div className="relative">
                                   <h3 className="text-center border-b border-border/50 pb-3 mb-4 font-bold text-sm text-muted-foreground group-hover:text-foreground transition-colors">
                                     {day.label || day.dateKey}
                                   </h3>
 
                                   <div className="flex justify-center mb-3">
-                                    <WeatherIcon 
+                                    <WeatherIcon
                                       iconUrl={day.iconUrl}
                                       main={day.main}
                                       size="w-12 h-12"
@@ -575,7 +621,8 @@ const WeatherWidget = () => {
                                       {Math.round((day.max + day.min) / 2)}°C
                                     </div>
                                     <div className="text-xs text-muted-foreground">
-                                      {Math.round(day.max)}° / {Math.round(day.min)}°
+                                      {Math.round(day.max)}° /{" "}
+                                      {Math.round(day.min)}°
                                     </div>
                                   </div>
 

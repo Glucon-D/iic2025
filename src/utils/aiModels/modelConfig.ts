@@ -1,7 +1,7 @@
 // Model configuration
 const MODELS = {
-  "google/gemini-2.5-flash-lite": {
-    id: "google/gemini-2.5-flash-lite",
+  "google/gemini-2.5-flash": {
+    id: "google/gemini-2.5-flash",
     name: "Gemini 2.5 Flash Lite",
     provider: "Google",
     description:
@@ -15,7 +15,7 @@ const MODELS = {
 };
 
 // Default model
-const DEFAULT_MODEL = "google/gemini-2.5-flash-lite";
+const DEFAULT_MODEL = "google/gemini-2.5-flash";
 
 export const DEFAULT_MODELS = {
   GENERAL_CHAT: DEFAULT_MODEL,

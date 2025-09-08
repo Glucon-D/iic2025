@@ -183,10 +183,14 @@ Focus on practical advice for the weather conditions and crops mentioned.`;
 
 export async function POST(request: NextRequest) {
   try {
+    console.log("Starting nudges API call");
+
     const body = await request.json();
     const { userId, location } = body;
+    console.log("Request body:", { userId, location });
 
     if (!userId || !location) {
+      console.error("Missing required fields:", { userId, location });
       return NextResponse.json(
         { error: "User ID and location are required" },
         { status: 400 }
@@ -194,28 +198,94 @@ export async function POST(request: NextRequest) {
     }
 
     // Get user profile from database
-    const userProfile = await databaseService.getUserByUserId(userId);
+    console.log("Fetching user profile for userId:", userId);
+    let userProfile = await databaseService.getUserByUserId(userId);
     if (!userProfile) {
+      console.warn(
+        "User profile not found for userId:",
+        userId,
+        "- using default profile"
+      );
+      // Use a default user profile for users who haven't completed onboarding
+      userProfile = {
+        userId,
+        username: "Farmer",
+        location: location.city || "Unknown",
+        farmsize: "Small (1-5 acres)",
+        crop: ["Rice", "Wheat"],
+        experience: "Beginner",
+        language: "english",
+      } as any;
+    }
+    console.log("User profile:", {
+      username: (userProfile as any).username,
+      crop: (userProfile as any).crop,
+    });
+
+    // Validate OpenRouter configuration
+    console.log("Validating OpenRouter config");
+    if (!process.env.OPENROUTER_API_KEY) {
+      console.error("OPENROUTER_API_KEY is missing");
       return NextResponse.json(
-        { error: "User profile not found" },
-        { status: 404 }
+        { error: "OpenRouter API key not configured" },
+        { status: 500 }
       );
     }
 
-    // Fetch weather and soil data
-    const [weather, soil] = await Promise.all([
-      getWeatherForecast(location.latitude, location.longitude),
-      getSoilData(location.latitude, location.longitude),
-    ]);
+    // Fetch weather data
+    console.log("Fetching weather data for location:", location);
+    let weather;
+    try {
+      weather = await getWeatherForecast(location.latitude, location.longitude);
+      console.log("Weather data fetched successfully");
+    } catch (weatherError) {
+      console.error("Weather API failed:", weatherError);
+      throw new Error(
+        `Weather API failed: ${
+          weatherError instanceof Error ? weatherError.message : "Unknown error"
+        }`
+      );
+    }
+
+    // Fetch soil data
+    console.log("Fetching soil data for location:", location);
+    let soil;
+    try {
+      soil = await getSoilData(location.latitude, location.longitude);
+      console.log("Soil data fetched successfully");
+    } catch (soilError) {
+      console.error("Soil API failed:", soilError);
+      throw new Error(
+        `Soil API failed: ${
+          soilError instanceof Error ? soilError.message : "Unknown error"
+        }`
+      );
+    }
 
     // Build prompt
     const prompt = buildNudgesPrompt(userProfile, weather, soil, location);
+    console.log("Prompt built, length:", prompt.length);
 
     // Generate nudges using OpenRouter Gemini 2.5 Flash Lite
-    const result = await generateText({
-      model: openrouter("google/gemini-2.5-flash-lite"),
-      messages: [{ role: "user", content: prompt }],
-    });
+    console.log("Calling OpenRouter API with model: google/gemini-2.5-flash");
+    let result;
+    try {
+      result = await generateText({
+        model: openrouter("google/gemini-2.5-flash"),
+        messages: [{ role: "user", content: prompt }],
+      });
+      console.log(
+        "OpenRouter API call successful, response length:",
+        result.text.length
+      );
+    } catch (aiError) {
+      console.error("OpenRouter API failed:", aiError);
+      throw new Error(
+        `OpenRouter API failed: ${
+          aiError instanceof Error ? aiError.message : "Unknown error"
+        }`
+      );
+    }
 
     // Parse nudges from response
     const nudgesText = result.text;
@@ -235,13 +305,22 @@ export async function POST(request: NextRequest) {
       crops: (userProfile as any).crop || [],
     };
 
+    console.log(
+      "Response data prepared, nudges count:",
+      responseData.nudges.length
+    );
     return NextResponse.json(responseData);
   } catch (error) {
     console.error("AI nudges generation failed:", error);
+    console.error(
+      "Error stack:",
+      error instanceof Error ? error.stack : "No stack trace"
+    );
     return NextResponse.json(
       {
         error: "Failed to generate nudges",
         message: error instanceof Error ? error.message : "Unknown error",
+        details: error instanceof Error ? error.stack : "No stack trace",
       },
       { status: 500 }
     );

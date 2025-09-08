@@ -14,13 +14,18 @@ const openrouter = createOpenRouter({
 // Message types for our API
 interface APIMessage {
   role: "user" | "assistant" | "system";
-  content: string | Array<{
-    type: "text";
-    text: string;
-  } | {
-    type: "image";
-    image: string;
-  }>;
+  content:
+    | string
+    | Array<
+        | {
+            type: "text";
+            text: string;
+          }
+        | {
+            type: "image";
+            image: string;
+          }
+      >;
 }
 
 // Weather and context interfaces
@@ -38,7 +43,10 @@ interface WeatherData {
 }
 
 // Get weather forecast for next 5 days
-async function getWeatherForecast(lat: number, lon: number): Promise<WeatherData> {
+async function getWeatherForecast(
+  lat: number,
+  lon: number
+): Promise<WeatherData> {
   const OPENWEATHER_API_KEY = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
 
   if (!OPENWEATHER_API_KEY) {
@@ -84,7 +92,9 @@ async function getWeatherForecast(lat: number, lon: number): Promise<WeatherData
 async function getSoilData(lat: number, lon: number): Promise<SoilResponse> {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/soil/type?lat=${lat}&lon=${lon}&top_k=3`
+      `${
+        process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
+      }/api/soil/type?lat=${lat}&lon=${lon}&top_k=3`
     );
 
     if (!response.ok) {
@@ -113,31 +123,53 @@ async function getSoilData(lat: number, lon: number): Promise<SoilResponse> {
   }
 }
 
+// Detect language from user message
+function detectLanguage(message: string): string {
+  // Simple language detection based on script/characters
+  const hindiPattern = /[\u0900-\u097F]/;
+  const malayalamPattern = /[\u0D00-\u0D7F]/;
+  const tamilPattern = /[\u0B80-\u0BFF]/;
+  const teluguPattern = /[\u0C00-\u0C7F]/;
+
+  if (hindiPattern.test(message)) return "Hindi";
+  if (malayalamPattern.test(message)) return "Malayalam";
+  if (tamilPattern.test(message)) return "Tamil";
+  if (teluguPattern.test(message)) return "Telugu";
+
+  return "English";
+}
+
 // Build enhanced system prompt with context
 function buildEnhancedSystemPrompt(
   userProfile: any,
+  currentUserMessage: string,
   weather?: WeatherData,
   soil?: SoilResponse,
   location?: { city: string; latitude: number; longitude: number }
 ): string {
-  const currentDate = new Date().toLocaleDateString('en-IN', {
-    timeZone: 'Asia/Kolkata',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
+  const detectedLanguage = detectLanguage(currentUserMessage);
+  const currentDate = new Date().toLocaleDateString("en-IN", {
+    timeZone: "Asia/Kolkata",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   });
-  const currentTime = new Date().toLocaleTimeString('en-IN', {
-    timeZone: 'Asia/Kolkata'
+  const currentTime = new Date().toLocaleTimeString("en-IN", {
+    timeZone: "Asia/Kolkata",
   });
 
-  let systemPrompt = `You are an expert agricultural AI assistant specifically designed for farmers in India. You provide personalized, context-aware farming advice based on real-time data.
+  let systemPrompt = `CRITICAL LANGUAGE INSTRUCTION: The user is asking in ${detectedLanguage}. You MUST respond ONLY in ${detectedLanguage}. Do not use any other language regardless of any context or previous conversations.
+
+You are an expert agricultural AI assistant specifically designed for farmers in India. You provide personalized, context-aware farming advice based on real-time data.
 
 **CURRENT CONTEXT:**
 📅 Date & Time: ${currentDate}, ${currentTime} (IST)
-👤 Farmer: ${userProfile.username} from ${userProfile.location || location?.city || 'Unknown location'}
-🏡 Farm Size: ${userProfile.farmsize || 'Not specified'}
-🌱 Experience: ${userProfile.experience || 'Not specified'}
-🌾 Current Crops: ${userProfile.crop?.join(', ') || 'Not specified'}`;
+👤 Farmer: ${userProfile.username} from ${
+    userProfile.location || location?.city || "Unknown location"
+  }
+🏡 Farm Size: ${userProfile.farmsize || "Not specified"}
+🌱 Experience: ${userProfile.experience || "Not specified"}
+🌾 Current Crops: ${userProfile.crop?.join(", ") || "Not specified"}`;
 
   if (weather) {
     systemPrompt += `
@@ -148,9 +180,14 @@ function buildEnhancedSystemPrompt(
 - Conditions: ${weather.conditions}
 
 📊 5-DAY FORECAST:
-${weather.forecast.map((day, i) =>
-  `Day ${i + 1} (${day.date}): ${day.conditions}, ${day.temp_min}-${day.temp_max}°C, ${day.humidity}% humidity`
-).join('\n')}`;
+${weather.forecast
+  .map(
+    (day, i) =>
+      `Day ${i + 1} (${day.date}): ${day.conditions}, ${day.temp_min}-${
+        day.temp_max
+      }°C, ${day.humidity}% humidity`
+  )
+  .join("\n")}`;
   }
 
   if (soil) {
@@ -159,9 +196,11 @@ ${weather.forecast.map((day, i) =>
 🌍 SOIL ANALYSIS:
 - Primary Soil Type: ${soil.properties.most_probable_soil_type}
 - Soil Probabilities:
-${soil.properties.probabilities?.map(p =>
-  `  • ${p.soil_type}: ${p.probability}%`
-).join('\n') || '  • No detailed probabilities available'}`;
+${
+  soil.properties.probabilities
+    ?.map((p) => `  • ${p.soil_type}: ${p.probability}%`)
+    .join("\n") || "  • No detailed probabilities available"
+}`;
   }
 
   systemPrompt += `
@@ -170,12 +209,13 @@ ${soil.properties.probabilities?.map(p =>
 - Provide personalized farming advice based on the above context
 - Consider current weather conditions and forecast in your recommendations
 - Take into account the soil type for crop and fertilizer suggestions
-- Respond in the same language as the user's input
 - Be practical and actionable in your advice
 - Include specific timing recommendations when relevant
 - Consider the farmer's experience level in your explanations
 - Analyze images of crops, pests, and farming conditions when provided
-- Focus on sustainable and cost-effective farming practices`;
+- Focus on sustainable and cost-effective farming practices
+
+**FINAL LANGUAGE REMINDER: RESPOND ONLY IN ${detectedLanguage}. This overrides any other language preferences or context.**`;
 
   return systemPrompt;
 }
@@ -225,7 +265,21 @@ export async function POST(req: NextRequest) {
     }
 
     const contextMessages = prepareContextMessages(messages);
-    let enhancedSystemPrompt = "You are a helpful AI assistant for agricultural queries. You can analyze images of crops, pests, and farming conditions. Respond in the same language as the user's input. Provide clear, concise responses about farming, crops, diseases, and agricultural practices.";
+
+    // Get the current user message for language detection
+    const currentUserMessage = messages[messages.length - 1]?.content;
+    const userMessageText =
+      typeof currentUserMessage === "string"
+        ? currentUserMessage
+        : Array.isArray(currentUserMessage)
+        ? currentUserMessage.find((item) => item.type === "text")?.text || ""
+        : "";
+
+    const detectedLanguage = detectLanguage(userMessageText);
+
+    let enhancedSystemPrompt = `CRITICAL LANGUAGE INSTRUCTION: The user is asking in ${detectedLanguage}. You MUST respond ONLY in ${detectedLanguage}. Do not use any other language regardless of any context or previous conversations.
+
+      You are a helpful AI assistant for agricultural queries. You can analyze images of crops, pests, and farming conditions. Provide clear, concise responses about farming, crops, diseases, and agricultural practices.`;
 
     // If userId is provided, fetch context data for enhanced prompts
     if (userId) {
@@ -246,26 +300,35 @@ export async function POST(req: NextRequest) {
                 getSoilData(location.latitude, location.longitude),
               ]);
 
-              if (weatherData.status === 'fulfilled') {
+              if (weatherData.status === "fulfilled") {
                 weather = weatherData.value;
               }
 
-              if (soilData.status === 'fulfilled') {
+              if (soilData.status === "fulfilled") {
                 soil = soilData.value;
               }
             } catch (error) {
-              console.warn('Failed to fetch weather/soil data:', error);
+              console.warn("Failed to fetch weather/soil data:", error);
             }
           }
 
           // Build enhanced system prompt with context
-          enhancedSystemPrompt = buildEnhancedSystemPrompt(userProfile, weather, soil, userLocation);
+          enhancedSystemPrompt = buildEnhancedSystemPrompt(
+            userProfile,
+            userMessageText,
+            weather,
+            soil,
+            userLocation
+          );
         }
       } catch (error) {
-        console.warn('Failed to fetch user context:', error);
+        console.warn("Failed to fetch user context:", error);
         // Continue with basic prompt if context fetch fails
       }
     }
+
+    // Add final language reinforcement to system prompt
+    enhancedSystemPrompt += `\n\nIMPORTANT: Your response must be in ${detectedLanguage} language only. Ignore any other language preferences from context or conversation history.`;
 
     const result = streamText({
       model: openrouter("google/gemini-2.5-flash-lite"),

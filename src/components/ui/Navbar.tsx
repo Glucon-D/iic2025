@@ -116,8 +116,8 @@ export function Navbar() {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6">
             <div className="flex items-center space-x-3">
-              <WeatherWidget />
-              <CropCalendarDropdown />
+              {isAuthenticated && <WeatherWidget />}
+              {isAuthenticated && <CropCalendarDropdown />}
               {isAuthenticated && <AINudgesDropdown />}
               <ThemeToggle />
 
@@ -214,8 +214,8 @@ export function Navbar() {
 
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center space-x-3">
-            <WeatherWidget />
-            <CropCalendarDropdown />
+            {isAuthenticated && <WeatherWidget />}
+            {isAuthenticated && <CropCalendarDropdown />}
             {isAuthenticated && <AINudgesDropdown />}
             <ThemeToggle />
             <button
@@ -237,14 +237,16 @@ export function Navbar() {
           <div className="md:hidden border-t border-border/50 py-4 bg-background/50 backdrop-blur-sm">
             <div className="flex flex-col space-y-2">
               {/* Weather Widget in Mobile Menu */}
-              <div className="border-t border-border/30 pt-3 mt-2">
-                <div className="flex items-center justify-between px-4 py-3 rounded-lg hover:bg-accent/30 transition-all duration-200">
-                  <span className="text-sm font-medium text-muted-foreground">
-                    Weather
-                  </span>
-                  <WeatherWidget />
+              {isAuthenticated && (
+                <div className="border-t border-border/30 pt-3 mt-2">
+                  <div className="flex items-center justify-between px-4 py-3 rounded-lg hover:bg-accent/30 transition-all duration-200">
+                    <span className="text-sm font-medium text-muted-foreground">
+                      Weather
+                    </span>
+                    <WeatherWidget />
+                  </div>
                 </div>
-              </div>
+              )}
 
               {isAuthenticated && user ? (
                 <>

@@ -174,8 +174,8 @@ The system is configured to use Google's Gemini 2.5 Flash Lite model through Ope
 
 ```typescript
 const MODELS = {
-  "google/gemini-2.5-flash-lite": {
-    id: "google/gemini-2.5-flash-lite",
+  "google/gemini-2.5-flash": {
+    id: "google/gemini-2.5-flash",
     name: "Gemini 2.5 Flash Lite",
     provider: "Google",
     description:

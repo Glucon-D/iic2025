@@ -21,11 +21,12 @@ export async function POST(req: NextRequest) {
     }
 
     const result = await generateText({
-      model: openrouter("google/gemini-2.5-flash-lite"),
+      model: openrouter("google/gemini-2.5-flash"),
       messages: [
         {
           role: "system",
-          content: "Generate a concise title (max 4 words) for this chat in the same language as the input message. Return only the title.",
+          content:
+            "Generate a concise title (max 4 words) for this chat in the same language as the input message. Return only the title.",
         },
         {
           role: "user",
