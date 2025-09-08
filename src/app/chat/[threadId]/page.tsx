@@ -82,12 +82,20 @@ export default function ChatPage() {
   ]);
 
   // Show loading while auth is initializing
-  if (authLoading || (!isAuthenticated && !user)) {
+  if (authLoading) {
     return (
       <div className="flex-1 flex items-center justify-center">
         <LoadingSpinner />
       </div>
     );
+  }
+
+  // Redirect to login if not authenticated
+  if (!authLoading && !isAuthenticated) {
+    if (typeof window !== 'undefined') {
+      window.location.href = '/login';
+    }
+    return null;
   }
 
   if (!isInitialized || isLoading) {

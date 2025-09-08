@@ -14,6 +14,8 @@ import {
 } from "lucide-react";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import WeatherWidget from "@/components/ui/WeatherWidget";
+import { CropCalendarDropdown } from "@/components/ui/CropCalendarDropdown";
+import AINudgesDropdown from "@/components/ui/AINudgesDropdown";
 import { useAuthStore } from "@/services/authStore";
 import { useRouter } from "next/navigation";
 
@@ -76,6 +78,8 @@ export function Navbar() {
           <nav className="hidden md:flex items-center space-x-6">
             <div className="flex items-center space-x-3">
               <WeatherWidget />
+              <CropCalendarDropdown />
+              {isAuthenticated && <AINudgesDropdown />}
               <ThemeToggle />
 
               {isAuthenticated && user ? (
@@ -152,6 +156,8 @@ export function Navbar() {
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center space-x-3">
             <WeatherWidget />
+            <CropCalendarDropdown />
+            {isAuthenticated && <AINudgesDropdown />}
             <ThemeToggle />
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
