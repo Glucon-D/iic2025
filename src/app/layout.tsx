@@ -37,6 +37,7 @@ export default function RootLayout({
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-background text-foreground antialiased`}
+        suppressHydrationWarning={true}
       >
         <ThemeProvider defaultTheme="system" storageKey="digital-krishi-theme">
           <div className="flex flex-col min-h-screen">{children}</div>
