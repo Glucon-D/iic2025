@@ -34,17 +34,7 @@ export function Hero() {
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-secondary/5" />
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] dark:opacity-[0.05]" />
       
-      {/* Floating Elements */}
-      <div className="absolute top-20 left-10 animate-float-slow">
-        <Sprout className="h-8 w-8 text-primary/20" />
-      </div>
-      <div className="absolute top-40 right-20 animate-float-slower">
-        <Sparkles className="h-6 w-6 text-primary/30" />
-      </div>
-      <div className="absolute bottom-40 left-20 animate-float">
-        <div className="h-3 w-3 bg-primary/20 rounded-full" />
-      </div>
-
+      
       <div className="max-w-7xl mx-auto text-center relative z-10">
         {/* Badge */}
         <div
@@ -133,11 +123,7 @@ export function Hero() {
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 border-2 border-primary/30 rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-primary/50 rounded-full mt-2 animate-pulse" />
-        </div>
-      </div>
+      
     </section>
   );
 }
