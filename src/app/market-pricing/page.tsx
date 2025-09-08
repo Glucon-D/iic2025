@@ -1,21 +1,21 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useCallback } from 'react';
-import { MandiRecord, MandiFilters } from '@/utils/types/mandi.types';
-import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
-import { Navbar } from '@/components/ui/Navbar';
-import { 
-  Filter, 
-  Download, 
-  RefreshCw, 
+import { useState, useEffect, useCallback } from "react";
+import { MandiRecord, MandiFilters } from "@/utils/types/mandi.types";
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
+import { Navbar } from "@/components/ui/Navbar";
+import {
+  Filter,
+  Download,
+  RefreshCw,
   TrendingUp,
   MapPin,
   Package,
   ChevronDown,
   ChevronUp,
   AlertCircle,
-  BarChart3
-} from 'lucide-react';
+  BarChart3,
+} from "lucide-react";
 
 export default function MarketPricingPage() {
   const [records, setRecords] = useState<MandiRecord[]>([]);
@@ -43,7 +43,7 @@ export default function MarketPricingPage() {
   const fetchMarketData = useCallback(async () => {
     setLoading(true);
     setError(null);
-    
+
     try {
       const params = new URLSearchParams({
         offset: ((currentPage - 1) * recordsPerPage).toString(),
@@ -55,14 +55,14 @@ export default function MarketPricingPage() {
       });
 
       const response = await fetch(`/api/market-pricing?${params}`);
-      
+
       if (!response.ok) {
-        throw new Error('Failed to fetch market data');
+        throw new Error("Failed to fetch market data");
       }
 
       const data = await response.json();
-      
-      if (data.status === 'ok' || data.records) {
+
+      if (data.status === "ok" || data.records) {
         setRecords(data.records || []);
         setTotalRecords(data.total || data.count || 0);
       } else {
@@ -70,7 +70,7 @@ export default function MarketPricingPage() {
         setTotalRecords(0);
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      setError(err instanceof Error ? err.message : "An error occurred");
       setRecords([]);
     } finally {
       setLoading(false);
@@ -79,15 +79,39 @@ export default function MarketPricingPage() {
 
   const fetchFilterOptions = async () => {
     try {
-      const response = await fetch('/api/market-pricing?limit=500');
+      const response = await fetch("/api/market-pricing?limit=500");
       const data = await response.json();
-      
+
       if (data.records && data.records.length > 0) {
-        const states = [...new Set(data.records.map((r: MandiRecord) => r.State || r.state).filter(Boolean))].sort() as string[];
-        const districts = [...new Set(data.records.map((r: MandiRecord) => r.District || r.district).filter(Boolean))].sort() as string[];
-        const markets = [...new Set(data.records.map((r: MandiRecord) => r.Market || r.market).filter(Boolean))].sort() as string[];
-        const commodities = [...new Set(data.records.map((r: MandiRecord) => r.Commodity || r.commodity).filter(Boolean))].sort() as string[];
-        
+        const states = [
+          ...new Set(
+            data.records
+              .map((r: MandiRecord) => r.State || r.state)
+              .filter(Boolean)
+          ),
+        ].sort() as string[];
+        const districts = [
+          ...new Set(
+            data.records
+              .map((r: MandiRecord) => r.District || r.district)
+              .filter(Boolean)
+          ),
+        ].sort() as string[];
+        const markets = [
+          ...new Set(
+            data.records
+              .map((r: MandiRecord) => r.Market || r.market)
+              .filter(Boolean)
+          ),
+        ].sort() as string[];
+        const commodities = [
+          ...new Set(
+            data.records
+              .map((r: MandiRecord) => r.Commodity || r.commodity)
+              .filter(Boolean)
+          ),
+        ].sort() as string[];
+
         setFilterOptions({
           states,
           districts,
@@ -96,7 +120,7 @@ export default function MarketPricingPage() {
         });
       }
     } catch (err) {
-      console.error('Failed to fetch filter options:', err);
+      console.error("Failed to fetch filter options:", err);
     }
   };
 
@@ -106,7 +130,7 @@ export default function MarketPricingPage() {
   }, [fetchMarketData]);
 
   const handleFilterChange = (key: keyof MandiFilters, value: string) => {
-    setFilters(prev => ({
+    setFilters((prev) => ({
       ...prev,
       [key]: value || undefined,
     }));
@@ -129,69 +153,112 @@ export default function MarketPricingPage() {
   };
 
   const exportToCSV = () => {
-    const headers = ['State', 'District', 'Market', 'Commodity', 'Variety', 'Grade', 'Min Price', 'Max Price', 'Modal Price'];
+    const headers = [
+      "State",
+      "District",
+      "Market",
+      "Commodity",
+      "Variety",
+      "Grade",
+      "Min Price",
+      "Max Price",
+      "Modal Price",
+    ];
     const csvContent = [
-      headers.join(','),
-      ...records.map(record => [
-        record.State || record.state || '',
-        record.District || record.district || '',
-        record.Market || record.market || '',
-        record.Commodity || record.commodity || '',
-        record.Variety || record.variety || '',
-        record.Grade || record.grade || '',
-        record.Min_Price || record.min_price || '',
-        record.Max_Price || record.max_price || '',
-        record.Modal_Price || record.modal_price || '',
-      ].join(',')),
-    ].join('\n');
+      headers.join(","),
+      ...records.map((record) =>
+        [
+          record.State || record.state || "",
+          record.District || record.district || "",
+          record.Market || record.market || "",
+          record.Commodity || record.commodity || "",
+          record.Variety || record.variety || "",
+          record.Grade || record.grade || "",
+          record.Min_Price || record.min_price || "",
+          record.Max_Price || record.max_price || "",
+          record.Modal_Price || record.modal_price || "",
+        ].join(",")
+      ),
+    ].join("\n");
 
-    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const blob = new Blob([csvContent], { type: "text/csv" });
     const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
-    a.download = `market-prices-${new Date().toISOString().split('T')[0]}.csv`;
+    a.download = `market-prices-${new Date().toISOString().split("T")[0]}.csv`;
     a.click();
   };
 
   const totalPages = Math.ceil(totalRecords / recordsPerPage);
 
   const formatPrice = (price: string | number) => {
-    if (!price || price === '-') return '-';
+    if (!price || price === "-") return "-";
     return `₹${price}`;
   };
 
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      
+
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-green-600 to-blue-600 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="flex justify-center mb-6">
-              <div className="p-4 bg-white/10 backdrop-blur-sm rounded-2xl">
-                <TrendingUp className="h-12 w-12" />
+      <section className="relative min-h-[70vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden mt-16">
+        {/* Background Elements */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-secondary/5" />
+        <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] dark:opacity-[0.05]" />
+
+        {/* Floating Elements */}
+        <div className="absolute top-20 left-10 animate-float-slow">
+          <TrendingUp className="h-8 w-8 text-primary/20" />
+        </div>
+        <div className="absolute top-40 right-20 animate-float-slower">
+          <BarChart3 className="h-6 w-6 text-primary/30" />
+        </div>
+        <div className="absolute bottom-40 left-20 animate-float">
+          <div className="h-3 w-3 bg-primary/20 rounded-full" />
+        </div>
+
+        <div className="max-w-7xl mx-auto text-center relative z-10 mt-8">
+          {/* Main Heading */}
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
+            Live Market
+            <span className="block bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+              Prices
+            </span>
+          </h1>
+
+          {/* Subtitle */}
+          <p className="text-md sm:text-lg md:text-xl text-muted-foreground mb-12 max-w-4xl mx-auto leading-relaxed">
+            Real-time commodity prices from mandis across India with
+            comprehensive market data and daily updates for informed trading
+            decisions.
+          </p>
+
+          {/* Statistics Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-xl mx-auto">
+            <div className="group cursor-pointer bg-card border border-border rounded-xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 backdrop-blur-sm">
+              <div className="flex items-center justify-center mb-2">
+                <BarChart3 className="h-8 w-8 text-primary mr-3" />
+                <div className="text-4xl font-bold text-primary">
+                  {totalRecords.toLocaleString("en-IN")}
+                </div>
+              </div>
+              <div className="text-muted-foreground text-md font-semibold">
+                Price Records
               </div>
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Live Market Prices
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 opacity-90">
-              Real-time commodity prices from mandis across India
-            </p>
-            <div className="flex items-center justify-center space-x-6 text-lg">
-              <div className="flex items-center">
-                <BarChart3 className="h-6 w-6 mr-2" />
-                <span>{totalRecords.toLocaleString('en-IN')} Price Records</span>
+
+            <div className="group cursor-pointer bg-card border border-border rounded-xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 backdrop-blur-sm">
+              <div className="flex items-center justify-center mb-2">
+                <AlertCircle className="h-8 w-8 text-primary mr-3" />
+                <div className="text-3xl font-bold text-primary">Daily</div>
               </div>
-              <div className="flex items-center">
-                <AlertCircle className="h-6 w-6 mr-2" />
-                <span>Updated Daily</span>
+              <div className="text-muted-foreground text-md font-semibold">
+                Updates
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -203,8 +270,12 @@ export default function MarketPricingPage() {
               className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
             >
               <Filter className="h-5 w-5" />
-              {showFilters ? 'Hide' : 'Show'} Filters
-              {showFilters ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+              {showFilters ? "Hide" : "Show"} Filters
+              {showFilters ? (
+                <ChevronUp className="h-4 w-4" />
+              ) : (
+                <ChevronDown className="h-4 w-4" />
+              )}
             </button>
             <button
               onClick={fetchMarketData}
@@ -224,13 +295,17 @@ export default function MarketPricingPage() {
                     State
                   </label>
                   <select
-                    value={filters.state || ''}
-                    onChange={(e) => handleFilterChange('state', e.target.value)}
+                    value={filters.state || ""}
+                    onChange={(e) =>
+                      handleFilterChange("state", e.target.value)
+                    }
                     className="w-full px-3 py-2 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary"
                   >
                     <option value="">All States</option>
-                    {filterOptions.states.map(state => (
-                      <option key={state} value={state}>{state}</option>
+                    {filterOptions.states.map((state) => (
+                      <option key={state} value={state}>
+                        {state}
+                      </option>
                     ))}
                   </select>
                 </div>
@@ -240,13 +315,17 @@ export default function MarketPricingPage() {
                     District
                   </label>
                   <select
-                    value={filters.district || ''}
-                    onChange={(e) => handleFilterChange('district', e.target.value)}
+                    value={filters.district || ""}
+                    onChange={(e) =>
+                      handleFilterChange("district", e.target.value)
+                    }
                     className="w-full px-3 py-2 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary"
                   >
                     <option value="">All Districts</option>
-                    {filterOptions.districts.map(district => (
-                      <option key={district} value={district}>{district}</option>
+                    {filterOptions.districts.map((district) => (
+                      <option key={district} value={district}>
+                        {district}
+                      </option>
                     ))}
                   </select>
                 </div>
@@ -256,13 +335,17 @@ export default function MarketPricingPage() {
                     Market
                   </label>
                   <select
-                    value={filters.market || ''}
-                    onChange={(e) => handleFilterChange('market', e.target.value)}
+                    value={filters.market || ""}
+                    onChange={(e) =>
+                      handleFilterChange("market", e.target.value)
+                    }
                     className="w-full px-3 py-2 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary"
                   >
                     <option value="">All Markets</option>
-                    {filterOptions.markets.map(market => (
-                      <option key={market} value={market}>{market}</option>
+                    {filterOptions.markets.map((market) => (
+                      <option key={market} value={market}>
+                        {market}
+                      </option>
                     ))}
                   </select>
                 </div>
@@ -272,13 +355,17 @@ export default function MarketPricingPage() {
                     Commodity
                   </label>
                   <select
-                    value={filters.commodity || ''}
-                    onChange={(e) => handleFilterChange('commodity', e.target.value)}
+                    value={filters.commodity || ""}
+                    onChange={(e) =>
+                      handleFilterChange("commodity", e.target.value)
+                    }
                     className="w-full px-3 py-2 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary"
                   >
                     <option value="">All Commodities</option>
-                    {filterOptions.commodities.map(commodity => (
-                      <option key={commodity} value={commodity}>{commodity}</option>
+                    {filterOptions.commodities.map((commodity) => (
+                      <option key={commodity} value={commodity}>
+                        {commodity}
+                      </option>
                     ))}
                   </select>
                 </div>
@@ -318,7 +405,9 @@ export default function MarketPricingPage() {
         ) : error ? (
           <div className="text-center py-12">
             <div className="text-6xl mb-4">⚠️</div>
-            <h3 className="text-xl font-semibold text-foreground mb-2">Error Loading Data</h3>
+            <h3 className="text-xl font-semibold text-foreground mb-2">
+              Error Loading Data
+            </h3>
             <p className="text-muted-foreground mb-4">{error}</p>
             <button
               onClick={fetchMarketData}
@@ -330,7 +419,9 @@ export default function MarketPricingPage() {
         ) : records.length === 0 ? (
           <div className="text-center py-12">
             <div className="text-6xl mb-4">📊</div>
-            <h3 className="text-xl font-semibold text-foreground mb-2">No Market Data Available</h3>
+            <h3 className="text-xl font-semibold text-foreground mb-2">
+              No Market Data Available
+            </h3>
             <p className="text-muted-foreground">
               Try adjusting your search or filters to find pricing information.
             </p>
@@ -364,32 +455,51 @@ export default function MarketPricingPage() {
                     </thead>
                     <tbody className="divide-y divide-border">
                       {records.map((record, index) => (
-                        <tr key={index} className="hover:bg-accent/30 transition-colors">
+                        <tr
+                          key={index}
+                          className="hover:bg-accent/30 transition-colors"
+                        >
                           <td className="px-4 py-4">
                             <div>
-                              <div className="text-sm font-medium text-foreground">{record.Market || record.market || '-'}</div>
+                              <div className="text-sm font-medium text-foreground">
+                                {record.Market || record.market || "-"}
+                              </div>
                               <div className="text-xs text-muted-foreground">
-                                {record.District || record.district || '-'}, {record.State || record.state || '-'}
+                                {record.District || record.district || "-"},{" "}
+                                {record.State || record.state || "-"}
                               </div>
                             </div>
                           </td>
                           <td className="px-4 py-4">
                             <div>
-                              <div className="text-sm font-medium text-foreground">{record.Commodity || record.commodity || '-'}</div>
+                              <div className="text-sm font-medium text-foreground">
+                                {record.Commodity || record.commodity || "-"}
+                              </div>
                               <div className="text-xs text-muted-foreground">
-                                {record.Variety || record.variety || '-'} • {record.Grade || record.grade || '-'}
+                                {record.Variety || record.variety || "-"} •{" "}
+                                {record.Grade || record.grade || "-"}
                               </div>
                             </div>
                           </td>
                           <td className="px-4 py-4 text-center">
-                            <span className="text-sm text-muted-foreground">{formatPrice(record.Min_Price || record.min_price || '')}</span>
+                            <span className="text-sm text-muted-foreground">
+                              {formatPrice(
+                                record.Min_Price || record.min_price || ""
+                              )}
+                            </span>
                           </td>
                           <td className="px-4 py-4 text-center">
-                            <span className="text-sm text-muted-foreground">{formatPrice(record.Max_Price || record.max_price || '')}</span>
+                            <span className="text-sm text-muted-foreground">
+                              {formatPrice(
+                                record.Max_Price || record.max_price || ""
+                              )}
+                            </span>
                           </td>
                           <td className="px-4 py-4 text-center">
                             <span className="text-sm font-semibold text-green-600 dark:text-green-400">
-                              {formatPrice(record.Modal_Price || record.modal_price || '')}
+                              {formatPrice(
+                                record.Modal_Price || record.modal_price || ""
+                              )}
                             </span>
                           </td>
                         </tr>
@@ -403,25 +513,30 @@ export default function MarketPricingPage() {
             {/* Mobile Cards */}
             <div className="lg:hidden space-y-4">
               {records.map((record, index) => (
-                <div key={index} className="bg-card border border-border rounded-lg p-4">
+                <div
+                  key={index}
+                  className="bg-card border border-border rounded-lg p-4"
+                >
                   <div className="flex justify-between items-start mb-3">
                     <div className="flex-1">
                       <h3 className="font-semibold text-foreground flex items-center">
                         <Package className="h-4 w-4 mr-2 text-primary" />
-                        {record.Commodity || record.commodity || '-'}
+                        {record.Commodity || record.commodity || "-"}
                       </h3>
                       <p className="text-sm text-muted-foreground mt-1">
-                        {record.Variety || record.variety || '-'} • {record.Grade || record.grade || '-'}
+                        {record.Variety || record.variety || "-"} •{" "}
+                        {record.Grade || record.grade || "-"}
                       </p>
                     </div>
                     <button
                       onClick={() => toggleRowExpansion(index)}
                       className="p-2 hover:bg-accent rounded-lg transition-colors"
                     >
-                      {expandedRows.has(index) ? 
-                        <ChevronUp className="h-4 w-4" /> : 
+                      {expandedRows.has(index) ? (
+                        <ChevronUp className="h-4 w-4" />
+                      ) : (
                         <ChevronDown className="h-4 w-4" />
-                      }
+                      )}
                     </button>
                   </div>
 
@@ -429,28 +544,38 @@ export default function MarketPricingPage() {
                     <div className="flex items-center text-sm">
                       <MapPin className="h-4 w-4 mr-2 text-muted-foreground" />
                       <span className="text-muted-foreground">
-                        {record.Market || record.market || '-'}, {record.District || record.district || '-'}, {record.State || record.state || '-'}
+                        {record.Market || record.market || "-"},{" "}
+                        {record.District || record.district || "-"},{" "}
+                        {record.State || record.state || "-"}
                       </span>
                     </div>
 
                     <div className="grid grid-cols-3 gap-2 pt-2">
                       <div className="text-center p-2 bg-accent/30 rounded">
                         <p className="text-xs text-muted-foreground">Min</p>
-                        <p className="text-sm font-medium">{formatPrice(record.Min_Price || record.min_price || '')}</p>
+                        <p className="text-sm font-medium">
+                          {formatPrice(
+                            record.Min_Price || record.min_price || ""
+                          )}
+                        </p>
                       </div>
                       <div className="text-center p-2 bg-accent/30 rounded">
                         <p className="text-xs text-muted-foreground">Max</p>
-                        <p className="text-sm font-medium">{formatPrice(record.Max_Price || record.max_price || '')}</p>
+                        <p className="text-sm font-medium">
+                          {formatPrice(
+                            record.Max_Price || record.max_price || ""
+                          )}
+                        </p>
                       </div>
                       <div className="text-center p-2 bg-green-500/10 rounded">
                         <p className="text-xs text-muted-foreground">Modal</p>
                         <p className="text-sm font-semibold text-green-600 dark:text-green-400">
-                          {formatPrice(record.Modal_Price || record.modal_price || '')}
+                          {formatPrice(
+                            record.Modal_Price || record.modal_price || ""
+                          )}
                         </p>
                       </div>
                     </div>
-
-
                   </div>
                 </div>
               ))}
@@ -459,12 +584,15 @@ export default function MarketPricingPage() {
             {/* Pagination */}
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="text-sm text-muted-foreground">
-                Showing {((currentPage - 1) * recordsPerPage) + 1} to{' '}
-                {Math.min(currentPage * recordsPerPage, totalRecords)} of {totalRecords} results
+                Showing {(currentPage - 1) * recordsPerPage + 1} to{" "}
+                {Math.min(currentPage * recordsPerPage, totalRecords)} of{" "}
+                {totalRecords} results
               </div>
               <div className="flex gap-2">
                 <button
-                  onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.max(1, prev - 1))
+                  }
                   disabled={currentPage === 1}
                   className="px-4 py-2 border border-border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-accent transition-colors"
                 >
@@ -474,7 +602,9 @@ export default function MarketPricingPage() {
                   Page {currentPage} of {totalPages}
                 </span>
                 <button
-                  onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.min(totalPages, prev + 1))
+                  }
                   disabled={currentPage === totalPages}
                   className="px-4 py-2 border border-border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-accent transition-colors"
                 >
@@ -494,7 +624,8 @@ export default function MarketPricingPage() {
               Need Help Understanding Market Trends?
             </h3>
             <p className="text-muted-foreground mb-4">
-              Get personalized insights and recommendations from our AI assistant
+              Get personalized insights and recommendations from our AI
+              assistant
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <button className="flex items-center px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors">
