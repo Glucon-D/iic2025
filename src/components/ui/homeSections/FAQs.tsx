@@ -35,10 +35,6 @@ export function FAQs() {
       answer: "The Digital Krishi Officer supports major Indian crops including rice, wheat, pulses, oilseeds, sugarcane, cotton, spices, coffee, tea, fruits and vegetables. The system is continuously updated with new crop information.",
     },
     {
-      question: "How accurate is the crop disease identification?",
-      answer: "Our AI has been trained on thousands of images of crop diseases common in India and achieves over 90% accuracy in disease identification. However, for complex cases, the system automatically escalates to agricultural experts for verification.",
-    },
-    {
       question: "Is the service available 24/7?",
       answer: "Yes, the Digital Krishi Officer is available 24 hours a day, 7 days a week. You can get instant responses to your queries anytime, whether it's early morning before heading to the fields or late at night when you notice something concerning about your crops.",
     },
@@ -53,18 +49,6 @@ export function FAQs() {
     {
       question: "What if the AI can't answer my specific question?",
       answer: "If the AI encounters a complex query it cannot handle confidently, it automatically escalates your question to local agricultural officers and experts who can provide personalized human guidance. You'll receive a response within 24 hours.",
-    },
-    {
-      question: "Is my farming data kept private and secure?",
-      answer: "Yes, we take data privacy very seriously. All your farming data, photos, and conversations are encrypted and stored securely. We never share your personal information with third parties, and you have full control over your data.",
-    },
-    {
-      question: "How much does the service cost?",
-      answer: "We offer a free tier that includes basic crop advice and disease identification. Premium features like detailed weather analytics, personalized farming calendars, and priority expert consultation are available through affordable subscription plans starting from ₹99/month.",
-    },
-    {
-      question: "Do I need internet connection to use the service?",
-      answer: "While an internet connection is required for real-time AI responses and weather updates, we're developing an offline mode that will allow basic crop identification and cached advice for areas with limited connectivity.",
     },
   ];
 
