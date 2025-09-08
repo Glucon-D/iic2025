@@ -200,7 +200,7 @@ export function Features() {
               Ready to Experience the Future of Farming?
             </h3>
             <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
-              Join thousands of Kerala farmers who are already using our AI-powered 
+              Join thousands of Indian farmers who are already using our AI-powered 
               platform to make smarter farming decisions.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
