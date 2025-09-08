@@ -18,7 +18,7 @@ import { Footer } from "@/components/ui/Footer";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { login, logout, isLoading, error, clearError } = useAuthStore();
+  const { login, logout, error, clearError, isLoading } = useAuthStore();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -26,6 +26,7 @@ export default function LoginPage() {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validateForm = () => {
     const errors: Record<string, string> = {};
@@ -50,6 +51,7 @@ export default function LoginPage() {
 
     if (!validateForm()) return;
 
+    setIsSubmitting(true);
     try {
       await login({
         email: formData.email.toLowerCase().trim(),
@@ -61,15 +63,20 @@ export default function LoginPage() {
     } catch (error) {
       // Error is handled by the store
       console.error("Login failed:", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleClearSession = async () => {
+    setIsSubmitting(true);
     try {
       await logout();
       setFormErrors({});
     } catch (error) {
       console.error("Error clearing session:", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -227,11 +234,11 @@ export default function LoginPage() {
               <div>
                 <button
                   type="submit"
-                  disabled={isLoading}
+                  disabled={isSubmitting}
                   className="group relative w-full overflow-hidden bg-gradient-to-r from-green-600 via-green-700 to-emerald-600 hover:from-green-700 hover:via-green-800 hover:to-emerald-700 text-white font-semibold py-4 px-6 rounded-2xl transition-all duration-500 transform hover:scale-[1.02] hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-green-500/50 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
                   <span className="relative z-10 flex items-center justify-center">
-                    {isLoading ? (
+                    {isSubmitting ? (
                       <div className="flex items-center space-x-3">
                         <Loader2 className="h-5 w-5 animate-spin" />
                         <span>Signing in...</span>

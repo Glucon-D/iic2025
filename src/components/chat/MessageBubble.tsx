@@ -10,9 +10,10 @@ interface MessageBubbleProps {
   isUser: boolean;
   isCurrentUser: boolean;
   showAvatar: boolean;
+  isStreaming?: boolean;
 }
 
-export function MessageBubble({ message, isUser, isCurrentUser, showAvatar }: MessageBubbleProps) {
+export function MessageBubble({ message, isUser, showAvatar, isStreaming }: MessageBubbleProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -88,10 +89,22 @@ export function MessageBubble({ message, isUser, isCurrentUser, showAvatar }: Me
             )}
           </div>
         );
-      default:
-        return (
-          <p className="whitespace-pre-wrap break-words">{message.content}</p>
-        );
+       default:
+         return (
+           <div>
+             <p className="whitespace-pre-wrap break-words">{message.content}</p>
+             {isStreaming && (
+               <div className="flex items-center space-x-2 mt-2 text-xs opacity-70">
+                 <div className="flex space-x-1">
+                   <div className="w-2 h-2 bg-current rounded-full animate-pulse" style={{ animationDelay: '0ms' }}></div>
+                   <div className="w-2 h-2 bg-current rounded-full animate-pulse" style={{ animationDelay: '200ms' }}></div>
+                   <div className="w-2 h-2 bg-current rounded-full animate-pulse" style={{ animationDelay: '400ms' }}></div>
+                 </div>
+                 <span className="animate-pulse">AI is typing...</span>
+               </div>
+             )}
+           </div>
+         );
     }
   };
 

@@ -21,11 +21,11 @@ export default function ChatPage() {
     messages,
     selectThread,
     sendMessage,
-
     isLoading,
+    isStreaming,
     error,
   } = useChatStore();
-  const { user } = useAuthStore();
+  const { user, isLoading: authLoading, isAuthenticated } = useAuthStore();
   const [isInitialized, setIsInitialized] = useState(false);
   const [hasProcessedInitialMessage, setHasProcessedInitialMessage] =
     useState(false);
@@ -45,14 +45,25 @@ export default function ChatPage() {
         console.error("Failed to send message:", error);
       }
     },
-    [currentThread, user, sendMessage]
+    [currentThread?.$id, user?.$id, sendMessage]
   );
 
   useEffect(() => {
-    if (threadId && user && !isInitialized) {
-      selectThread(threadId).finally(() => setIsInitialized(true));
+    if (threadId && user && !isInitialized && !authLoading) {
+      // For temporary threads, just load from store
+      if (threadId.startsWith('temp-thread-')) {
+        selectThread(threadId, true).finally(() => setIsInitialized(true));
+      } else {
+        // For real threads, load from cache first then sync with Appwrite
+        selectThread(threadId, true).finally(() => setIsInitialized(true));
+        
+        // Then sync with Appwrite for latest messages
+        setTimeout(() => {
+          selectThread(threadId, false).catch(console.error);
+        }, 200);
+      }
     }
-  }, [threadId, user, selectThread, isInitialized]);
+  }, [threadId, user?.$id, isInitialized, authLoading]);
 
   // Handle initial message from URL params
   useEffect(() => {
@@ -67,11 +78,20 @@ export default function ChatPage() {
     }
   }, [
     initialMessage,
-    currentThread,
+    currentThread?.$id,
     hasProcessedInitialMessage,
     isInitialized,
     handleSendMessage,
   ]);
+
+  // Show loading while auth is initializing
+  if (authLoading || (!isAuthenticated && !user)) {
+    return (
+      <div className="flex-1 flex items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   if (!isInitialized || isLoading) {
     return (
@@ -109,13 +129,17 @@ export default function ChatPage() {
 
       {/* Messages */}
       <div className="flex-1 overflow-hidden">
-        <MessageList messages={messages} currentUserId={user?.$id} />
+        <MessageList 
+          messages={messages} 
+          currentUserId={user?.$id} 
+          isStreaming={isStreaming} 
+        />
       </div>
 
       {/* Message Input */}
       <MessageInput
         onSendMessage={handleSendMessage}
-        disabled={isLoading}
+        disabled={isLoading || isStreaming}
         placeholder="Ask about farming, crops, diseases, or any agricultural question in your preferred language..."
       />
     </div>

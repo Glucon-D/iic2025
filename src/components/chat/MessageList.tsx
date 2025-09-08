@@ -7,9 +7,10 @@ import { MessageBubble } from './MessageBubble';
 interface MessageListProps {
   messages: ChatMessage[];
   currentUserId?: string;
+  isStreaming?: boolean;
 }
 
-export function MessageList({ messages, currentUserId }: MessageListProps) {
+export function MessageList({ messages, currentUserId, isStreaming }: MessageListProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -56,17 +57,20 @@ export function MessageList({ messages, currentUserId }: MessageListProps) {
       {messages.map((message, index) => {
         const isUser = message.role === 'user';
         const isCurrentUser = message.userId === currentUserId;
-        const showAvatar = index === 0 || messages[index - 1].role !== message.role;
-        
-        return (
-          <MessageBubble
-            key={message.$id || index}
-            message={message}
-            isUser={isUser}
-            isCurrentUser={isCurrentUser}
-            showAvatar={showAvatar}
-          />
-        );
+         const showAvatar = index === 0 || messages[index - 1].role !== message.role;
+         const isLastMessage = index === messages.length - 1;
+         const isStreamingMessage = isStreaming && !isUser && isLastMessage;
+         
+         return (
+           <MessageBubble
+             key={message.$id || index}
+             message={message}
+             isUser={isUser}
+             isCurrentUser={isCurrentUser}
+             showAvatar={showAvatar}
+             isStreaming={isStreamingMessage}
+           />
+         );
       })}
       <div ref={messagesEndRef} />
     </div>
