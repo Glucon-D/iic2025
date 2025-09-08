@@ -4,6 +4,7 @@ import { databases, DATABASE_ID, COLLECTIONS } from './config';
 // User interface based on the schema
 export interface User {
   $id?: string;
+  userId: string; // Auth user ID
   username: string;
   location: string;
   farmsize?: string;
@@ -70,6 +71,20 @@ class DatabaseService {
       return user;
     } catch (error) {
       console.error('Error getting user:', error);
+      throw error;
+    }
+  }
+
+  async getUserByUserId(userId: string): Promise<Models.Document | null> {
+    try {
+      const users = await databases.listDocuments(
+        DATABASE_ID,
+        COLLECTIONS.USER,
+        [Query.equal('userId', userId)]
+      );
+      return users.documents.length > 0 ? users.documents[0] : null;
+    } catch (error) {
+      console.error('Error getting user by userId:', error);
       throw error;
     }
   }
