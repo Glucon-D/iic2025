@@ -13,6 +13,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import WeatherWidget from "@/components/ui/WeatherWidget";
 import { useAuthStore } from "@/services/authStore";
 import { useRouter } from "next/navigation";
 
@@ -86,6 +87,7 @@ export function Navbar() {
             </div>
 
             <div className="flex items-center space-x-3">
+              <WeatherWidget />
               <ThemeToggle />
 
               {isAuthenticated && user ? (
@@ -161,6 +163,7 @@ export function Navbar() {
 
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center space-x-3">
+            <WeatherWidget />
             <ThemeToggle />
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
