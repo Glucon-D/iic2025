@@ -26,14 +26,14 @@ export function Testimonials() {
 
   const testimonials = [
     {
-      name: "രാജേഷ് കുമാർ",
-      location: "കോട്ടയം",
-      crop: "റബ്ബർ കൃഷി",
+      name: "रमेश शर्मा",
+      location: "पंजाब",
+      crop: "गेहूं और धान",
       rating: 5,
       testimonial:
-        "ഈ AI സിസ്റ്റം എന്റെ റബ്ബർ കൃഷിയിൽ വലിയ മാറ്റം കൊണ്ടുവന്നു. രോഗങ്ങൾ തിരിച്ചറിയാനും ചികിത്സ നൽകാനും വളരെ സഹായകരമാണ്.",
+        "यह AI सिस्टम मेरी खेती में क्रांति लेकर आया है। हिंदी में सवाल पूछ सकता हूं और तुरंत सटीक जवाब मिलता है। मेरी फसल की पैदावार 40% बढ़ गई है।",
       translation:
-        "This AI system has brought great change to my rubber cultivation. It's very helpful in identifying diseases and providing treatment.",
+        "This AI system has brought a revolution to my farming. I can ask questions in Hindi and get accurate answers immediately. My crop yield has increased by 40%.",
     },
     {
       name: "സുനിത ദേവി",
@@ -41,9 +41,39 @@ export function Testimonials() {
       crop: "നെല്ല് കൃഷി",
       rating: 5,
       testimonial:
-        "മലയാളത്തിൽ ചോദിക്കാൻ കഴിയുന്നതും ഉടനെ ഉത്തരം കിട്ടുന്നതും വളരെ നല്ലതാണ്. എന്റെ നെല്ല് വിളയുടെ ഉത്പാദനം 30% വർധിച്ചു.",
+        "മലയാളത്തിൽ ചോദിക്കാൻ കഴിയുന്നതും ഉടനെ ഉത്തരം കിട്ടുന്നതും വളരെ നല്ലതാണ്. എന്റെ നെല്ല് വിളയുടെ ഉത്പാദനം 30% വർധിച്ചു।",
       translation:
         "Being able to ask in Malayalam and get immediate answers is excellent. My rice crop production increased by 30%.",
+    },
+    {
+      name: "Priya Mehta",
+      location: "Gujarat",
+      crop: "Cotton & Groundnut",
+      rating: 5,
+      testimonial:
+        "The crop disease detection feature is amazing! I just take a photo and instantly know what's wrong with my plants. It has saved me thousands of rupees in losses.",
+      translation:
+        "The crop disease detection feature is amazing! I just take a photo and instantly know what's wrong with my plants. It has saved me thousands of rupees in losses.",
+    },
+    {
+      name: "अनिल वर्मा",
+      location: "उत्तर प्रदेश",
+      crop: "आलू और टमाटर",
+      rating: 5,
+      testimonial:
+        "मौसम की जानकारी बहुत सटीक मिलती है। कीट नियंत्रण की सलाह से मेरी फसल को बहुत फायदा हुआ है। अब नुकसान बहुत कम होता है।",
+      translation:
+        "Weather information is very accurate. Pest control advice has greatly benefited my crops. Now losses are much reduced.",
+    },
+    {
+      name: "Sarah Johnson",
+      location: "Karnataka",
+      crop: "Coffee & Spices",
+      rating: 5,
+      testimonial:
+        "As a modern farmer, I love how this AI platform combines traditional knowledge with cutting-edge technology. The 24/7 support has been invaluable during critical farming periods.",
+      translation:
+        "As a modern farmer, I love how this AI platform combines traditional knowledge with cutting-edge technology. The 24/7 support has been invaluable during critical farming periods.",
     },
     {
       name: "മുരളി മേനോൻ",
@@ -51,39 +81,9 @@ export function Testimonials() {
       crop: "കാപ്പി & മസാല",
       rating: 5,
       testimonial:
-        "കാലാവസ്ഥാ വിവരങ്ങളും കീടനിയന്ത്രണവും വളരെ കൃത്യമാണ്. ഇപ്പോൾ എന്റെ കാപ്പി തോട്ടത്തിൽ നഷ്ടം വളരെ കുറഞ്ഞു.",
+        "കാലാവസ്ഥാ വിവരങ്ങളും കീടനിയന്ത്രണവും വളരെ കൃത്യമാണ്. ഇപ്പോൾ എന്റെ കാപ്പി തോട്ടത്തിൽ നഷ്ടം വളരെ കുറഞ്ഞു।",
       translation:
         "Weather information and pest control are very accurate. Now losses in my coffee plantation have reduced significantly.",
-    },
-    {
-      name: "പ്രിയ രാജൻ",
-      location: "ഇടുക്കി",
-      crop: "ഇലയ്ക്ക & കർദ്ദമം",
-      rating: 5,
-      testimonial:
-        "24 മണിക്കൂറും സഹായം ലഭിക്കുന്നത് വളരെ നല്ലതാണ്. പ്രത്യേകിച്ച് മഴക്കാലത്ത് പെട്ടെന്ന് ഉത്തരം കിട്ടുന്നത് ഒരു വലിയ സഹായമാണ്.",
-      translation:
-        "Getting help 24 hours is excellent. Especially during monsoon, getting quick answers is a great help.",
-    },
-    {
-      name: "അനിൽ വർമ്മ",
-      location: "തൃശ്ശൂർ",
-      crop: "തെങ്ങ് & പച്ചക്കറി",
-      rating: 5,
-      testimonial:
-        "ഫോട്ടോ എടുത്ത് അയച്ചാൽ ഉടനെ രോഗം കണ്ടുപിടിക്കുന്നു. പഴയ കാലത്ത് ഡോക്ടറെ കാണാൻ ദൂരം പോകേണ്ടിയിരുന്നു.",
-      translation:
-        "When I send a photo, it immediately identifies the disease. In the old days, I had to travel far to see a doctor.",
-    },
-    {
-      name: "ലീല ദാസ്",
-      location: "കോഴിക്കോട്",
-      crop: "പഴവർഗ്ഗങ്ങൾ",
-      rating: 5,
-      testimonial:
-        "എന്റെ മാങ്ങ, ജാക്ക്ഫ്രൂട്ട് മരങ്ങളുടെ പരിചരണത്തിൽ ഇത് വളരെ സഹായകമാണ്. ഉത്പാദനം വളരെയധികം മെച്ചപ്പെട്ടു.",
-      translation:
-        "This is very helpful in caring for my mango and jackfruit trees. Production has improved significantly.",
     },
   ];
 
@@ -102,7 +102,7 @@ export function Testimonials() {
                 : "opacity-0 translate-y-8"
             }`}
           >
-            What Indian Farmers Are Saying
+            What Farmers Across India Are Saying
           </h2>
           <p
             className={`text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto transition-all duration-1000 delay-200 ${
@@ -111,8 +111,8 @@ export function Testimonials() {
                 : "opacity-0 translate-y-8"
             }`}
           >
-            Real stories from farmers across India who have transformed their 
-            agricultural practices with our AI-powered platform.
+            Real stories from farmers across different states of India, speaking in their 
+            native languages about how our AI platform has transformed their farming practices.
           </p>
         </div>
 
@@ -120,7 +120,7 @@ export function Testimonials() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
             <div
-              key={testimonial.name}
+              key={`${testimonial.name}-${testimonial.location}-${index}`}
               className={`group p-6 rounded-2xl bg-card/50 backdrop-blur-sm border border-border/50 hover:border-primary/30 hover:shadow-xl transition-all duration-500 hover:-translate-y-2 ${
                 isVisible
                   ? "opacity-100 translate-y-0"
