@@ -8,6 +8,8 @@ export const appwriteConfig = {
   userCollectionId: process.env.NEXT_PUBLIC_APPWRITE_USER_COLLECTION_ID!,
   threadCollectionId: process.env.NEXT_PUBLIC_APPWRITE_THREAD_COLLECTION_ID!,
   messageCollectionId: process.env.NEXT_PUBLIC_APPWRITE_MESSAGE_COLLECTION_ID!,
+  weatherCacheCollectionId: process.env.NEXT_PUBLIC_APPWRITE_WEATHER_CACHE_COLLECTION_ID || 'weather-cache',
+  soilCacheCollectionId: process.env.NEXT_PUBLIC_APPWRITE_SOIL_CACHE_COLLECTION_ID || 'soil-cache',
   bucketId: 'iic-bucket',
 };
 
@@ -44,6 +46,8 @@ export const COLLECTIONS = {
   USER: appwriteConfig.userCollectionId,
   THREAD: appwriteConfig.threadCollectionId,
   MESSAGE: appwriteConfig.messageCollectionId,
+  WEATHER_CACHE: appwriteConfig.weatherCacheCollectionId,
+  SOIL_CACHE: appwriteConfig.soilCacheCollectionId,
 } as const;
 
 // Database ID

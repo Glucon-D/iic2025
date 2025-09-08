@@ -27,7 +27,21 @@ export function Navbar() {
   const { user, isAuthenticated, logout } = useAuthStore();
   const router = useRouter();
   const userMenuRef = useRef<HTMLDivElement>(null);
-  const { sidebarOpen, toggleSidebar } = useSidebar();
+
+  // Use sidebar context only if available (for chat pages)
+  let sidebarOpen = false;
+  let toggleSidebar = () => {};
+  let hasSidebarContext = false;
+
+  try {
+    const sidebarContext = useSidebar();
+    sidebarOpen = sidebarContext.sidebarOpen;
+    toggleSidebar = sidebarContext.toggleSidebar;
+    hasSidebarContext = true;
+  } catch (error) {
+    // Sidebar context not available (e.g., on home page)
+    // Use default values
+  }
 
   // Close user menu when clicking outside
   useEffect(() => {
@@ -65,24 +79,28 @@ export function Navbar() {
     <header className="bg-background/95 backdrop-blur-md border-b border-border/50 fixed top-0 inset-x-0 z-50 shadow-sm">
       <div className=" mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Sidebar toggle button - only show when sidebar is closed */}
+          {/* Sidebar toggle button - only show in chat context */}
           <div className="flex items-center space-x-3">
-            {!sidebarOpen ? (
-              <button
-                onClick={toggleSidebar}
-                className="p-2 hover:bg-accent rounded-lg transition-colors"
-                title="Open sidebar"
-              >
-                <Menu className="h-5 w-5" />
-              </button>
-            ) : (
-              <button
-                onClick={toggleSidebar}
-                className="p-2 hover:bg-accent rounded-lg transition-colors"
-                title="Close sidebar"
-              >
-                <XIcon className="h-5 w-5" />
-              </button>
+            {hasSidebarContext && (
+              <>
+                {!sidebarOpen ? (
+                  <button
+                    onClick={toggleSidebar}
+                    className="p-2 hover:bg-accent rounded-lg transition-colors"
+                    title="Open sidebar"
+                  >
+                    <Menu className="h-5 w-5" />
+                  </button>
+                ) : (
+                  <button
+                    onClick={toggleSidebar}
+                    className="p-2 hover:bg-accent rounded-lg transition-colors"
+                    title="Close sidebar"
+                  >
+                    <XIcon className="h-5 w-5" />
+                  </button>
+                )}
+              </>
             )}
             {/* Logo */}
             <Link href="/" className="flex items-center space-x-3 group">

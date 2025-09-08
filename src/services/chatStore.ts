@@ -622,7 +622,7 @@ export const useChatStore = create<ChatStore>()(
     }));
 
     try {
-      // Prepare messages with image URLs for AI SDK
+      // Prepare messages for AI SDK
       const apiMessages = messages.map((msg) => {
         if (msg.contentType === "image" && msg.attachment) {
           return {
@@ -641,9 +641,39 @@ export const useChatStore = create<ChatStore>()(
         }
         return {
           role: msg.role,
-          content: msg.content,
+          content: msg.content || "",
         };
+      }).filter(msg => {
+        if (Array.isArray(msg.content)) {
+          return msg.content.length > 0;
+        }
+        return typeof msg.content === 'string' && msg.content.trim().length > 0;
       });
+
+      // Ensure we have at least one message
+      if (apiMessages.length === 0) {
+        throw new Error("No valid messages to process");
+      }
+
+      console.log("Sending messages to API:", apiMessages);
+
+      // Get user location if available (you can enhance this to get actual coordinates)
+      let userLocation;
+      try {
+        // Try to get location from user profile or browser geolocation
+        const userProfile = await databaseService.getUserByUserId(user.$id);
+        if (userProfile && (userProfile as any).location) {
+          // For now, we'll use a default location for Kerala
+          // In a real implementation, you'd geocode the location string
+          userLocation = {
+            city: (userProfile as any).location,
+            latitude: 10.8505, // Kerala center coordinates
+            longitude: 76.2711
+          };
+        }
+      } catch (error) {
+        console.warn('Failed to get user location:', error);
+      }
 
       const response = await fetch("/api/generateResponse", {
         method: "POST",
@@ -652,6 +682,8 @@ export const useChatStore = create<ChatStore>()(
         },
         body: JSON.stringify({
           messages: apiMessages,
+          userId: user.$id,
+          location: userLocation,
         }),
       });
 
