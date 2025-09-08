@@ -236,7 +236,7 @@ export async function POST(req: NextRequest) {
         if (userProfile) {
           let weather: WeatherData | undefined;
           let soil: SoilResponse | undefined;
-          let userLocation = location;
+          const userLocation = location;
 
           // If location coordinates are provided, fetch weather and soil data
           if (location?.latitude && location?.longitude) {

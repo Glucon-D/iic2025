@@ -91,12 +91,12 @@ const AINudgesDropdown = () => {
       const nudgesResponse = await aiNudgesService.generateNudges({
         userProfile: {
           userId: user.$id, // Add userId for API call
-          username: userProfile.username,
-          location: userProfile.location,
-          farmsize: userProfile.farmsize,
-          crop: userProfile.crop,
-          experience: userProfile.experience,
-          language: userProfile.language,
+          username: (userProfile as any).username,
+          location: (userProfile as any).location,
+          farmsize: (userProfile as any).farmsize,
+          crop: (userProfile as any).crop,
+          experience: (userProfile as any).experience,
+          language: (userProfile as any).language,
         },
         location,
       });

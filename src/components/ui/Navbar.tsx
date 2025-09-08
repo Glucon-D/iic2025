@@ -12,6 +12,8 @@ import {
   LogOut,
   ChevronDown,
   XIcon,
+  Info,
+  InfoIcon,
 } from "lucide-react";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import WeatherWidget from "@/components/ui/WeatherWidget";
@@ -38,7 +40,7 @@ export function Navbar() {
     sidebarOpen = sidebarContext.sidebarOpen;
     toggleSidebar = sidebarContext.toggleSidebar;
     hasSidebarContext = true;
-  } catch (error) {
+  } catch {
     // Sidebar context not available (e.g., on home page)
     // Use default values
   }
@@ -69,11 +71,6 @@ export function Navbar() {
       console.error("Logout failed:", error);
     }
   };
-
-  const navLinks = [
-    { href: "/#features", label: "Features" },
-    { href: "about", label: "About" },
-  ];
 
   return (
     <header className="bg-background/95 backdrop-blur-md border-b border-border/50 fixed top-0 inset-x-0 z-50 shadow-sm">
@@ -152,6 +149,16 @@ export function Navbar() {
                         New Chat
                       </Link>
                       <Link
+                        href="/farmerScheme"
+                        onClick={() => setIsUserMenuOpen(false)}
+                        className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 hover:bg-accent/50 text-popover-foreground"
+                      >
+                        <div className="p-1.5 bg-blue-500/10 rounded-lg">
+                          <InfoIcon className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                        </div>
+                        Government Schemes
+                      </Link>
+                      <Link
                         href="/settings"
                         onClick={() => setIsUserMenuOpen(false)}
                         className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 hover:bg-accent/50 text-popover-foreground"
@@ -218,21 +225,12 @@ export function Navbar() {
         {isMobileMenuOpen && (
           <div className="md:hidden border-t border-border/50 py-4 bg-background/50 backdrop-blur-sm">
             <div className="flex flex-col space-y-2">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="px-4 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-all duration-200"
-                >
-                  {link.label}
-                </Link>
-              ))}
-
               {/* Weather Widget in Mobile Menu */}
               <div className="border-t border-border/30 pt-3 mt-2">
                 <div className="flex items-center justify-between px-4 py-3 rounded-lg hover:bg-accent/30 transition-all duration-200">
-                  <span className="text-sm font-medium text-muted-foreground">Weather</span>
+                  <span className="text-sm font-medium text-muted-foreground">
+                    Weather
+                  </span>
                   <WeatherWidget />
                 </div>
               </div>
@@ -258,6 +256,16 @@ export function Navbar() {
                           <MessageCircle className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                         </div>
                         <span>New Chat</span>
+                      </Link>
+                      <Link
+                        href="/farmerScheme"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-all duration-200"
+                      >
+                        <div className="p-1.5 bg-green-500/10 rounded-lg">
+                          <Info className="h-4 w-4 text-green-600 dark:text-green-400" />
+                        </div>
+                        <span>Government Schemes</span>
                       </Link>
                       <Link
                         href="/settings"

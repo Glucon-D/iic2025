@@ -1,0 +1,307 @@
+{
+  "schemes": [
+    {
+      "scheme_id": "SCH001",
+      "scheme_name": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)",
+      "objective": "To supplement the financial needs of Small and Marginal farmers in procuring various inputs to ensure proper crop health and appropriate yields, commensurate with the anticipated farm income at the end of each crop cycle",
+      "benefits": [
+        "Direct income support of Rs. 6,000 per year in three equal installments of Rs. 2,000 each",
+        "Direct Benefit Transfer (DBT) to Aadhaar linked bank accounts",
+        "Financial support for agricultural and allied activities",
+        "Protection from falling into clutches of money lenders"
+      ],
+      "eligibility_criteria": [
+        "All land-holding farmer families (husband, wife and minor children under 18 years)",
+        "Own cultivable land in their names irrespective of size of land holdings",
+        "Names entered into land records (excluding institutional landholders)",
+        "Cut-off date for land holding determination: February 1, 2019",
+        "Mandatory e-KYC verification"
+      ],
+      "exclusions": [
+        "Institutional land holders",
+        "Farmer families with members holding constitutional posts",
+        "Present/former Ministers, MPs, MLAs, MLCs",
+        "Government employees (except Multi Tasking Staff, Class IV, Group D)",
+        "Pensioners receiving Rs. 10,000+ monthly pension",
+        "Income tax payers in last assessment year",
+        "Professionals (doctors, engineers, lawyers, CAs, architects)",
+        "Non-Resident Indians (NRIs)"
+      ],
+      "how_to_apply": [
+        "Visit official PM-KISAN portal: https://pmkisan.gov.in",
+        "Click on 'New Farmer Registration' in Farmer's Corner",
+        "Provide Aadhaar number, bank account details, land records",
+        "Submit required documents and complete e-KYC",
+        "Track application status online"
+      ],
+      "whom_to_contact": [
+        "Village Revenue Officer/Patwari",
+        "Agriculture Extension Officer",
+        "District Collector/Magistrate",
+        "PM-KISAN Helpline: 155261",
+        "State Agriculture Department"
+      ],
+      "required_documents": [
+        "Aadhaar Card",
+        "Bank passbook/cancelled cheque",
+        "Land ownership documents",
+        "Voter ID/Driving License (identity proof)",
+        "Mobile number for registration"
+      ]
+    },
+    {
+      "scheme_id": "SCH002",
+      "scheme_name": "Pradhan Mantri Fasal Bima Yojana (PMFBY)",
+      "objective": "To provide insurance coverage and financial support to farmers in case of crop loss due to natural calamities, pests, and diseases while encouraging farmers to adopt innovative and modern agricultural practices",
+      "benefits": [
+        "Comprehensive risk insurance for crop losses",
+        "Low premium rates: 2% for Kharif, 1.5% for Rabi crops",
+        "Coverage from sowing to harvesting",
+        "Post-harvest losses coverage (up to 2 weeks)",
+        "Prevented sowing/planting risk coverage up to 25% of Sum Insured",
+        "Localized risk coverage (hailstorm, landslide, inundation)",
+        "Mid-season adversity coverage for widespread calamities"
+      ],
+      "eligibility_criteria": [
+        "All farmers (loanee and non-loanee) including sharecroppers and tenant farmers",
+        "Growing notified crops in notified areas",
+        "Valid land ownership certificate or land tenure agreement",
+        "Application within 2 weeks of sowing season start",
+        "Valid Kisan Credit Card (KCC) or obtain within 6 months of enrollment",
+        "Valid bank account and identity proof",
+        "Insurable interest for notified/insured crops"
+      ],
+      "exclusions": [
+        "Losses due to war, nuclear risks, riots",
+        "Deliberate destruction, theft, hostile conduct",
+        "Grazing/destruction by livestock and wild animals",
+        "Post-harvest losses beyond 2 weeks",
+        "Preventable losses due to farmer negligence"
+      ],
+      "how_to_apply": [
+        "Visit official PMFBY portal: https://pmfby.gov.in",
+        "Click on 'Farmer Corner' and select 'Guest Farmer' if new user",
+        "Enter required details and create account",
+        "Fill application form with crop and land details",
+        "Submit through Agriculture Department, Common Service Center, or online",
+        "Pay premium amount and receive policy documents"
+      ],
+      "whom_to_contact": [
+        "Local Agriculture Department",
+        "Participating insurance companies",
+        "Common Service Centers",
+        "Bank branches (for KCC holders)",
+        "PMFBY Toll-free: 1800-209-5959",
+        "District Collector for claim settlements"
+      ],
+      "required_documents": [
+        "Aadhaar Card (mandatory from Kharif 2017)",
+        "Bank account details",
+        "Land documents (ownership/lease agreement)",
+        "Sowing certificate from village officer",
+        "Previous insurance policy (if any)",
+        "Crop cutting experiment acknowledgment"
+      ]
+    },
+    {
+      "scheme_id": "SCH003",
+      "scheme_name": "Soil Health Card Scheme (SHC)",
+      "objective": "To assess soil health status and provide crop-wise recommendations of nutrients and fertilizers required for better soil health and higher crop yields while promoting judicious use of fertilizers",
+      "benefits": [
+        "Free soil testing every 3 years",
+        "Detailed soil health report with 12 parameters",
+        "Crop-specific nutrient recommendations",
+        "Fertilizer use optimization guidance",
+        "Reduction in input costs through balanced fertilization",
+        "Improved soil fertility and crop productivity",
+        "Promotion of organic farming practices"
+      ],
+      "eligibility_criteria": [
+        "All farmers across the country",
+        "Land-holding farmers (small, marginal, medium, large)",
+        "Sharecroppers and tenant farmers (with valid agreements)",
+        "Cooperative societies and farmer groups",
+        "No restriction on land size or crop type"
+      ],
+      "exclusions": ["No specific exclusions - universal coverage intended"],
+      "how_to_apply": [
+        "Visit Soil Health Card portal: https://soilhealth.dac.gov.in",
+        "Contact local Agriculture Extension Officer",
+        "Submit soil samples at designated collection centers",
+        "Provide land details and farmer information",
+        "Collect soil health card from village center or download online"
+      ],
+      "whom_to_contact": [
+        "Agriculture Extension Officer",
+        "Soil Testing Laboratory staff",
+        "Village Level Worker (VLW)",
+        "Krishi Vigyan Kendra (KVK)",
+        "District Agriculture Officer",
+        "State Department of Agriculture"
+      ],
+      "required_documents": [
+        "Aadhaar Card",
+        "Land ownership documents",
+        "Previous soil health card (if available)",
+        "Survey/Khasra number details",
+        "Mobile number for SMS updates"
+      ]
+    },
+    {
+      "scheme_id": "SCH004",
+      "scheme_name": "National Agriculture Market (e-NAM)",
+      "objective": "To create a unified national market for agricultural commodities by networking existing APMC markets through online trading platform for transparent price discovery and efficient marketing",
+      "benefits": [
+        "Transparent online trading with enhanced market accessibility",
+        "Real-time price discovery based on demand and supply",
+        "Reduced transaction costs for buyers and sellers",
+        "Online payment directly to farmers' bank accounts",
+        "Quality certification and assaying facilities",
+        "Access to broader market beyond geographical boundaries",
+        "SMS updates on commodity prices and sales",
+        "Mobile app for market information access"
+      ],
+      "eligibility_criteria": [
+        "All farmers, traders, buyers, processors and exporters",
+        "Valid license for traders (single license valid across state)",
+        "Registration on e-NAM portal",
+        "Bank account linked with Aadhaar",
+        "Quality testing facilities in participating mandis",
+        "State APMC Act reforms compliance"
+      ],
+      "exclusions": [
+        "Non-licensed traders in regulated markets",
+        "Markets not integrated with e-NAM platform"
+      ],
+      "how_to_apply": [
+        "Visit e-NAM portal: https://enam.gov.in",
+        "Register as farmer/trader/buyer on the platform",
+        "Complete KYC verification process",
+        "Submit produce details and quality certificates",
+        "Participate in online auctions and trading",
+        "Receive payments through integrated payment system"
+      ],
+      "whom_to_contact": [
+        "Market Committee/APMC officials",
+        "e-NAM helpdesk and customer support",
+        "State Marketing Board",
+        "Licensed commission agents",
+        "District Marketing Officer",
+        "Small Farmers Agribusiness Consortium (SFAC)"
+      ],
+      "required_documents": [
+        "Aadhaar Card",
+        "Bank account details",
+        "Land documents/tenancy agreement",
+        "Trading license (for traders)",
+        "Quality testing certificates",
+        "Mobile number for registration"
+      ]
+    },
+    {
+      "scheme_id": "SCH005",
+      "scheme_name": "Rashtriya Krishi Vikas Yojana (RKVY)",
+      "objective": "To incentivize states to increase investment in agriculture and allied sectors while ensuring holistic development of agriculture by allowing states flexibility to choose their own agriculture development activities",
+      "benefits": [
+        "Flexible funding for state-specific agriculture programs",
+        "Support for crop development, horticulture, animal husbandry",
+        "Infrastructure development for agriculture marketing",
+        "Promotion of organic farming and natural resource management",
+        "Technology adoption and mechanization support",
+        "Capacity building and training programs",
+        "Research and development initiatives support"
+      ],
+      "eligibility_criteria": [
+        "All states and Union Territories are eligible",
+        "State must have State Agricultural Plans (SAPs)",
+        "District Agricultural Plans (DAPs) preparation mandatory",
+        "States must spend minimum proportion for agriculture sector",
+        "Individual farmers engaged in agricultural activities",
+        "Valid land records required",
+        "Indian residency mandatory"
+      ],
+      "exclusions": [
+        "Minors cannot directly apply",
+        "Non-agricultural activities not covered"
+      ],
+      "how_to_apply": [
+        "States submit proposals to central government",
+        "Individual farmers apply through state agriculture departments",
+        "Submit detailed project reports (DPRs)",
+        "Online applications through state portals",
+        "Direct Benefit Transfer (DBT) for approved schemes"
+      ],
+      "whom_to_contact": [
+        "State Agriculture Department",
+        "District Agriculture Officer",
+        "Principal Secretary Agriculture",
+        "Project Implementation Unit (PIU)",
+        "Block Agriculture Officer",
+        "Ministry of Agriculture & Farmers Welfare"
+      ],
+      "required_documents": [
+        "Land ownership documents",
+        "Aadhaar Card",
+        "Bank account details",
+        "Project proposal/DPR",
+        "State Agricultural Plan documents",
+        "Utilization certificates (for states)"
+      ]
+    },
+    {
+      "scheme_id": "SCH006",
+      "scheme_name": "Krishi Decision Support System (Krishi-DSS)",
+      "objective": "To provide comprehensive digital geospatial platform integrating remote sensing data on crops, soil, weather, and water resources for enhanced decision-making in agriculture through data-driven insights",
+      "benefits": [
+        "Real-time crop monitoring and yield estimation",
+        "Soil moisture and health monitoring",
+        "Weather-based advisories for farming decisions",
+        "Drought monitoring and early warning systems",
+        "Crop weather watch and harvest tracking",
+        "Field-parcel segmentation for targeted interventions",
+        "Comprehensive soil information system",
+        "Data-driven crop planning and management"
+      ],
+      "eligibility_criteria": [
+        "All farmers across India",
+        "Agriculture scientists and researchers",
+        "Government officials and policy makers",
+        "Agricultural institutions and universities",
+        "State agriculture departments",
+        "Anyone involved in agricultural activities"
+      ],
+      "exclusions": [
+        "No specific exclusions - open platform for agriculture stakeholders"
+      ],
+      "how_to_apply": [
+        "Access Krishi-DSS portal: https://krishi-dss.gov.in",
+        "Register with Aadhaar and mobile number",
+        "Select location/area of interest",
+        "Access various data layers and analytics",
+        "Download reports and advisories",
+        "Use mobile app for field-level access"
+      ],
+      "whom_to_contact": [
+        "Department of Agriculture and Farmers Welfare",
+        "ISRO/Department of Space officials",
+        "State Remote Sensing Centers",
+        "Agriculture universities and research institutes",
+        "District Agriculture Officers",
+        "Krishi Vigyan Kendras (KVKs)"
+      ],
+      "required_documents": [
+        "Aadhaar Card for registration",
+        "Mobile number verification",
+        "Land details (survey numbers/GPS coordinates)",
+        "Basic farmer/user information",
+        "Organization details (for institutional users)"
+      ]
+    }
+  ],
+  "metadata": {
+    "total_schemes": 6,
+    "last_updated": "2025-09-08",
+    "data_source": "Government of India Agriculture & Farmers Welfare Ministry",
+    "api_version": "1.0"
+  }
+}
