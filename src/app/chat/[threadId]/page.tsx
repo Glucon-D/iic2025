@@ -73,10 +73,13 @@ export default function ChatPage() {
       isInitialized
     ) {
       setHasProcessedInitialMessage(true);
-      handleSendMessage(decodeURIComponent(initialMessage));
+      const messageContentType = (contentType || "text") as "text" | "image" | "voice" | "file";
+      // URLSearchParams already decodes the parameter, so no need to decode again
+      handleSendMessage(initialMessage, messageContentType);
     }
   }, [
     initialMessage,
+    contentType,
     currentThread?.$id,
     hasProcessedInitialMessage,
     isInitialized,

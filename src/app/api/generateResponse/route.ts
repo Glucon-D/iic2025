@@ -54,16 +54,34 @@ function prepareContextMessages(messages: APIMessage[]): APIMessage[] {
 
 export async function POST(req: NextRequest) {
   try {
-    const { messages } = await req.json();
+    const body = await req.json();
+    const { messages } = body;
+
+    console.log("Received request body:", JSON.stringify(body, null, 2));
+    console.log("Messages:", messages);
 
     if (!messages || !Array.isArray(messages) || messages.length === 0) {
+      console.error("Invalid messages:", { messages, isArray: Array.isArray(messages), length: messages?.length });
       return new Response(
         JSON.stringify({ error: "Messages array is required" }),
         { status: 400, headers: { "Content-Type": "application/json" } }
       );
     }
 
+    // Validate message structure
+    for (let i = 0; i < messages.length; i++) {
+      const msg = messages[i];
+      if (!msg.role || !msg.content) {
+        console.error(`Invalid message at index ${i}:`, msg);
+        return new Response(
+          JSON.stringify({ error: `Invalid message structure at index ${i}. Missing role or content.` }),
+          { status: 400, headers: { "Content-Type": "application/json" } }
+        );
+      }
+    }
+
     const contextMessages = prepareContextMessages(messages);
+    console.log("Context messages:", contextMessages);
 
     const result = streamText({
       model: openrouter("google/gemini-2.5-flash-lite"),
