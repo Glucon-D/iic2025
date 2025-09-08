@@ -5,6 +5,7 @@ import { Sidebar } from "@/components/chat/Sidebar";
 import { useChatStore } from "@/services/chatStore";
 import { useAuthStore } from "@/services/authStore";
 import { useEffect } from "react";
+import { Navbar } from "@/components/ui/Navbar";
 
 // Create context for sidebar state
 const SidebarContext = createContext<{
@@ -71,7 +72,8 @@ export default function ChatLayout({
 
   return (
     <SidebarContext.Provider value={{ sidebarOpen, toggleSidebar }}>
-      <div className="flex h-screen bg-background relative">
+      <Navbar />
+      <div className="flex h-screen pt-16 bg-background relative">
         {/* Mobile overlay */}
         {sidebarOpen && (
           <div
@@ -90,7 +92,7 @@ export default function ChatLayout({
         </div>
 
         {/* Main Chat Area */}
-        <div className="flex-1 flex flex-col">{children}</div>
+        <div className="flex-1 min-h-0 flex flex-col">{children}</div>
       </div>
     </SidebarContext.Provider>
   );

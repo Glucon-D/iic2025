@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
-import { ChatMessage } from '@/utils/types/chat.types';
-import { MessageBubble } from './MessageBubble';
+import { useEffect, useRef } from "react";
+import { ChatMessage } from "@/utils/types/chat.types";
+import { MessageBubble } from "./MessageBubble";
 
 interface MessageListProps {
   messages: ChatMessage[];
@@ -10,11 +10,15 @@ interface MessageListProps {
   isStreaming?: boolean;
 }
 
-export function MessageList({ messages, currentUserId, isStreaming }: MessageListProps) {
+export function MessageList({
+  messages,
+  currentUserId,
+  isStreaming,
+}: MessageListProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
@@ -44,8 +48,9 @@ export function MessageList({ messages, currentUserId, isStreaming }: MessageLis
             Start a conversation
           </h3>
           <p className="text-muted-foreground">
-            Ask me anything about farming, crops, diseases, weather, or any agricultural question. 
-            I'm here to help you with expert advice in your preferred language.
+            Ask me anything about farming, crops, diseases, weather, or any
+            agricultural question. I'm here to help you with expert advice in
+            your preferred language.
           </p>
         </div>
       </div>
@@ -53,24 +58,25 @@ export function MessageList({ messages, currentUserId, isStreaming }: MessageLis
   }
 
   return (
-    <div className="flex-1 overflow-y-auto p-4 space-y-4">
+    <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-custom">
       {messages.map((message, index) => {
-        const isUser = message.role === 'user';
+        const isUser = message.role === "user";
         const isCurrentUser = message.userId === currentUserId;
-         const showAvatar = index === 0 || messages[index - 1].role !== message.role;
-         const isLastMessage = index === messages.length - 1;
-         const isStreamingMessage = isStreaming && !isUser && isLastMessage;
-         
-         return (
-           <MessageBubble
-             key={message.$id || index}
-             message={message}
-             isUser={isUser}
-             isCurrentUser={isCurrentUser}
-             showAvatar={showAvatar}
-             isStreaming={isStreamingMessage}
-           />
-         );
+        const showAvatar =
+          index === 0 || messages[index - 1].role !== message.role;
+        const isLastMessage = index === messages.length - 1;
+        const isStreamingMessage = isStreaming && !isUser && isLastMessage;
+
+        return (
+          <MessageBubble
+            key={message.$id || index}
+            message={message}
+            isUser={isUser}
+            isCurrentUser={isCurrentUser}
+            showAvatar={showAvatar}
+            isStreaming={isStreamingMessage}
+          />
+        );
       })}
       <div ref={messagesEndRef} />
     </div>
