@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { ChatThread } from "@/utils/types/chat.types";
 import { useChatStore } from "@/services/chatStore";
-import { useSidebar } from "@/app/chat/layout";
+
 import { formatDistanceToNow } from "date-fns";
 
 interface ChatHeaderProps {
@@ -21,7 +21,6 @@ interface ChatHeaderProps {
 export function ChatHeader({ thread }: ChatHeaderProps) {
   const [showMenu, setShowMenu] = useState(false);
   const { updateThread } = useChatStore();
-  const { sidebarOpen, toggleSidebar } = useSidebar();
 
   const getStatusIcon = () => {
     switch (thread.status) {
@@ -74,17 +73,6 @@ export function ChatHeader({ thread }: ChatHeaderProps) {
   return (
     <div className="flex items-center justify-between p-4 border-b border-border bg-card">
       <div className="flex items-center space-x-3">
-        {/* Sidebar toggle button - only show when sidebar is closed */}
-        {!sidebarOpen && (
-          <button
-            onClick={toggleSidebar}
-            className="p-2 hover:bg-accent rounded-lg transition-colors"
-            title="Open sidebar"
-          >
-            <Menu className="h-5 w-5" />
-          </button>
-        )}
-
         {/* Priority indicator */}
         {thread.priority && (
           <div
@@ -98,7 +86,7 @@ export function ChatHeader({ thread }: ChatHeaderProps) {
             {thread.title}
           </h1>
           <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-            <span>{thread.messageCount || 0} messages</span>
+            {/* <span>{thread.messageCount || 0} messages</span> */}
             {thread.lastMessageAt && (
               <span>
                 Last active{" "}

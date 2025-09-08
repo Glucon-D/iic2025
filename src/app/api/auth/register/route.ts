@@ -59,6 +59,7 @@ export async function POST(req: NextRequest) {
     if (profile && profile.username && profile.location) {
       try {
         const profileData = {
+          userId: user.$id,
           username: profile.username.trim(),
           location: profile.location.trim(),
           farmsize: profile.farmsize || '',

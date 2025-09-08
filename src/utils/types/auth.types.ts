@@ -27,8 +27,9 @@ export interface AuthActions {
   login: (credentials: LoginCredentials) => Promise<void>;
   register: (credentials: RegisterCredentials) => Promise<void>;
   logout: () => Promise<void>;
-  getCurrentUser: () => Promise<void>;
+  getCurrentUser: (useCache?: boolean) => Promise<void>;
   updateProfile: (data: Partial<AuthUser>) => Promise<void>;
+  initializeAuth: () => Promise<void>;
   clearError: () => void;
   setLoading: (loading: boolean) => void;
 }

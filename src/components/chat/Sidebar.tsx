@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { Search, Plus, MessageSquare, Menu, Sprout } from "lucide-react";
 import { useChatStore } from "@/services/chatStore";
 import { useRouter, useParams } from "next/navigation";
@@ -13,53 +13,44 @@ interface SidebarProps {
 
 export function Sidebar({ onToggle }: SidebarProps) {
   const [searchQuery, setSearchQuery] = useState("");
-  const { threads, createThread, isLoading } = useChatStore();
+  const { threads, isLoading } = useChatStore();
   const router = useRouter();
   const params = useParams();
   const currentThreadId = params?.threadId as string;
 
-  // Filter threads based on search query
-  const filteredThreads = threads.filter(
-    (thread) =>
-      thread.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      thread.description?.toLowerCase().includes(searchQuery.toLowerCase())
+  // Memoized filtered threads for better performance
+  const filteredThreads = useMemo(() => {
+    if (!searchQuery.trim()) return threads;
+
+    const query = searchQuery.toLowerCase();
+    return threads.filter(
+      (thread) =>
+        thread.title.toLowerCase().includes(query) ||
+        thread.description?.toLowerCase().includes(query)
+    );
+  }, [threads, searchQuery]);
+
+  const handleNewChat = useCallback(() => {
+    // Navigate to the main chat page with feature buttons
+    router.push("/chat");
+  }, [router]);
+
+  const handleThreadSelect = useCallback(
+    (threadId: string | undefined) => {
+      if (!threadId) return;
+
+      // Use router.replace for smoother transitions
+      const newUrl = `/chat/${threadId}`;
+      if (window.location.pathname !== newUrl) {
+        router.replace(newUrl);
+      }
+    },
+    [router]
   );
 
-  const handleNewChat = async () => {
-    try {
-      const newThread = await createThread("New Chat", "General farming query");
-      router.push(`/chat/${newThread.$id}`);
-    } catch (error) {
-      console.error("Failed to create new thread:", error);
-    }
-  };
-
-  const handleThreadSelect = (threadId: string | undefined) => {
-    if (!threadId) return;
-    router.push(`/chat/${threadId}`);
-  };
-
   return (
-    <div className="flex flex-col h-full bg-card border-r border-border">
+    <div className="flex flex-col h-full bg-background border-r border-border">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-border">
-        <div className="flex items-center space-x-2">
-          <Sprout className="h-6 w-6 text-primary" />
-          <h1 className="text-lg font-semibold text-card-foreground">
-            Digital Krishi
-          </h1>
-        </div>
-        <div className="flex items-center space-x-2">
-          <ThemeToggle />
-          <button
-            onClick={onToggle}
-            className="p-1 hover:bg-accent rounded-md transition-colors"
-            aria-label="Toggle sidebar"
-          >
-            <Menu className="h-4 w-4" />
-          </button>
-        </div>
-      </div>
 
       {/* New Chat Button */}
       <div className="p-4">

@@ -85,6 +85,9 @@ The Digital Krishi Officer serves as a "Digital Krishi Officer" that provides in
    OPENROUTER_API_KEY=your_openrouter_api_key
    NEXT_PUBLIC_OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
 
+   # Weather API Configuration (Optional)
+   NEXT_PUBLIC_OPENWEATHER_API_KEY=your_openweathermap_api_key
+
    # Application Configuration
    NEXT_PUBLIC_APP_URL=http://localhost:3000
    NEXT_PUBLIC_APP_NAME=Digital Krishi Officer

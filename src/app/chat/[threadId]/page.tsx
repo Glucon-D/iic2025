@@ -4,55 +4,65 @@ import { useEffect, useState, useCallback } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import { useChatStore } from "@/services/chatStore";
 import { useAuthStore } from "@/services/authStore";
-import { ChatHeader } from "@/components/chat/ChatHeader";
 import { MessageList } from "@/components/chat/MessageList";
 import { MessageInput } from "@/components/chat/MessageInput";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
-
 
 export default function ChatPage() {
   const params = useParams();
   const searchParams = useSearchParams();
   const threadId = params?.threadId as string;
   const initialMessage = searchParams?.get("initialMessage");
+  const contentType = searchParams?.get("contentType") as "text" | "image" | "voice" | "file" | null;
+  const hasAttachment = searchParams?.get("hasAttachment") === "true";
 
   const {
     currentThread,
     messages,
     selectThread,
     sendMessage,
-
     isLoading,
+    isStreaming,
     error,
   } = useChatStore();
-  const { user } = useAuthStore();
+  const { user, isLoading: authLoading, isAuthenticated } = useAuthStore();
   const [isInitialized, setIsInitialized] = useState(false);
   const [hasProcessedInitialMessage, setHasProcessedInitialMessage] =
     useState(false);
 
-
-
   const handleSendMessage = useCallback(
     async (
       content: string,
-      contentType: "text" | "image" | "voice" | "file" = "text"
+      contentType: "text" | "image" | "voice" | "file" = "text",
+      attachment?: File
     ) => {
       if (!currentThread || !user) return;
 
       try {
-        await sendMessage(content, contentType);
+        await sendMessage(content, contentType, attachment);
       } catch (error) {
         console.error("Failed to send message:", error);
       }
     },
-    [currentThread, user, sendMessage]
+    [currentThread?.$id, user?.$id, sendMessage]
   );
 
   useEffect(() => {
-    if (threadId && user && !isInitialized) {
-      selectThread(threadId).finally(() => setIsInitialized(true));
+    if (threadId && user && !isInitialized && !authLoading) {
+      // For temporary threads, just load from store
+      if (threadId.startsWith("temp-thread-")) {
+        selectThread(threadId, true).finally(() => setIsInitialized(true));
+      } else {
+        // For real threads, load from cache first then sync with Appwrite
+        selectThread(threadId, true).finally(() => setIsInitialized(true));
+
+        // Then sync with Appwrite for latest messages
+        setTimeout(() => {
+          selectThread(threadId, false).catch(console.error);
+        }, 200);
+      }
     }
-  }, [threadId, user, selectThread, isInitialized]);
+  }, [threadId, user?.$id, isInitialized, authLoading]);
 
   // Handle initial message from URL params
   useEffect(() => {
@@ -63,15 +73,35 @@ export default function ChatPage() {
       isInitialized
     ) {
       setHasProcessedInitialMessage(true);
-      handleSendMessage(decodeURIComponent(initialMessage));
+      const messageContentType = (contentType || "text") as "text" | "image" | "voice" | "file";
+      // URLSearchParams already decodes the parameter, so no need to decode again
+      handleSendMessage(initialMessage, messageContentType);
     }
   }, [
     initialMessage,
-    currentThread,
+    contentType,
+    currentThread?.$id,
     hasProcessedInitialMessage,
     isInitialized,
     handleSendMessage,
   ]);
+
+  // Show loading while auth is initializing
+  if (authLoading) {
+    return (
+      <div className="flex-1 flex items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
+  // Redirect to login if not authenticated
+  if (!authLoading && !isAuthenticated) {
+    if (typeof window !== 'undefined') {
+      window.location.href = '/login';
+    }
+    return null;
+  }
 
   if (!isInitialized || isLoading) {
     return (
@@ -103,19 +133,20 @@ export default function ChatPage() {
   }
 
   return (
-    <div className="flex-1 flex flex-col h-full">
-      {/* Chat Header */}
-      <ChatHeader thread={currentThread} />
-
+    <div className="flex-1 min-h-0 flex flex-col h-full">
       {/* Messages */}
-      <div className="flex-1 overflow-hidden">
-        <MessageList messages={messages} currentUserId={user?.$id} />
+      <div className="flex-1 min-h-0 overflow-hidden flex">
+        <MessageList
+          messages={messages}
+          currentUserId={user?.$id}
+          isStreaming={isStreaming}
+        />
       </div>
 
       {/* Message Input */}
       <MessageInput
         onSendMessage={handleSendMessage}
-        disabled={isLoading}
+        disabled={isLoading || isStreaming}
         placeholder="Ask about farming, crops, diseases, or any agricultural question in your preferred language..."
       />
     </div>
