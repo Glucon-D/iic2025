@@ -14,6 +14,7 @@ import {
   XIcon,
   Info,
   InfoIcon,
+  TrendingUp,
 } from "lucide-react";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import WeatherWidget from "@/components/ui/WeatherWidget";
@@ -159,6 +160,16 @@ export function Navbar() {
                         Government Schemes
                       </Link>
                       <Link
+                        href="/market-pricing"
+                        onClick={() => setIsUserMenuOpen(false)}
+                        className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 hover:bg-accent/50 text-popover-foreground"
+                      >
+                        <div className="p-1.5 bg-green-500/10 rounded-lg">
+                          <TrendingUp className="h-4 w-4 text-green-600 dark:text-green-400" />
+                        </div>
+                        Market Pricing
+                      </Link>
+                      <Link
                         href="/settings"
                         onClick={() => setIsUserMenuOpen(false)}
                         className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 hover:bg-accent/50 text-popover-foreground"
@@ -266,6 +277,16 @@ export function Navbar() {
                           <Info className="h-4 w-4 text-green-600 dark:text-green-400" />
                         </div>
                         <span>Government Schemes</span>
+                      </Link>
+                      <Link
+                        href="/market-pricing"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-all duration-200"
+                      >
+                        <div className="p-1.5 bg-emerald-500/10 rounded-lg">
+                          <TrendingUp className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                        </div>
+                        <span>Market Pricing</span>
                       </Link>
                       <Link
                         href="/settings"
