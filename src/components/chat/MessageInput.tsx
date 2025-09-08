@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { Send, Paperclip, Image, Mic, X } from 'lucide-react';
+import { Send, Paperclip, Image, Mic, X, Loader2 } from 'lucide-react';
 
 interface MessageInputProps {
   onSendMessage: (content: string, contentType?: 'text' | 'image' | 'voice' | 'file') => void;
@@ -18,7 +18,7 @@ export function MessageInput({ onSendMessage, disabled, placeholder }: MessageIn
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (message.trim() || attachedFile) {
+    if ((message.trim() || attachedFile) && !disabled) {
       const content = message.trim();
       let contentType: 'text' | 'image' | 'voice' | 'file' = 'text';
       
@@ -168,7 +168,11 @@ export function MessageInput({ onSendMessage, disabled, placeholder }: MessageIn
           className="p-3 bg-primary text-primary-foreground rounded-2xl hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           title="Send message"
         >
-          <Send className="h-5 w-5" />
+          {disabled ? (
+            <Loader2 className="h-5 w-5 animate-spin" />
+          ) : (
+            <Send className="h-5 w-5" />
+          )}
         </button>
       </form>
 

@@ -32,7 +32,7 @@ export default function RegisterPage() {
         email: formData.email,
         password: formData.password,
       });
-      router.push('/chat');
+      router.replace('/chat');
     } catch (error) {
       console.error('Registration failed:', error);
     }

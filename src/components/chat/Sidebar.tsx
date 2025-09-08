@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { Search, Plus, MessageSquare, Menu, Sprout } from "lucide-react";
 import { useChatStore } from "@/services/chatStore";
 import { useRouter, useParams } from "next/navigation";
@@ -18,26 +18,37 @@ export function Sidebar({ onToggle }: SidebarProps) {
   const params = useParams();
   const currentThreadId = params?.threadId as string;
 
-  // Filter threads based on search query
-  const filteredThreads = threads.filter(
-    (thread) =>
-      thread.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      thread.description?.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Memoized filtered threads for better performance
+  const filteredThreads = useMemo(() => {
+    if (!searchQuery.trim()) return threads;
+    
+    const query = searchQuery.toLowerCase();
+    return threads.filter(
+      (thread) =>
+        thread.title.toLowerCase().includes(query) ||
+        thread.description?.toLowerCase().includes(query)
+    );
+  }, [threads, searchQuery]);
 
-  const handleNewChat = async () => {
+  const handleNewChat = useCallback(async () => {
     try {
       const newThread = await createThread("New Chat", "General farming query");
-      router.push(`/chat/${newThread.$id}`);
-    } catch (error) {
-      console.error("Failed to create new thread:", error);
+      // Use router.replace for smoother transition without adding to history
+      router.replace(`/chat/${newThread.$id}`);
+    } catch (error: any) {
+      console.error("Failed to create thread:", error);
     }
-  };
+  }, [createThread, router]);
 
-  const handleThreadSelect = (threadId: string | undefined) => {
+  const handleThreadSelect = useCallback((threadId: string | undefined) => {
     if (!threadId) return;
-    router.push(`/chat/${threadId}`);
-  };
+    
+    // Use router.replace for smoother transitions
+    const newUrl = `/chat/${threadId}`;
+    if (window.location.pathname !== newUrl) {
+      router.replace(newUrl);
+    }
+  }, [router]);
 
   return (
     <div className="flex flex-col h-full bg-card border-r border-border">

@@ -8,7 +8,7 @@ import { useAuthStore } from "@/services/authStore";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { login, logout, isLoading, error, clearError } = useAuthStore();
+  const { login, logout, error, clearError } = useAuthStore();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -16,6 +16,7 @@ export default function LoginPage() {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validateForm = () => {
     const errors: Record<string, string> = {};
@@ -40,6 +41,7 @@ export default function LoginPage() {
 
     if (!validateForm()) return;
 
+    setIsSubmitting(true);
     try {
       await login({
         email: formData.email.toLowerCase().trim(),
@@ -47,19 +49,24 @@ export default function LoginPage() {
       });
 
       // Redirect to chat on successful login
-      router.push("/chat");
+      router.replace("/chat");
     } catch (error) {
       // Error is handled by the store
       console.error("Login failed:", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleClearSession = async () => {
+    setIsSubmitting(true);
     try {
       await logout();
       setFormErrors({});
     } catch (error) {
       console.error("Error clearing session:", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -191,10 +198,10 @@ export default function LoginPage() {
           <div>
             <button
               type="submit"
-              disabled={isLoading}
+              disabled={isSubmitting}
               className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLoading ? (
+              {isSubmitting ? (
                 <>
                   <Loader2 className="h-5 w-5 mr-2 animate-spin" />
                   Signing in...

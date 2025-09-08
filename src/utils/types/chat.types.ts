@@ -44,13 +44,14 @@ export interface ChatState {
 export interface ChatActions {
   // Thread actions
   createThread: (title: string, description?: string) => Promise<ChatThread>;
-  selectThread: (threadId: string) => Promise<void>;
+  createAndSwitchThread: (title: string, description?: string) => Promise<ChatThread>;
+  selectThread: (threadId: string, useCache?: boolean) => Promise<void>;
   updateThread: (
     threadId: string,
     updates: Partial<ChatThread>
   ) => Promise<void>;
   deleteThread: (threadId: string) => Promise<void>;
-  loadThreads: () => Promise<void>;
+  loadThreads: (useCache?: boolean) => Promise<void>;
 
   // Message actions
   sendMessage: (
@@ -74,6 +75,7 @@ export interface ChatActions {
   clearError: () => void;
   setLoading: (loading: boolean) => void;
   reset: () => void;
+  syncWithAppwrite: () => Promise<void>;
 }
 
 export type ChatStore = ChatState & ChatActions;
