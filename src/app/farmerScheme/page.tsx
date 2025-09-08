@@ -2,13 +2,26 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Search, Filter, ExternalLink, Users, FileText, Phone, CheckCircle, XCircle, AlertCircle, ChevronDown, ChevronUp } from "lucide-react";
+import {
+  Search,
+  Filter,
+  ExternalLink,
+  Users,
+  FileText,
+  Phone,
+  CheckCircle,
+  XCircle,
+  AlertCircle,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
 import { Navbar } from "@/components/ui/Navbar";
 import schemeData from "@/utils/schemeData/schemeData.json";
 
 interface Scheme {
   scheme_id: string;
   scheme_name: string;
+  apply_url: string;
   objective: string;
   benefits: string[];
   eligibility_criteria: string[];
@@ -26,10 +39,13 @@ export default function FarmerSchemePage() {
   const schemes: Scheme[] = schemeData.schemes;
 
   const filteredSchemes = schemes.filter((scheme) => {
-    const matchesSearch = scheme.scheme_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         scheme.objective.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         scheme.benefits.some(benefit => benefit.toLowerCase().includes(searchTerm.toLowerCase()));
-    
+    const matchesSearch =
+      scheme.scheme_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      scheme.objective.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      scheme.benefits.some((benefit) =>
+        benefit.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+
     if (filterType === "all") return matchesSearch;
     // Add more filter logic here if needed
     return matchesSearch;
@@ -52,7 +68,7 @@ export default function FarmerSchemePage() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      
+
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-green-600 to-blue-600 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -61,7 +77,8 @@ export default function FarmerSchemePage() {
               Government Schemes for Farmers
             </h1>
             <p className="text-xl md:text-2xl mb-8 opacity-90">
-              Discover and apply for government schemes designed to support farmers across India
+              Discover and apply for government schemes designed to support
+              farmers across India
             </p>
             <div className="flex items-center justify-center space-x-6 text-lg">
               <div className="flex items-center">
@@ -122,7 +139,9 @@ export default function FarmerSchemePage() {
               <div className="p-6">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-start space-x-4">
-                    <div className="text-4xl">{getSchemeIcon(scheme.scheme_name)}</div>
+                    <div className="text-4xl">
+                      {getSchemeIcon(scheme.scheme_name)}
+                    </div>
                     <div className="flex-1">
                       <h3 className="text-xl font-bold text-foreground mb-2">
                         {scheme.scheme_name}
@@ -136,7 +155,11 @@ export default function FarmerSchemePage() {
                     onClick={() => toggleExpanded(scheme.scheme_id)}
                     className="flex items-center space-x-1 px-4 py-2 text-primary border border-primary rounded-lg hover:bg-primary hover:text-primary-foreground transition-colors"
                   >
-                    <span>{expandedScheme === scheme.scheme_id ? "Less Info" : "More Info"}</span>
+                    <span>
+                      {expandedScheme === scheme.scheme_id
+                        ? "Less Info"
+                        : "More Info"}
+                    </span>
                     {expandedScheme === scheme.scheme_id ? (
                       <ChevronUp className="h-4 w-4" />
                     ) : (
@@ -154,7 +177,10 @@ export default function FarmerSchemePage() {
                     </h4>
                     <ul className="space-y-1">
                       {scheme.benefits.slice(0, 3).map((benefit, index) => (
-                        <li key={index} className="text-sm text-muted-foreground flex items-start">
+                        <li
+                          key={index}
+                          className="text-sm text-muted-foreground flex items-start"
+                        >
                           <span className="text-green-500 mr-2">•</span>
                           {benefit}
                         </li>
@@ -172,15 +198,21 @@ export default function FarmerSchemePage() {
                       Eligibility
                     </h4>
                     <ul className="space-y-1">
-                      {scheme.eligibility_criteria.slice(0, 2).map((criteria, index) => (
-                        <li key={index} className="text-sm text-muted-foreground flex items-start">
-                          <span className="text-blue-500 mr-2">•</span>
-                          {criteria}
-                        </li>
-                      ))}
+                      {scheme.eligibility_criteria
+                        .slice(0, 2)
+                        .map((criteria, index) => (
+                          <li
+                            key={index}
+                            className="text-sm text-muted-foreground flex items-start"
+                          >
+                            <span className="text-blue-500 mr-2">•</span>
+                            {criteria}
+                          </li>
+                        ))}
                       {scheme.eligibility_criteria.length > 2 && (
                         <li className="text-sm text-primary">
-                          +{scheme.eligibility_criteria.length - 2} more criteria
+                          +{scheme.eligibility_criteria.length - 2} more
+                          criteria
                         </li>
                       )}
                     </ul>
@@ -199,8 +231,13 @@ export default function FarmerSchemePage() {
                         </h4>
                         <ul className="space-y-2">
                           {scheme.benefits.map((benefit, index) => (
-                            <li key={index} className="text-sm text-muted-foreground flex items-start">
-                              <span className="text-green-500 mr-2 mt-1">•</span>
+                            <li
+                              key={index}
+                              className="text-sm text-muted-foreground flex items-start"
+                            >
+                              <span className="text-green-500 mr-2 mt-1">
+                                •
+                              </span>
                               {benefit}
                             </li>
                           ))}
@@ -214,14 +251,21 @@ export default function FarmerSchemePage() {
                           Eligibility Criteria
                         </h4>
                         <ul className="space-y-2 mb-4">
-                          {scheme.eligibility_criteria.map((criteria, index) => (
-                            <li key={index} className="text-sm text-muted-foreground flex items-start">
-                              <span className="text-blue-500 mr-2 mt-1">•</span>
-                              {criteria}
-                            </li>
-                          ))}
+                          {scheme.eligibility_criteria.map(
+                            (criteria, index) => (
+                              <li
+                                key={index}
+                                className="text-sm text-muted-foreground flex items-start"
+                              >
+                                <span className="text-blue-500 mr-2 mt-1">
+                                  •
+                                </span>
+                                {criteria}
+                              </li>
+                            )
+                          )}
                         </ul>
-                        
+
                         {scheme.exclusions.length > 0 && (
                           <>
                             <h4 className="font-semibold text-foreground mb-3 flex items-center">
@@ -230,8 +274,13 @@ export default function FarmerSchemePage() {
                             </h4>
                             <ul className="space-y-2">
                               {scheme.exclusions.map((exclusion, index) => (
-                                <li key={index} className="text-sm text-muted-foreground flex items-start">
-                                  <span className="text-red-500 mr-2 mt-1">•</span>
+                                <li
+                                  key={index}
+                                  className="text-sm text-muted-foreground flex items-start"
+                                >
+                                  <span className="text-red-500 mr-2 mt-1">
+                                    •
+                                  </span>
                                   {exclusion}
                                 </li>
                               ))}
@@ -248,7 +297,10 @@ export default function FarmerSchemePage() {
                         </h4>
                         <ol className="space-y-2 mb-4">
                           {scheme.how_to_apply.map((step, index) => (
-                            <li key={index} className="text-sm text-muted-foreground flex items-start">
+                            <li
+                              key={index}
+                              className="text-sm text-muted-foreground flex items-start"
+                            >
                               <span className="bg-purple-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs mr-2 mt-0.5 flex-shrink-0">
                                 {index + 1}
                               </span>
@@ -263,8 +315,13 @@ export default function FarmerSchemePage() {
                         </h4>
                         <ul className="space-y-2">
                           {scheme.whom_to_contact.map((contact, index) => (
-                            <li key={index} className="text-sm text-muted-foreground flex items-start">
-                              <span className="text-orange-500 mr-2 mt-1">•</span>
+                            <li
+                              key={index}
+                              className="text-sm text-muted-foreground flex items-start"
+                            >
+                              <span className="text-orange-500 mr-2 mt-1">
+                                •
+                              </span>
                               {contact}
                             </li>
                           ))}
@@ -280,7 +337,10 @@ export default function FarmerSchemePage() {
                       </h4>
                       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2">
                         {scheme.required_documents.map((document, index) => (
-                          <div key={index} className="flex items-center text-sm text-muted-foreground">
+                          <div
+                            key={index}
+                            className="flex items-center text-sm text-muted-foreground"
+                          >
                             <CheckCircle className="h-4 w-4 text-green-500 mr-2 flex-shrink-0" />
                             {document}
                           </div>
@@ -290,17 +350,12 @@ export default function FarmerSchemePage() {
 
                     {/* Action Buttons */}
                     <div className="flex flex-wrap gap-3 mt-6">
-                      <button className="flex items-center px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors">
+                      <button
+                        onClick={() => window.open(scheme.apply_url, "_blank")}
+                        className="flex items-center px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+                      >
                         <ExternalLink className="h-4 w-4 mr-2" />
                         Apply Now
-                      </button>
-                      <button className="flex items-center px-4 py-2 border border-border rounded-lg hover:bg-accent transition-colors">
-                        <FileText className="h-4 w-4 mr-2" />
-                        Download Guidelines
-                      </button>
-                      <button className="flex items-center px-4 py-2 border border-border rounded-lg hover:bg-accent transition-colors">
-                        <Phone className="h-4 w-4 mr-2" />
-                        Contact Support
                       </button>
                     </div>
                   </div>
@@ -314,9 +369,12 @@ export default function FarmerSchemePage() {
         {filteredSchemes.length === 0 && (
           <div className="text-center py-12">
             <div className="text-6xl mb-4">🔍</div>
-            <h3 className="text-xl font-semibold text-foreground mb-2">No schemes found</h3>
+            <h3 className="text-xl font-semibold text-foreground mb-2">
+              No schemes found
+            </h3>
             <p className="text-muted-foreground">
-              Try adjusting your search terms or filters to find relevant schemes.
+              Try adjusting your search terms or filters to find relevant
+              schemes.
             </p>
           </div>
         )}
@@ -330,18 +388,19 @@ export default function FarmerSchemePage() {
               Need Help Finding the Right Scheme?
             </h3>
             <p className="text-muted-foreground mb-4">
-              Contact our agricultural experts for personalized scheme recommendations
+              Contact our agricultural experts for personalized scheme
+              recommendations
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Link 
-                href="/chat" 
+              <Link
+                href="/chat"
                 className="flex items-center px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
               >
                 <span className="mr-2">💬</span>
                 Chat with AI Assistant
               </Link>
-              <Link 
-                href="/contact" 
+              <Link
+                href="/contact"
                 className="flex items-center px-6 py-3 border border-border rounded-lg hover:bg-accent transition-colors"
               >
                 <Phone className="h-5 w-5 mr-2" />

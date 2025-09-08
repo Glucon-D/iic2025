@@ -3,6 +3,7 @@
     {
       "scheme_id": "SCH001",
       "scheme_name": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)",
+      "apply_url": "https://pmkisan.gov.in",
       "objective": "To supplement the financial needs of Small and Marginal farmers in procuring various inputs to ensure proper crop health and appropriate yields, commensurate with the anticipated farm income at the end of each crop cycle",
       "benefits": [
         "Direct income support of Rs. 6,000 per year in three equal installments of Rs. 2,000 each",
@@ -52,6 +53,7 @@
     {
       "scheme_id": "SCH002",
       "scheme_name": "Pradhan Mantri Fasal Bima Yojana (PMFBY)",
+      "apply_url": "https://pmfby.gov.in",
       "objective": "To provide insurance coverage and financial support to farmers in case of crop loss due to natural calamities, pests, and diseases while encouraging farmers to adopt innovative and modern agricultural practices",
       "benefits": [
         "Comprehensive risk insurance for crop losses",
@@ -106,6 +108,7 @@
     {
       "scheme_id": "SCH003",
       "scheme_name": "Soil Health Card Scheme (SHC)",
+      "apply_url": "https://soilhealth.dac.gov.in",
       "objective": "To assess soil health status and provide crop-wise recommendations of nutrients and fertilizers required for better soil health and higher crop yields while promoting judicious use of fertilizers",
       "benefits": [
         "Free soil testing every 3 years",
@@ -150,6 +153,7 @@
     {
       "scheme_id": "SCH004",
       "scheme_name": "National Agriculture Market (e-NAM)",
+      "apply_url": "https://enam.gov.in",
       "objective": "To create a unified national market for agricultural commodities by networking existing APMC markets through online trading platform for transparent price discovery and efficient marketing",
       "benefits": [
         "Transparent online trading with enhanced market accessibility",
@@ -201,6 +205,7 @@
     {
       "scheme_id": "SCH005",
       "scheme_name": "Rashtriya Krishi Vikas Yojana (RKVY)",
+      "apply_url": "https://rkvy.nic.in",
       "objective": "To incentivize states to increase investment in agriculture and allied sectors while ensuring holistic development of agriculture by allowing states flexibility to choose their own agriculture development activities",
       "benefits": [
         "Flexible funding for state-specific agriculture programs",
@@ -251,6 +256,7 @@
     {
       "scheme_id": "SCH006",
       "scheme_name": "Krishi Decision Support System (Krishi-DSS)",
+      "apply_url": "https://krishi-dss.gov.in",
       "objective": "To provide comprehensive digital geospatial platform integrating remote sensing data on crops, soil, weather, and water resources for enhanced decision-making in agriculture through data-driven insights",
       "benefits": [
         "Real-time crop monitoring and yield estimation",
