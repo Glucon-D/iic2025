@@ -596,7 +596,7 @@ export const useChatStore = create<ChatStore>()(
 
   // Generate AI response with real-time streaming
   generateAIResponse: async () => {
-    const { currentThread, messages } = get();
+    const { currentThread } = get();
     const { user } = useAuthStore.getState();
 
     if (!currentThread || !user) {
@@ -622,33 +622,44 @@ export const useChatStore = create<ChatStore>()(
     }));
 
     try {
-      // Prepare messages for AI SDK
-      const apiMessages = messages.map((msg) => {
-        if (msg.contentType === "image" && msg.attachment) {
+      // Get the latest messages state right before processing
+      const { messages } = get();
+
+      console.log("Total messages in state:", messages.length);
+      console.log("Messages:", messages.map(m => ({ role: m.role, content: m.content?.substring(0, 50), id: m.$id })));
+
+      // Prepare messages for AI SDK (exclude temporary assistant messages)
+      const apiMessages = messages
+        .filter(msg => msg.role !== "assistant" || !msg.$id?.startsWith("temp-assistant-"))
+        .map((msg) => {
+          if (msg.contentType === "image" && msg.attachment) {
+            return {
+              role: msg.role,
+              content: [
+                {
+                  type: "text",
+                  text: msg.content || "What's in this image?",
+                },
+                {
+                  type: "image",
+                  image: msg.attachment,
+                },
+              ],
+            };
+          }
           return {
             role: msg.role,
-            content: [
-              {
-                type: "text",
-                text: msg.content || "What's in this image?",
-              },
-              {
-                type: "image",
-                image: msg.attachment,
-              },
-            ],
+            content: msg.content || "",
           };
-        }
-        return {
-          role: msg.role,
-          content: msg.content || "",
-        };
-      }).filter(msg => {
-        if (Array.isArray(msg.content)) {
-          return msg.content.length > 0;
-        }
-        return typeof msg.content === 'string' && msg.content.trim().length > 0;
-      });
+        }).filter(msg => {
+          if (Array.isArray(msg.content)) {
+            return msg.content.length > 0;
+          }
+          return typeof msg.content === 'string' && msg.content.trim().length > 0;
+        });
+
+      console.log("API messages to send:", apiMessages.length);
+      console.log("API messages:", apiMessages);
 
       // Ensure we have at least one message
       if (apiMessages.length === 0) {
