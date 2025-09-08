@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { Send, Paperclip, Image, Mic, X, Loader2 } from 'lucide-react';
+import { Send, Paperclip, Image, Mic, X, Loader2, MicOff, AlertCircle } from 'lucide-react';
+import { useVoiceRecording } from '@/hooks/useVoiceRecording';
 
 interface MessageInputProps {
   onSendMessage: (content: string, contentType?: 'text' | 'image' | 'voice' | 'file') => void;
@@ -11,10 +12,21 @@ interface MessageInputProps {
 
 export function MessageInput({ onSendMessage, disabled, placeholder }: MessageInputProps) {
   const [message, setMessage] = useState('');
-  const [isRecording, setIsRecording] = useState(false);
   const [attachedFile, setAttachedFile] = useState<File | null>(null);
+  const [isTranscribing, setIsTranscribing] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const {
+    isRecording,
+    isProcessing,
+    error: voiceError,
+    recordingDuration,
+    startRecording,
+    stopRecording,
+    cancelRecording,
+    clearError,
+  } = useVoiceRecording();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -73,15 +85,59 @@ export function MessageInput({ onSendMessage, disabled, placeholder }: MessageIn
     }
   };
 
-  const startRecording = () => {
-    // TODO: Implement voice recording
-    setIsRecording(true);
-    console.log('Voice recording not implemented yet');
+  const handleVoiceRecording = async () => {
+    if (isRecording) {
+      // Stop recording and process
+      try {
+        const audioBlob = await stopRecording();
+        if (audioBlob) {
+          await transcribeAudio(audioBlob);
+        }
+      } catch (error) {
+        console.error('Failed to stop recording:', error);
+      }
+    } else {
+      // Start recording
+      clearError();
+      await startRecording();
+    }
   };
 
-  const stopRecording = () => {
-    setIsRecording(false);
-    // TODO: Process recorded audio
+  const transcribeAudio = async (audioBlob: Blob) => {
+    setIsTranscribing(true);
+    try {
+      const formData = new FormData();
+      formData.append('audio', audioBlob);
+
+      const response = await fetch('/api/speech-to-text', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to transcribe audio');
+      }
+
+      const result = await response.json();
+
+      // Add transcribed text to the message input
+      if (result.text) {
+        const transcribedText = result.text.trim();
+        setMessage(prev => prev ? `${prev} ${transcribedText}` : transcribedText);
+
+        // Auto-resize textarea
+        if (textareaRef.current) {
+          textareaRef.current.style.height = 'auto';
+          textareaRef.current.style.height = Math.min(textareaRef.current.scrollHeight, 120) + 'px';
+        }
+      }
+    } catch (error) {
+      console.error('Transcription failed:', error);
+      // The error will be shown via the voice recording hook
+    } finally {
+      setIsTranscribing(false);
+    }
   };
 
   return (
@@ -135,16 +191,32 @@ export function MessageInput({ onSendMessage, disabled, placeholder }: MessageIn
         {/* Voice recording button */}
         <button
           type="button"
-          onClick={isRecording ? stopRecording : startRecording}
-          disabled={disabled}
+          onClick={handleVoiceRecording}
+          disabled={disabled || isTranscribing}
           className={`p-2 rounded-lg transition-colors disabled:opacity-50 ${
             isRecording
               ? 'text-red-500 bg-red-50 dark:bg-red-950'
+              : isProcessing || isTranscribing
+              ? 'text-blue-500 bg-blue-50 dark:bg-blue-950'
               : 'text-muted-foreground hover:text-foreground hover:bg-accent'
           }`}
-          title={isRecording ? 'Stop recording' : 'Record voice message'}
+          title={
+            isRecording
+              ? 'Stop recording'
+              : isProcessing
+              ? 'Processing...'
+              : isTranscribing
+              ? 'Transcribing...'
+              : 'Record voice message'
+          }
         >
-          <Mic className={`h-5 w-5 ${isRecording ? 'animate-pulse' : ''}`} />
+          {isProcessing || isTranscribing ? (
+            <Loader2 className="h-5 w-5 animate-spin" />
+          ) : isRecording ? (
+            <MicOff className="h-5 w-5 animate-pulse" />
+          ) : (
+            <Mic className="h-5 w-5" />
+          )}
         </button>
 
         {/* Message input */}
@@ -176,11 +248,56 @@ export function MessageInput({ onSendMessage, disabled, placeholder }: MessageIn
         </button>
       </form>
 
-      {/* Recording indicator */}
-      {isRecording && (
-        <div className="mt-2 flex items-center space-x-2 text-red-500">
-          <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
-          <span className="text-sm">Recording...</span>
+      {/* Recording/Processing indicators */}
+      {(isRecording || isProcessing || isTranscribing) && (
+        <div className="mt-2 flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            {isRecording && (
+              <>
+                <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+                <span className="text-sm text-red-500">
+                  Recording... {recordingDuration}s
+                </span>
+              </>
+            )}
+            {isProcessing && (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin text-blue-500" />
+                <span className="text-sm text-blue-500">Processing audio...</span>
+              </>
+            )}
+            {isTranscribing && (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin text-blue-500" />
+                <span className="text-sm text-blue-500">Converting speech to text...</span>
+              </>
+            )}
+          </div>
+
+          {isRecording && (
+            <button
+              type="button"
+              onClick={cancelRecording}
+              className="text-xs text-muted-foreground hover:text-foreground px-2 py-1 rounded"
+            >
+              Cancel
+            </button>
+          )}
+        </div>
+      )}
+
+      {/* Error display */}
+      {voiceError && (
+        <div className="mt-2 flex items-center space-x-2 text-red-500 bg-red-50 dark:bg-red-950/20 p-2 rounded-lg">
+          <AlertCircle className="w-4 h-4 flex-shrink-0" />
+          <span className="text-sm">{voiceError}</span>
+          <button
+            type="button"
+            onClick={clearError}
+            className="ml-auto text-red-400 hover:text-red-600"
+          >
+            <X className="w-4 h-4" />
+          </button>
         </div>
       )}
     </div>
