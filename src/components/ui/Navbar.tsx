@@ -11,6 +11,7 @@ import {
   Settings,
   LogOut,
   ChevronDown,
+  XIcon,
 } from "lucide-react";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import WeatherWidget from "@/components/ui/WeatherWidget";
@@ -18,6 +19,7 @@ import { CropCalendarDropdown } from "@/components/ui/CropCalendarDropdown";
 import AINudgesDropdown from "@/components/ui/AINudgesDropdown";
 import { useAuthStore } from "@/services/authStore";
 import { useRouter } from "next/navigation";
+import { useSidebar } from "@/app/chat/layout";
 
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -25,6 +27,7 @@ export function Navbar() {
   const { user, isAuthenticated, logout } = useAuthStore();
   const router = useRouter();
   const userMenuRef = useRef<HTMLDivElement>(null);
+  const { sidebarOpen, toggleSidebar } = useSidebar();
 
   // Close user menu when clicking outside
   useEffect(() => {
@@ -62,17 +65,37 @@ export function Navbar() {
     <header className="bg-background/95 backdrop-blur-md border-b border-border/50 fixed top-0 inset-x-0 z-50 shadow-sm">
       <div className=" mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3 group">
-            <div className="p-2 bg-primary/10 rounded-xl group-hover:bg-primary/20 transition-colors">
-              <Sprout className="h-6 w-6 text-primary" />
-            </div>
-            <div className="hidden sm:block">
-              <h1 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
-                Digital Krishi Officer
-              </h1>
-            </div>
-          </Link>
+          {/* Sidebar toggle button - only show when sidebar is closed */}
+          <div className="flex items-center space-x-3">
+            {!sidebarOpen ? (
+              <button
+                onClick={toggleSidebar}
+                className="p-2 hover:bg-accent rounded-lg transition-colors"
+                title="Open sidebar"
+              >
+                <Menu className="h-5 w-5" />
+              </button>
+            ) : (
+              <button
+                onClick={toggleSidebar}
+                className="p-2 hover:bg-accent rounded-lg transition-colors"
+                title="Close sidebar"
+              >
+                <XIcon className="h-5 w-5" />
+              </button>
+            )}
+            {/* Logo */}
+            <Link href="/" className="flex items-center space-x-3 group">
+              <div className="p-2 bg-primary/10 rounded-xl group-hover:bg-primary/20 transition-colors">
+                <Sprout className="h-6 w-6 text-primary" />
+              </div>
+              <div className="hidden sm:block">
+                <h1 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
+                  Digital Krishi Officer
+                </h1>
+              </div>
+            </Link>
+          </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6">

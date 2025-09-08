@@ -4,7 +4,6 @@ import { useEffect, useState, useCallback } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import { useChatStore } from "@/services/chatStore";
 import { useAuthStore } from "@/services/authStore";
-import { ChatHeader } from "@/components/chat/ChatHeader";
 import { MessageList } from "@/components/chat/MessageList";
 import { MessageInput } from "@/components/chat/MessageInput";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
@@ -14,6 +13,8 @@ export default function ChatPage() {
   const searchParams = useSearchParams();
   const threadId = params?.threadId as string;
   const initialMessage = searchParams?.get("initialMessage");
+  const contentType = searchParams?.get("contentType") as "text" | "image" | "voice" | "file" | null;
+  const hasAttachment = searchParams?.get("hasAttachment") === "true";
 
   const {
     currentThread,
@@ -32,12 +33,13 @@ export default function ChatPage() {
   const handleSendMessage = useCallback(
     async (
       content: string,
-      contentType: "text" | "image" | "voice" | "file" = "text"
+      contentType: "text" | "image" | "voice" | "file" = "text",
+      attachment?: File
     ) => {
       if (!currentThread || !user) return;
 
       try {
-        await sendMessage(content, contentType);
+        await sendMessage(content, contentType, attachment);
       } catch (error) {
         console.error("Failed to send message:", error);
       }

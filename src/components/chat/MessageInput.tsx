@@ -5,7 +5,7 @@ import { Send, Paperclip, Image, Mic, X, Loader2, MicOff, AlertCircle } from 'lu
 import { useVoiceRecording } from '@/hooks/useVoiceRecording';
 
 interface MessageInputProps {
-  onSendMessage: (content: string, contentType?: 'text' | 'image' | 'voice' | 'file') => void;
+  onSendMessage: (content: string, contentType?: 'text' | 'image' | 'voice' | 'file', attachment?: File) => void;
   disabled?: boolean;
   placeholder?: string;
 }
@@ -13,6 +13,7 @@ interface MessageInputProps {
 export function MessageInput({ onSendMessage, disabled, placeholder }: MessageInputProps) {
   const [message, setMessage] = useState('');
   const [attachedFile, setAttachedFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isTranscribing, setIsTranscribing] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -31,7 +32,7 @@ export function MessageInput({ onSendMessage, disabled, placeholder }: MessageIn
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if ((message.trim() || attachedFile) && !disabled) {
-      const content = message.trim();
+      const content = message.trim() || (attachedFile ? `Image: ${attachedFile.name}` : '');
       let contentType: 'text' | 'image' | 'voice' | 'file' = 'text';
       
       if (attachedFile) {
@@ -44,9 +45,10 @@ export function MessageInput({ onSendMessage, disabled, placeholder }: MessageIn
         }
       }
       
-      onSendMessage(content, contentType);
+      onSendMessage(content, contentType, attachedFile || undefined);
       setMessage('');
       setAttachedFile(null);
+      setImagePreview(null);
       
       // Reset textarea height
       if (textareaRef.current) {
@@ -74,12 +76,36 @@ export function MessageInput({ onSendMessage, disabled, placeholder }: MessageIn
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      // Validate file type for images
+      const validImageTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/webp'];
+      if (!validImageTypes.includes(file.type)) {
+        alert('Please select a valid image file (PNG, JPEG, JPG, GIF, or WebP)');
+        return;
+      }
+
+      // Validate file size (max 10MB)
+      const maxSize = 10 * 1024 * 1024;
+      if (file.size > maxSize) {
+        alert('File size must be less than 10MB');
+        return;
+      }
+
       setAttachedFile(file);
+      
+      // Create preview for image files
+      if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setImagePreview(reader.result as string);
+        };
+        reader.readAsDataURL(file);
+      }
     }
   };
 
   const removeAttachment = () => {
     setAttachedFile(null);
+    setImagePreview(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
@@ -144,26 +170,37 @@ export function MessageInput({ onSendMessage, disabled, placeholder }: MessageIn
     <div className="border-t border-border bg-background p-4">
       {/* File attachment preview */}
       {attachedFile && (
-        <div className="mb-3 p-3 bg-muted rounded-lg flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            {attachedFile.type.startsWith('image/') ? (
-              <Image className="h-4 w-4 text-muted-foreground" />
-            ) : (
-              <Paperclip className="h-4 w-4 text-muted-foreground" />
-            )}
-            <span className="text-sm text-muted-foreground truncate">
-              {attachedFile.name}
-            </span>
-            <span className="text-xs text-muted-foreground">
-              ({(attachedFile.size / 1024).toFixed(1)} KB)
-            </span>
+        <div className="mb-3 p-3 bg-muted rounded-lg">
+          <div className="flex items-start justify-between">
+            <div className="flex items-start space-x-3 flex-1">
+              {imagePreview ? (
+                <img 
+                  src={imagePreview} 
+                  alt="Preview" 
+                  className="w-20 h-20 object-cover rounded-lg"
+                />
+              ) : (
+                <div className="w-20 h-20 bg-accent rounded-lg flex items-center justify-center">
+                  <Image className="h-8 w-8 text-muted-foreground" />
+                </div>
+              )}
+              <div className="flex-1">
+                <p className="text-sm font-medium text-foreground truncate">
+                  {attachedFile.name}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  {(attachedFile.size / 1024 / 1024).toFixed(2)} MB
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={removeAttachment}
+              className="p-1 hover:bg-accent rounded transition-colors ml-2"
+              type="button"
+            >
+              <X className="h-4 w-4" />
+            </button>
           </div>
-          <button
-            onClick={removeAttachment}
-            className="p-1 hover:bg-accent rounded transition-colors"
-          >
-            <X className="h-4 w-4" />
-          </button>
         </div>
       )}
 
@@ -174,7 +211,7 @@ export function MessageInput({ onSendMessage, disabled, placeholder }: MessageIn
           type="file"
           onChange={handleFileSelect}
           className="hidden"
-          accept="image/*,audio/*,.pdf,.doc,.docx,.txt"
+          accept="image/png,image/jpeg,image/jpg,image/gif,image/webp"
         />
 
         {/* Attachment button */}
