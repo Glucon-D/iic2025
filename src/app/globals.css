@@ -76,18 +76,33 @@ body {
 
 /* Custom animations */
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 @keyframes float-slow {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-15px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
 }
 
 @keyframes float-slower {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
 @keyframes spin-slow {
@@ -113,14 +128,56 @@ body {
 
 /* Grid pattern background */
 .bg-grid-pattern {
-  background-image: 
-    linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+  background-image: linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
   background-size: 20px 20px;
 }
 
 .dark .bg-grid-pattern {
-  background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.1) 1px,
+      transparent 1px
+    ),
     linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+}
+
+/* Themed custom scrollbar */
+.scrollbar-custom {
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: var(--sb-thumb) transparent;
+
+  /* Defaults for light */
+  --sb-track: transparent;
+  --sb-thumb: #cbd5e1; /* slate-300 */
+  --sb-thumb-hover: #94a3b8; /* slate-400 */
+}
+
+.dark .scrollbar-custom {
+  /* Dark overrides */
+  --sb-track: transparent;
+  --sb-thumb: #334155; /* slate-700 */
+  --sb-thumb-hover: #475569; /* slate-600 */
+}
+
+/* WebKit (Chrome, Edge, Safari) */
+.scrollbar-custom::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 9999px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: content-box; /* creates a subtle inset */
+}
+
+.scrollbar-custom:hover::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-hover);
 }

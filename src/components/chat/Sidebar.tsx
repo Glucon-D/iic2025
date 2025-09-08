@@ -21,7 +21,7 @@ export function Sidebar({ onToggle }: SidebarProps) {
   // Memoized filtered threads for better performance
   const filteredThreads = useMemo(() => {
     if (!searchQuery.trim()) return threads;
-    
+
     const query = searchQuery.toLowerCase();
     return threads.filter(
       (thread) =>
@@ -40,37 +40,22 @@ export function Sidebar({ onToggle }: SidebarProps) {
     }
   }, [createThread, router]);
 
-  const handleThreadSelect = useCallback((threadId: string | undefined) => {
-    if (!threadId) return;
-    
-    // Use router.replace for smoother transitions
-    const newUrl = `/chat/${threadId}`;
-    if (window.location.pathname !== newUrl) {
-      router.replace(newUrl);
-    }
-  }, [router]);
+  const handleThreadSelect = useCallback(
+    (threadId: string | undefined) => {
+      if (!threadId) return;
+
+      // Use router.replace for smoother transitions
+      const newUrl = `/chat/${threadId}`;
+      if (window.location.pathname !== newUrl) {
+        router.replace(newUrl);
+      }
+    },
+    [router]
+  );
 
   return (
     <div className="flex flex-col h-full bg-card border-r border-border">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-border">
-        <div className="flex items-center space-x-2">
-          <Sprout className="h-6 w-6 text-primary" />
-          <h1 className="text-lg font-semibold text-card-foreground">
-            Digital Krishi
-          </h1>
-        </div>
-        <div className="flex items-center space-x-2">
-          <ThemeToggle />
-          <button
-            onClick={onToggle}
-            className="p-1 hover:bg-accent rounded-md transition-colors"
-            aria-label="Toggle sidebar"
-          >
-            <Menu className="h-4 w-4" />
-          </button>
-        </div>
-      </div>
 
       {/* New Chat Button */}
       <div className="p-4">

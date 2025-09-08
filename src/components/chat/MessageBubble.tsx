@@ -1,9 +1,11 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Copy, Check, User, Bot, Image, FileText, Mic } from 'lucide-react';
-import { ChatMessage } from '@/utils/types/chat.types';
-import { formatDistanceToNow } from 'date-fns';
+import { useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { Copy, Check, User, Bot, Image, FileText, Mic } from "lucide-react";
+import { ChatMessage } from "@/utils/types/chat.types";
+import { formatDistanceToNow } from "date-fns";
 
 interface MessageBubbleProps {
   message: ChatMessage;
@@ -13,7 +15,12 @@ interface MessageBubbleProps {
   isStreaming?: boolean;
 }
 
-export function MessageBubble({ message, isUser, showAvatar, isStreaming }: MessageBubbleProps) {
+export function MessageBubble({
+  message,
+  isUser,
+  showAvatar,
+  isStreaming,
+}: MessageBubbleProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -22,17 +29,17 @@ export function MessageBubble({ message, isUser, showAvatar, isStreaming }: Mess
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (error) {
-      console.error('Failed to copy message:', error);
+      console.error("Failed to copy message:", error);
     }
   };
 
   const getContentTypeIcon = () => {
     switch (message.contentType) {
-      case 'image':
+      case "image":
         return <Image className="h-4 w-4" />;
-      case 'voice':
+      case "voice":
         return <Mic className="h-4 w-4" />;
-      case 'file':
+      case "file":
         return <FileText className="h-4 w-4" />;
       default:
         return null;
@@ -41,7 +48,7 @@ export function MessageBubble({ message, isUser, showAvatar, isStreaming }: Mess
 
   const renderContent = () => {
     switch (message.contentType) {
-      case 'image':
+      case "image":
         return (
           <div className="space-y-2">
             {message.attachment && (
@@ -52,11 +59,13 @@ export function MessageBubble({ message, isUser, showAvatar, isStreaming }: Mess
               />
             )}
             {message.content && (
-              <p className="whitespace-pre-wrap break-words">{message.content}</p>
+              <p className="whitespace-pre-wrap break-words">
+                {message.content}
+              </p>
             )}
           </div>
         );
-      case 'voice':
+      case "voice":
         return (
           <div className="space-y-2">
             {message.attachment && (
@@ -66,11 +75,13 @@ export function MessageBubble({ message, isUser, showAvatar, isStreaming }: Mess
               </audio>
             )}
             {message.content && (
-              <p className="whitespace-pre-wrap break-words">{message.content}</p>
+              <p className="whitespace-pre-wrap break-words">
+                {message.content}
+              </p>
             )}
           </div>
         );
-      case 'file':
+      case "file":
         return (
           <div className="space-y-2">
             {message.attachment && (
@@ -85,37 +96,60 @@ export function MessageBubble({ message, isUser, showAvatar, isStreaming }: Mess
               </a>
             )}
             {message.content && (
-              <p className="whitespace-pre-wrap break-words">{message.content}</p>
+              <p className="whitespace-pre-wrap break-words">
+                {message.content}
+              </p>
             )}
           </div>
         );
-       default:
-         return (
-           <div>
-             <p className="whitespace-pre-wrap break-words">{message.content}</p>
-             {isStreaming && (
-               <div className="flex items-center space-x-2 mt-2 text-xs opacity-70">
-                 <div className="flex space-x-1">
-                   <div className="w-2 h-2 bg-current rounded-full animate-pulse" style={{ animationDelay: '0ms' }}></div>
-                   <div className="w-2 h-2 bg-current rounded-full animate-pulse" style={{ animationDelay: '200ms' }}></div>
-                   <div className="w-2 h-2 bg-current rounded-full animate-pulse" style={{ animationDelay: '400ms' }}></div>
-                 </div>
-                 <span className="animate-pulse">AI is typing...</span>
-               </div>
-             )}
-           </div>
-         );
+      default:
+        return (
+          <div>
+            <div className="prose prose-slate prose-sm dark:prose-invert max-w-none">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {message.content}
+              </ReactMarkdown>
+            </div>
+            {isStreaming && (
+              <div className="flex items-center space-x-2 mt-2 text-xs opacity-70">
+                <div className="flex space-x-1">
+                  <div
+                    className="w-2 h-2 bg-current rounded-full animate-pulse"
+                    style={{ animationDelay: "0ms" }}
+                  ></div>
+                  <div
+                    className="w-2 h-2 bg-current rounded-full animate-pulse"
+                    style={{ animationDelay: "200ms" }}
+                  ></div>
+                  <div
+                    className="w-2 h-2 bg-current rounded-full animate-pulse"
+                    style={{ animationDelay: "400ms" }}
+                  ></div>
+                </div>
+                <span className="animate-pulse">AI is typing...</span>
+              </div>
+            )}
+          </div>
+        );
     }
   };
 
   return (
-    <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} group`}>
-      <div className={`flex max-w-[70%] ${isUser ? 'flex-row-reverse' : 'flex-row'} items-end space-x-2`}>
+    <div className={`flex ${isUser ? "justify-end" : "justify-start"} group`}>
+      <div
+        className={`flex max-w-[70%] ${
+          isUser ? "flex-row-reverse" : "flex-row"
+        } items-end space-x-2`}
+      >
         {/* Avatar */}
         {showAvatar && (
-          <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
-            isUser ? 'bg-primary text-primary-foreground ml-2' : 'bg-secondary text-secondary-foreground mr-2'
-          }`}>
+          <div
+            className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
+              isUser
+                ? "bg-primary text-primary-foreground ml-2"
+                : "bg-secondary text-secondary-foreground mr-2"
+            }`}
+          >
             {isUser ? (
               <User className="h-4 w-4" />
             ) : (
@@ -125,52 +159,50 @@ export function MessageBubble({ message, isUser, showAvatar, isStreaming }: Mess
         )}
 
         {/* Message bubble */}
-        <div className={`relative ${showAvatar ? '' : isUser ? 'mr-10' : 'ml-10'}`}>
+        <div
+          className={`relative ${showAvatar ? "" : isUser ? "mr-10" : "ml-10"}`}
+        >
           <div
             className={`px-4 py-3 rounded-2xl ${
               isUser
-                ? 'bg-primary text-primary-foreground rounded-br-md'
-                : 'bg-muted text-muted-foreground rounded-bl-md'
+                ? "bg-primary text-primary-foreground rounded-br-md"
+                : "bg-muted text-muted-foreground rounded-bl-md"
             }`}
           >
             {/* Content type indicator */}
-            {message.contentType !== 'text' && (
+            {message.contentType !== "text" && (
               <div className="flex items-center space-x-1 mb-2 opacity-70">
                 {getContentTypeIcon()}
-                <span className="text-xs capitalize">{message.contentType}</span>
+                <span className="text-xs capitalize">
+                  {message.contentType}
+                </span>
               </div>
             )}
 
             {/* Message content */}
-            <div className="text-sm">
-              {renderContent()}
-            </div>
+            <div className="text-sm">{renderContent()}</div>
           </div>
 
           {/* Message metadata */}
-          <div className={`flex items-center space-x-2 mt-1 text-xs text-muted-foreground ${
-            isUser ? 'justify-end' : 'justify-start'
-          }`}>
-            <span>
-              {message.$createdAt 
-                ? formatDistanceToNow(new Date(message.$createdAt), { addSuffix: true })
-                : 'Just now'
-              }
-            </span>
-            
-            {/* Copy button */}
-            <button
-              onClick={handleCopy}
-              className="opacity-0 group-hover:opacity-100 p-1 hover:bg-accent rounded transition-opacity"
-              title="Copy message"
-            >
-              {copied ? (
-                <Check className="h-3 w-3 text-green-500" />
-              ) : (
-                <Copy className="h-3 w-3" />
-              )}
-            </button>
-          </div>
+        </div>
+
+        <div
+          className={`flex items-center space-x-2 mt-1 text-xs text-muted-foreground ${
+            isUser ? "justify-end" : "justify-start"
+          }`}
+        >
+          {/* Copy button */}
+          <button
+            onClick={handleCopy}
+            className="opacity-0 group-hover:opacity-100 p-1 hover:bg-accent rounded transition-opacity"
+            title="Copy message"
+          >
+            {copied ? (
+              <Check className="h-3 w-3 text-green-500" />
+            ) : (
+              <Copy className="h-3 w-3" />
+            )}
+          </button>
         </div>
       </div>
     </div>

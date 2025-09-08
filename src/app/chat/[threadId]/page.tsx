@@ -9,7 +9,6 @@ import { MessageList } from "@/components/chat/MessageList";
 import { MessageInput } from "@/components/chat/MessageInput";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 
-
 export default function ChatPage() {
   const params = useParams();
   const searchParams = useSearchParams();
@@ -30,8 +29,6 @@ export default function ChatPage() {
   const [hasProcessedInitialMessage, setHasProcessedInitialMessage] =
     useState(false);
 
-
-
   const handleSendMessage = useCallback(
     async (
       content: string,
@@ -51,12 +48,12 @@ export default function ChatPage() {
   useEffect(() => {
     if (threadId && user && !isInitialized && !authLoading) {
       // For temporary threads, just load from store
-      if (threadId.startsWith('temp-thread-')) {
+      if (threadId.startsWith("temp-thread-")) {
         selectThread(threadId, true).finally(() => setIsInitialized(true));
       } else {
         // For real threads, load from cache first then sync with Appwrite
         selectThread(threadId, true).finally(() => setIsInitialized(true));
-        
+
         // Then sync with Appwrite for latest messages
         setTimeout(() => {
           selectThread(threadId, false).catch(console.error);
@@ -123,16 +120,13 @@ export default function ChatPage() {
   }
 
   return (
-    <div className="flex-1 flex flex-col h-full">
-      {/* Chat Header */}
-      <ChatHeader thread={currentThread} />
-
+    <div className="flex-1 min-h-0 flex flex-col h-full">
       {/* Messages */}
-      <div className="flex-1 overflow-hidden">
-        <MessageList 
-          messages={messages} 
-          currentUserId={user?.$id} 
-          isStreaming={isStreaming} 
+      <div className="flex-1 min-h-0 overflow-hidden flex">
+        <MessageList
+          messages={messages}
+          currentUserId={user?.$id}
+          isStreaming={isStreaming}
         />
       </div>
 

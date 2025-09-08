@@ -98,7 +98,7 @@ export function ChatHeader({ thread }: ChatHeaderProps) {
             {thread.title}
           </h1>
           <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-            <span>{thread.messageCount || 0} messages</span>
+            {/* <span>{thread.messageCount || 0} messages</span> */}
             {thread.lastMessageAt && (
               <span>
                 Last active{" "}
