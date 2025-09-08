@@ -39,7 +39,7 @@ export function Features() {
       title: "Hindi Support",
       description:
         "Ask questions in Hindi and get responses in your native language. No language barriers in farming advice.",
-      color: "blue",
+      color: "green",
     },
     {
       icon: Shield,
@@ -53,42 +53,42 @@ export function Features() {
       title: "Local Weather Insights",
       description:
         "Get weather-based farming advice tailored to India's climates and seasonal patterns.",
-      color: "purple",
+      color: "green",
     },
     {
       icon: Users,
       title: "Expert Escalation",
       description:
         "Complex issues are automatically escalated to local agricultural officers for human expertise.",
-      color: "orange",
+      color: "green",
     },
     {
       icon: Sprout,
       title: "Crop-Specific Advice",
       description:
         "Tailored recommendations for rice, wheat, pulses, spices, and other crops across India.",
-      color: "emerald",
+      color: "green",
     },
     {
       icon: Clock,
       title: "24/7 Availability",
       description:
         "Get farming advice anytime, anywhere. Your digital Krishi Officer never sleeps.",
-      color: "indigo",
+      color: "green",
     },
     {
       icon: Camera,
       title: "Visual Diagnostics",
       description:
         "AI-powered image analysis to identify plant diseases, pests, and nutrient deficiencies instantly.",
-      color: "pink",
+      color: "green",
     },
     {
       icon: CloudRain,
       title: "Monsoon Planning",
       description:
         "Specialized guidance for pre-monsoon, monsoon, and post-monsoon farming activities across India.",
-      color: "cyan",
+      color: "green",
     },
   ];
 
