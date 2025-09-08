@@ -73,11 +73,11 @@ const WeatherWidget = () => {
   // Helper function to get weather-based gradient
   const getWeatherGradient = (weather: string) => {
     switch (weather?.toLowerCase()) {
-      case 'clear': return 'from-yellow-400/20 via-orange-300/20 to-red-400/20';
-      case 'clouds': return 'from-gray-400/20 via-slate-300/20 to-gray-500/20';
-      case 'rain': return 'from-blue-400/20 via-indigo-300/20 to-blue-600/20';
-      case 'snow': return 'from-blue-100/20 via-white/20 to-blue-200/20';
-      default: return 'from-muted/50 to-accent/50';
+      case 'clear': return 'from-gradient-to-br from-amber-400/30 via-yellow-300/20 to-orange-400/30';
+      case 'clouds': return 'from-slate-400/30 via-gray-300/20 to-slate-500/30';
+      case 'rain': return 'from-blue-500/30 via-indigo-400/20 to-cyan-500/30';
+      case 'snow': return 'from-blue-100/30 via-white/20 to-blue-200/30';
+      default: return 'from-violet-500/20 via-purple-400/10 to-indigo-500/20';
     }
   };
 
@@ -189,28 +189,33 @@ const WeatherWidget = () => {
 
   // Weather Skeleton Component
   const WeatherSkeleton = () => (
-    <div className="animate-pulse p-6">
-      <div className="h-4 bg-muted rounded w-3/4 mb-4"></div>
-      <div className="h-12 bg-muted rounded w-1/2 mb-6"></div>
-      <div className="grid grid-cols-2 gap-3">
-        {[...Array(4)].map((_, i) => (
-          <div key={i} className="h-20 bg-muted rounded-xl"></div>
-        ))}
+    <div className="animate-pulse p-8">
+      <div className="flex flex-col items-center space-y-6">
+        <div className="h-6 bg-gradient-to-r from-muted/60 to-muted rounded-full w-3/4"></div>
+        <div className="h-16 bg-gradient-to-r from-muted/60 to-muted rounded-2xl w-1/2"></div>
+        <div className="grid grid-cols-2 gap-4 w-full max-w-lg">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="h-24 bg-gradient-to-br from-muted/40 to-muted/60 rounded-2xl"></div>
+          ))}
+        </div>
       </div>
     </div>
   );
 
   // Error State Component
   const ErrorState = ({ error, onRetry }: { error: string; onRetry: () => void }) => (
-    <div className="text-center py-12">
-      <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-destructive/10 flex items-center justify-center">
-        <CloudOff className="w-8 h-8 text-destructive" />
+    <div className="text-center py-16">
+      <div className="relative w-20 h-20 mx-auto mb-6">
+        <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 to-orange-500/20 rounded-full animate-pulse"></div>
+        <div className="relative w-full h-full rounded-full bg-gradient-to-r from-red-100/80 to-orange-100/80 flex items-center justify-center backdrop-blur-sm">
+          <CloudOff className="w-10 h-10 text-red-500" />
+        </div>
       </div>
-      <h3 className="text-lg font-semibold mb-2">Weather Unavailable</h3>
-      <p className="text-muted-foreground mb-6">{error}</p>
+      <h3 className="text-2xl font-bold mb-3 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">Weather Unavailable</h3>
+      <p className="text-muted-foreground mb-8 text-lg">{error}</p>
       <button 
         onClick={onRetry}
-        className="px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors shadow-md hover:shadow-lg"
+        className="px-8 py-4 bg-gradient-to-r from-primary to-primary/80 text-primary-foreground rounded-2xl hover:from-primary/90 hover:to-primary/70 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 font-semibold"
       >
         Try Again
       </button>
@@ -222,14 +227,17 @@ const WeatherWidget = () => {
     const animation = getWeatherAnimation(main || '');
     
     return iconUrl ? (
-      <img
-        src={iconUrl}
-        alt={main || "Weather"}
-        className={`${size} drop-shadow-lg ${animation}`}
-      />
+      <div className="relative">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-full blur-md opacity-60"></div>
+        <img
+          src={iconUrl}
+          alt={main || "Weather"}
+          className={`relative ${size} drop-shadow-2xl ${animation}`}
+        />
+      </div>
     ) : (
-      <div className={`${size} bg-primary/20 rounded-full flex items-center justify-center`}>
-        <span className="text-2xl">☀</span>
+      <div className={`${size} bg-gradient-to-br from-primary/30 to-accent/30 rounded-full flex items-center justify-center backdrop-blur-sm shadow-lg`}>
+        <span className="text-3xl filter drop-shadow-lg">☀</span>
       </div>
     );
   };
@@ -239,23 +247,24 @@ const WeatherWidget = () => {
       <div className="">
         <button
           onClick={() => setOpen(true)}
-          className="flex relative p-1.5 sm:p-2 rounded-xl border border-border/50 bg-background/60 hover:bg-accent/50 text-foreground transition-all duration-200"
+          className="group relative p-2 sm:p-3 rounded-2xl border-2 border-border/30 bg-gradient-to-br from-background/90 to-muted/50 hover:from-accent/60 hover:to-accent/40 text-foreground transition-all duration-300 hover:shadow-xl hover:scale-110 backdrop-blur-md"
           aria-label="Open weather app"
           title={cityLabel ? `Weather • ${cityLabel}` : "Weather"}
         >
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           {todayIconUrl ? (
             <img
               src={todayIconUrl}
               alt="Weather"
-              className="w-5 h-5 sm:w-7 sm:h-7 shrink-0"
+              className="relative w-6 h-6 sm:w-8 sm:h-8 shrink-0 drop-shadow-lg group-hover:scale-110 transition-transform duration-300"
               onError={(e) => {
                 e.currentTarget.style.display = "none";
               }}
             />
           ) : loading ? (
-            <Loader2 className="w-5 h-5 animate-spin text-primary" />
+            <Loader2 className="relative w-6 h-6 animate-spin text-primary drop-shadow-lg" />
           ) : (
-            <div className="w-5 h-5 sm:w-7 sm:h-7 flex items-center justify-center text-xs font-medium text-muted-foreground">
+            <div className="relative w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center text-sm font-bold bg-gradient-to-br from-muted-foreground/30 to-muted-foreground/20 rounded-lg">
               N/A
             </div>
           )}
@@ -265,50 +274,65 @@ const WeatherWidget = () => {
           mounted &&
           createPortal(
             <div
-              className={`fixed inset-0 z-[60] flex ${isMobile ? 'items-end' : 'items-center'} justify-center ${isMobile ? 'p-0' : 'p-2 sm:p-4'} backdrop-blur-md bg-background/40`}
+              className={`fixed inset-0 z-[60] flex ${isMobile ? 'items-end' : 'items-center'} justify-center ${isMobile ? 'p-0' : 'p-4 sm:p-6'} backdrop-blur-xl bg-black/30`}
               onClick={() => setOpen(false)}
             >
               <div
-                className={`relative w-full max-w-5xl bg-card border border-border shadow-2xl ${isMobile ? 'rounded-t-2xl max-h-[85vh]' : 'rounded-2xl max-h-[90vh]'} overflow-auto`}
+                className={`relative w-full max-w-6xl bg-gradient-to-br from-card/95 to-background/95 border-2 border-border/50 shadow-2xl ${isMobile ? 'rounded-t-3xl max-h-[90vh]' : 'rounded-3xl max-h-[85vh]'} overflow-hidden backdrop-blur-xl`}
                 onClick={(e) => e.stopPropagation()}
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
               >
+                {/* Animated background overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-50"></div>
+                
                 {/* Mobile swipe indicator */}
                 {isMobile && (
-                  <div className="flex justify-center pt-2 pb-1">
-                    <div className="w-12 h-1 bg-muted rounded-full"></div>
+                  <div className="relative flex justify-center pt-3 pb-2">
+                    <div className="w-16 h-1.5 bg-gradient-to-r from-muted to-muted/50 rounded-full"></div>
                   </div>
                 )}
                 
                 {loading ? (
-                  <div className="flex flex-col items-center justify-center h-full min-h-[400px] p-6">
+                  <div className="relative flex flex-col items-center justify-center h-full min-h-[500px] p-8">
+                    {/* Animated loading background */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/5 animate-pulse"></div>
+                    
                     {/* Loading Progress Bar */}
-                    <div className="w-full max-w-xs mb-6">
-                      <div className="w-full bg-muted rounded-full h-1">
+                    <div className="relative w-full max-w-md mb-8">
+                      <div className="w-full bg-gradient-to-r from-muted/50 to-muted/30 rounded-full h-2 overflow-hidden">
                         <div 
-                          className="bg-primary h-1 rounded-full transition-all duration-300"
+                          className="bg-gradient-to-r from-primary via-accent to-primary h-2 rounded-full transition-all duration-500 shadow-lg"
                           style={{ width: `${loadingProgress}%` }}
                         />
                       </div>
                     </div>
                     
-                    <div className="flex items-center gap-3 text-muted-foreground mb-8">
-                      <Loader2 className="w-6 h-6 animate-spin text-primary" />
-                      <span className="text-lg">Loading weather data...</span>
+                    <div className="relative flex items-center gap-4 text-muted-foreground mb-12">
+                      <div className="relative">
+                        <div className="absolute inset-0 bg-primary/20 rounded-full blur-md animate-pulse"></div>
+                        <Loader2 className="relative w-8 h-8 animate-spin text-primary drop-shadow-lg" />
+                      </div>
+                      <span className="text-xl font-medium bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">Loading weather data...</span>
                     </div>
                     
                     <WeatherSkeleton />
                   </div>
                 ) : error ? (
-                  <ErrorState error={error} onRetry={() => load()} />
+                  <div className="relative">
+                    <ErrorState error={error} onRetry={() => load()} />
+                  </div>
                 ) : (
-                  <div className="flex flex-col lg:flex-row h-full">
+                  <div className="relative flex flex-col lg:flex-row h-full">
                     {/* Left Panel - Current Weather */}
-                    <div className={`lg:w-1/5 bg-gradient-to-br ${getWeatherGradient(data?.ui?.today?.main || '')} p-4 sm:p-6 flex flex-col justify-between backdrop-blur-sm`}>
+                    <div className={`lg:w-2/5 bg-gradient-to-br ${getWeatherGradient(data?.ui?.today?.main || '')} p-6 sm:p-8 flex flex-col justify-between backdrop-blur-sm relative overflow-hidden`}>
+                      {/* Animated background elements */}
+                      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-white/10 to-transparent rounded-full blur-2xl"></div>
+                      <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-primary/10 to-transparent rounded-full blur-xl"></div>
+                      
                       {/* City Edit */}
-                      <div className="flex items-center bg-background/70 backdrop-blur-sm rounded-xl overflow-hidden mb-4 shadow-sm border border-border/50">
+                      <div className="relative flex items-center bg-white/20 backdrop-blur-md rounded-2xl overflow-hidden mb-6 shadow-lg border border-white/30">
                         {isEditing ? (
                           <>
                             <input
@@ -316,180 +340,197 @@ const WeatherWidget = () => {
                               value={editCity}
                               onChange={(e) => setEditCity(e.target.value)}
                               onKeyDown={handleKeyPress}
-                              placeholder="Enter city name"
-                              className="flex-1 px-4 py-2.5 bg-transparent outline-none text-foreground placeholder-muted-foreground text-sm"
+                              placeholder="Enter city name (Press Enter to save, Esc to cancel)"
+                              className="flex-1 px-5 py-3.5 bg-transparent outline-none text-foreground placeholder-white/60 text-base font-medium"
                               autoFocus
                             />
                             <button
                               onClick={handleSaveCity}
-                              className="p-2.5 bg-primary hover:bg-primary/90 transition-colors"
+                              className="px-6 py-3.5 bg-gradient-to-r from-emerald-500/90 to-green-500/90 hover:from-emerald-500 hover:to-green-500 transition-all duration-300 shadow-lg hover:shadow-xl rounded-r-2xl backdrop-blur-sm border-l border-white/20 group"
                               title="Save city"
                             >
-                              <Check className="w-4 h-4 text-primary-foreground" />
-                            </button>
-                            <button
-                              onClick={handleEditToggle}
-                              className="p-2.5 bg-muted hover:bg-muted/80 transition-colors"
-                              title="Cancel"
-                            >
-                              <X className="w-4 h-4 text-muted-foreground" />
+                              <div className="flex items-center space-x-2">
+                                <Check className="w-5 h-5 text-white group-hover:scale-110 transition-transform duration-200" />
+                                <span className="text-white font-semibold text-sm">Save</span>
+                              </div>
                             </button>
                           </>
                         ) : (
                           <>
-                            <div className="flex-1 px-4 py-2.5 text-foreground text-sm font-medium">
+                            <div className="flex-1 px-5 py-3.5 text-foreground text-base font-semibold">
                               {cityLabel || "Select city"}
                             </div>
                             <button
                               onClick={handleEditToggle}
-                              className="p-2.5 hover:bg-muted/50 transition-colors rounded-lg"
+                              className="p-3.5 hover:bg-white/20 transition-all duration-200 rounded-r-2xl group"
                               title="Edit city"
                             >
-                              <Edit3 className="w-4 h-4 text-muted-foreground hover:text-foreground transition-colors" />
+                              <Edit3 className="w-5 h-5 text-foreground/70 group-hover:text-foreground group-hover:scale-110 transition-all duration-200" />
                             </button>
                           </>
                         )}
                       </div>
 
                       {/* Current Temperature */}
-                      <div className="text-center flex-1 flex flex-col justify-center">
+                      <div className="relative text-center flex-1 flex flex-col justify-center">
                         {/* Weather Icon */}
-                        <div className="flex justify-center mb-4">
+                        <div className="flex justify-center mb-6">
                           <WeatherIcon 
                             iconUrl={todayIconUrl}
                             main={data?.ui?.today?.main}
-                            size="w-20 h-20"
+                            size="w-28 h-28"
                           />
                         </div>
 
-                        <div className="text-5xl md:text-6xl font-extralight text-foreground mb-3 tracking-tight">
+                        <div className="text-6xl md:text-7xl font-thin text-foreground mb-4 tracking-tight drop-shadow-2xl">
                           {currentTemp !== null ? `${currentTemp}°` : "__°"}
                         </div>
-                        <div className="text-xs text-muted-foreground uppercase tracking-wider mb-4">
+                        <div className="text-sm text-foreground/60 uppercase tracking-widest mb-6 font-medium">
                           CELSIUS
                         </div>
 
                         {/* Weather Description */}
-                        <div className="text-foreground/90 text-base font-medium capitalize mb-1 mt-4">
+                        <div className="text-foreground text-xl font-semibold capitalize mb-2 mt-6 drop-shadow-lg">
                           {data?.ui?.today?.main?.toLowerCase() || "Clear sky"}
                         </div>
                       </div>
 
                       {/* City Display */}
-                      <div className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground text-center py-4 px-6 rounded-xl font-semibold text-lg shadow-lg mt-8">
-                        {cityLabel.toUpperCase() || "CITY"}
+                      <div className="relative bg-gradient-to-r from-foreground/90 to-foreground/80 text-background text-center py-5 px-8 rounded-2xl font-bold text-xl shadow-xl mt-8 overflow-hidden">
+                        <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20"></div>
+                        <div className="relative">
+                          {cityLabel.toUpperCase() || "CITY"}
+                        </div>
                       </div>
                     </div>
 
                     {/* Right Panel - Details */}
-                    <div className="lg:w-4/5 bg-muted/30 p-3 sm:p-5">
+                    <div className="relative lg:w-3/5 bg-gradient-to-br from-muted/40 to-background/60 p-4 sm:p-6 backdrop-blur-sm">
                       {/* Close Button */}
                       <button
                         onClick={() => setOpen(false)}
-                        className="absolute top-3 right-3 p-1.5 rounded-full hover:bg-accent transition-colors"
+                        className="absolute top-4 right-4 p-2.5 rounded-full bg-muted/50 hover:bg-destructive/20 hover:text-destructive transition-all duration-200 backdrop-blur-sm border border-border/30 group"
                       >
-                        <X className="w-5 h-5 text-muted-foreground" />
+                        <X className="w-6 h-6 group-hover:scale-110 transition-transform duration-200" />
                       </button>
 
                       {/* Tab Navigation */}
-                      <div className="flex gap-8 mb-5">
+                      <div className="flex gap-12 mb-8">
                         <button
                           onClick={() => setActiveTab("today")}
-                          className={`text-lg font-medium pb-2 border-b-2 transition-all duration-200 ${
+                          className={`relative text-xl font-semibold pb-3 transition-all duration-300 ${
                             activeTab === "today"
-                              ? "border-primary text-primary"
-                              : "border-transparent text-muted-foreground hover:text-foreground"
+                              ? "text-primary"
+                              : "text-muted-foreground hover:text-foreground"
                           }`}
                         >
                           Today
+                          {activeTab === "today" && (
+                            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary to-accent rounded-full"></div>
+                          )}
                         </button>
                         <button
                           onClick={() => setActiveTab("week")}
-                          className={`text-lg font-medium pb-2 border-b-2 transition-all duration-200 ${
+                          className={`relative text-xl font-semibold pb-3 transition-all duration-300 ${
                             activeTab === "week"
-                              ? "border-primary text-primary"
-                              : "border-transparent text-muted-foreground hover:text-foreground"
+                              ? "text-primary"
+                              : "text-muted-foreground hover:text-foreground"
                           }`}
                         >
                           Week
+                          {activeTab === "week" && (
+                            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary to-accent rounded-full"></div>
+                          )}
                         </button>
                       </div>
 
                       {/* Today's Highlights */}
                       {activeTab === "today" && (
                         <div>
-                          <div className="text-center mb-4">
-                            <h2 className="text-xl font-semibold text-foreground mb-2">
-                              Today's Highlight
+                          <div className="text-center mb-6">
+                            <h2 className="text-2xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent mb-3">
+                              Today's Highlights
                             </h2>
-                            <div className="w-full h-px bg-gradient-to-r from-transparent via-border to-transparent"></div>
+                            <div className="w-full h-0.5 bg-gradient-to-r from-transparent via-primary/50 to-transparent rounded-full"></div>
                           </div>
 
-                          <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                          <div className="grid grid-cols-2 gap-4 sm:gap-6">
                             {/* Wind */}
-                            <div className="group bg-card p-3 sm:p-4 rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer border border-border hover:border-primary/50">
-                              <div className="flex items-center justify-between mb-2">
-                                <h4 className="text-muted-foreground font-medium text-sm group-hover:text-foreground transition-colors">
+                            <div className="group relative bg-gradient-to-br from-card/80 to-background/60 p-5 sm:p-6 rounded-2xl hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer border border-border/50 backdrop-blur-sm overflow-hidden">
+                              <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                              <div className="relative flex items-center justify-between mb-3">
+                                <h4 className="text-muted-foreground font-semibold text-base group-hover:text-foreground transition-colors">
                                   Wind
                                 </h4>
-                                <Wind className="w-5 h-5 text-primary group-hover:scale-110 transition-transform" />
+                                <div className="p-2 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-xl group-hover:scale-110 transition-transform duration-300">
+                                  <Wind className="w-6 h-6 text-green-500 drop-shadow-sm" />
+                                </div>
                               </div>
-                              <div className="text-xl font-bold text-foreground">
+                              <div className="relative text-2xl font-bold text-foreground">
                                 {additionalData?.windSpeed ||
                                   Math.round(
                                     (data?.ui?.today?.wind || 0) * 3.6
                                   )}{" "}
-                                <span className="text-sm font-normal text-muted-foreground">
+                                <span className="text-base font-semibold text-muted-foreground">
                                   km/hr
                                 </span>
                               </div>
                             </div>
 
                             {/* Visibility */}
-                            <div className="group bg-card p-3 sm:p-4 rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer border border-border hover:border-primary/50">
-                              <div className="flex items-center justify-between mb-2">
-                                <h4 className="text-muted-foreground font-medium text-sm group-hover:text-foreground transition-colors">
+                            <div className="group relative bg-gradient-to-br from-card/80 to-background/60 p-5 sm:p-6 rounded-2xl hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer border border-border/50 backdrop-blur-sm overflow-hidden">
+                              <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                              <div className="relative flex items-center justify-between mb-3">
+                                <h4 className="text-muted-foreground font-semibold text-base group-hover:text-foreground transition-colors">
                                   Visibility
                                 </h4>
-                                <Eye className="w-5 h-5 text-primary group-hover:scale-110 transition-transform" />
+                                <div className="p-2 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-xl group-hover:scale-110 transition-transform duration-300">
+                                  <Eye className="w-6 h-6 text-green-500 drop-shadow-sm" />
+                                </div>
                               </div>
-                              <div className="text-xl font-bold text-foreground">
+                              <div className="relative text-2xl font-bold text-foreground">
                                 {additionalData?.visibility || 10}
-                                <span className="text-sm font-normal text-muted-foreground">
+                                <span className="text-base font-semibold text-muted-foreground">
                                   km
                                 </span>
                               </div>
                             </div>
 
                             {/* Humidity */}
-                            <div className="group bg-card p-3 sm:p-4 rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer border border-border hover:border-primary/50">
-                              <div className="flex items-center justify-between mb-2">
-                                <h4 className="text-muted-foreground font-medium text-sm group-hover:text-foreground transition-colors">
+                            <div className="group relative bg-gradient-to-br from-card/80 to-background/60 p-5 sm:p-6 rounded-2xl hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer border border-border/50 backdrop-blur-sm overflow-hidden">
+                              <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                              <div className="relative flex items-center justify-between mb-3">
+                                <h4 className="text-muted-foreground font-semibold text-base group-hover:text-foreground transition-colors">
                                   Humidity
                                 </h4>
-                                <Droplets className="w-5 h-5 text-primary group-hover:scale-110 transition-transform" />
+                                <div className="p-2 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-xl group-hover:scale-110 transition-transform duration-300">
+                                  <Droplets className="w-6 h-6 text-green-500 drop-shadow-sm" />
+                                </div>
                               </div>
-                              <div className="text-xl font-bold text-foreground">
+                              <div className="relative text-2xl font-bold text-foreground">
                                 {additionalData?.humidity ||
                                   data?.ui?.today?.humidity ||
                                   0}
-                                <span className="text-sm font-normal text-muted-foreground">
+                                <span className="text-base font-semibold text-muted-foreground">
                                   %
                                 </span>
                               </div>
                             </div>
 
                             {/* Pressure */}
-                            <div className="group bg-card p-3 sm:p-4 rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer border border-border hover:border-primary/50">
-                              <div className="flex items-center justify-between mb-2">
-                                <h4 className="text-muted-foreground font-medium text-sm group-hover:text-foreground transition-colors">
+                            <div className="group relative bg-gradient-to-br from-card/80 to-background/60 p-5 sm:p-6 rounded-2xl hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer border border-border/50 backdrop-blur-sm overflow-hidden">
+                              <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                              <div className="relative flex items-center justify-between mb-3">
+                                <h4 className="text-muted-foreground font-semibold text-base group-hover:text-foreground transition-colors">
                                   Pressure
                                 </h4>
-                                <Gauge className="w-5 h-5 text-primary group-hover:scale-110 transition-transform" />
+                                <div className="p-2 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-xl group-hover:scale-110 transition-transform duration-300">
+                                  <Gauge className="w-6 h-6 text-green-500 drop-shadow-sm" />
+                                </div>
                               </div>
-                              <div className="text-xl font-bold text-foreground">
+                              <div className="relative text-2xl font-bold text-foreground">
                                 {additionalData?.pressure || 1013}
-                                <span className="text-sm font-normal text-muted-foreground">
+                                <span className="text-base font-semibold text-muted-foreground">
                                   hPa
                                 </span>
                               </div>
@@ -501,44 +542,53 @@ const WeatherWidget = () => {
                       {/* Week Forecast */}
                       {activeTab === "week" && (
                         <div>
-                          <div className="text-center mb-4">
-                            <h2 className="text-xl font-semibold text-foreground mb-2">
-                              Next 5 Days Updates
+                          <div className="text-center mb-6">
+                            <h2 className="text-2xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent mb-3">
+                              Next 5 Days Forecast
                             </h2>
-                            <div className="w-full h-px bg-gradient-to-r from-transparent via-border to-transparent"></div>
+                            <div className="w-full h-0.5 bg-gradient-to-r from-transparent via-primary/50 to-transparent rounded-full"></div>
                           </div>
 
-                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-3">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
                             {data?.ui?.days?.slice(1, 6).map((day, index) => (
                               <div
                                 key={day.dateKey}
-                                className="group bg-card p-2 sm:p-3 rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer border border-border hover:border-primary/50"
+                                className="group relative bg-gradient-to-br from-card/80 to-background/60 p-4 sm:p-5 rounded-2xl hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer border border-border/50 backdrop-blur-sm overflow-hidden"
                               >
-                                <h3 className="text-center border-b border-border pb-2 mb-3 font-medium text-xs text-muted-foreground group-hover:text-foreground transition-colors">
-                                  {day.dateKey}
-                                </h3>
+                                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                
+                                <div className="relative">
+                                  <h3 className="text-center border-b border-border/50 pb-3 mb-4 font-bold text-sm text-muted-foreground group-hover:text-foreground transition-colors">
+                                    {day.label || day.dateKey}
+                                  </h3>
 
-                                <div className="flex justify-center mb-2">
-                                  <WeatherIcon 
-                                    iconUrl={day.iconUrl}
-                                    main={day.main}
-                                    size="w-10 h-10"
-                                  />
-                                </div>
-
-                                <div className="text-center font-bold text-lg mb-2 text-foreground">
-                                  {Math.round((day.max + day.min) / 2)}°C
-                                </div>
-
-                                <div className="text-muted-foreground text-xs space-y-1">
-                                  <div className="capitalize text-center">
-                                    {day.main.toLowerCase()}
+                                  <div className="flex justify-center mb-3">
+                                    <WeatherIcon 
+                                      iconUrl={day.iconUrl}
+                                      main={day.main}
+                                      size="w-12 h-12"
+                                    />
                                   </div>
-                                  <div className="text-center">
-                                    Humidity: {day.humidity}%
+
+                                  <div className="text-center mb-3">
+                                    <div className="font-bold text-lg text-foreground">
+                                      {Math.round((day.max + day.min) / 2)}°C
+                                    </div>
+                                    <div className="text-xs text-muted-foreground">
+                                      {Math.round(day.max)}° / {Math.round(day.min)}°
+                                    </div>
                                   </div>
-                                  <div className="text-center">
-                                    Wind: {Math.round(day.wind * 3.6)} km/hr
+
+                                  <div className="text-muted-foreground text-xs space-y-2">
+                                    <div className="capitalize text-center font-semibold">
+                                      {day.main.toLowerCase()}
+                                    </div>
+                                    <div className="text-center bg-gradient-to-r from-muted/50 to-muted/30 rounded-lg py-1 px-2">
+                                      Humidity: {day.humidity}%
+                                    </div>
+                                    <div className="text-center bg-gradient-to-r from-muted/50 to-muted/30 rounded-lg py-1 px-2">
+                                      Wind: {Math.round(day.wind * 3.6)} km/hr
+                                    </div>
                                   </div>
                                 </div>
                               </div>
