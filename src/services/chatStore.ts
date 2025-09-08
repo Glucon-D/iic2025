@@ -2,8 +2,9 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { ChatStore, ChatMessage, ChatThread } from "@/utils/types/chat.types";
 import { databaseService } from "@/utils/appwrite/database";
+import { storageService } from "@/utils/appwrite/storage";
 import { useAuthStore } from "./authStore";
-import { DEFAULT_MODELS } from "@/utils/aiModels/modelConfig";
+import { DEFAULT_MODELS } from "@/utils/aiModels/modelConfig"
 import { Models } from "appwrite";
 
 // Type helpers for Appwrite documents
@@ -423,12 +424,25 @@ export const useChatStore = create<ChatStore>()(
   },
 
   // Message actions
-  sendMessage: async (content: string, contentType = "text" as const) => {
+  sendMessage: async (content: string, contentType = "text" as const, attachment?: File) => {
     const { currentThread, messages } = get();
     const { user } = useAuthStore.getState();
 
     if (!currentThread || !user) {
       throw new Error("No active thread or user not authenticated");
+    }
+
+    let attachmentUrl: string | undefined;
+
+    // Upload image if attachment is provided
+    if (attachment && contentType === "image") {
+      try {
+        const uploadResult = await storageService.uploadImage(attachment);
+        attachmentUrl = uploadResult.fileUrl;
+      } catch (error: any) {
+        set({ error: `Failed to upload image: ${error.message}` });
+        throw error;
+      }
     }
 
     // Create user message immediately with temporary ID
@@ -439,6 +453,7 @@ export const useChatStore = create<ChatStore>()(
       content,
       role: "user",
       contentType,
+      attachment: attachmentUrl,
       $createdAt: new Date().toISOString(),
     };
 
@@ -467,7 +482,7 @@ export const useChatStore = create<ChatStore>()(
         content: tempUserMessage.content,
         role: tempUserMessage.role,
         contentType: tempUserMessage.contentType,
-        attachment: tempUserMessage.attachment,
+        attachment: attachmentUrl,
       });
 
       // Update the temporary message with real ID
@@ -607,10 +622,28 @@ export const useChatStore = create<ChatStore>()(
     }));
 
     try {
-      const apiMessages = messages.map((msg) => ({
-        role: msg.role,
-        content: msg.content,
-      }));
+      // Prepare messages with image URLs for AI SDK
+      const apiMessages = messages.map((msg) => {
+        if (msg.contentType === "image" && msg.attachment) {
+          return {
+            role: msg.role,
+            content: [
+              {
+                type: "text",
+                text: msg.content || "What's in this image?",
+              },
+              {
+                type: "image",
+                image: msg.attachment,
+              },
+            ],
+          };
+        }
+        return {
+          role: msg.role,
+          content: msg.content,
+        };
+      });
 
       const response = await fetch("/api/generateResponse", {
         method: "POST",

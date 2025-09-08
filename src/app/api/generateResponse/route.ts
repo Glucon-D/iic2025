@@ -9,18 +9,25 @@ const openrouter = createOpenRouter({
   headers: openRouterConfig.defaultHeaders,
 });
 
-interface Message {
+// Message types for our API
+interface APIMessage {
   role: "user" | "assistant" | "system";
-  content: string;
+  content: string | Array<{
+    type: "text";
+    text: string;
+  } | {
+    type: "image";
+    image: string;
+  }>;
 }
 
-function prepareContextMessages(messages: Message[]): Message[] {
+function prepareContextMessages(messages: APIMessage[]): APIMessage[] {
   if (messages.length === 0) return [];
-  
+
   const lastMessages = messages.slice(-10);
-  const contextMessages: Message[] = [];
-  const userMsgs: Message[] = [];
-  const assistantMsgs: Message[] = [];
+  const contextMessages: APIMessage[] = [];
+  const userMsgs: APIMessage[] = [];
+  const assistantMsgs: APIMessage[] = [];
   
   lastMessages.forEach(msg => {
     if (msg.role === "user") userMsgs.push(msg);
@@ -57,16 +64,11 @@ export async function POST(req: NextRequest) {
     }
 
     const contextMessages = prepareContextMessages(messages);
-    
+
     const result = streamText({
       model: openrouter("google/gemini-2.5-flash-lite"),
-      messages: [
-        {
-          role: "system",
-          content: "You are a helpful AI assistant for agricultural queries. Respond in the same language as the user's input. Provide clear, concise responses about farming, crops, diseases, and agricultural practices."
-        },
-        ...contextMessages
-      ],
+      messages: contextMessages as any,
+      system: "You are a helpful AI assistant for agricultural queries. You can analyze images of crops, pests, and farming conditions. Respond in the same language as the user's input. Provide clear, concise responses about farming, crops, diseases, and agricultural practices.",
       temperature: 0.7,
       maxRetries: 2,
     });

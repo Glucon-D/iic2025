@@ -38,17 +38,30 @@ export default function ChatHomePage() {
     return null;
   }
 
-  const handleSendMessage = async (content: string) => {
-    if (!content.trim() || isCreatingThread) return;
+  const handleSendMessage = async (content: string, contentType?: 'text' | 'image' | 'voice' | 'file', attachment?: File) => {
+    if ((!content.trim() && !attachment) || isCreatingThread) return;
 
     setIsCreatingThread(true);
     try {
       // Create thread instantly (optimistic UI)
-      const newThread = await createThread("New Chat", "General farming query");
-      
-      // Navigate to the new thread with the initial message
+      const threadTitle = attachment ? "Image conversation" : "New Chat";
+      const newThread = await createThread(threadTitle, "General farming query");
+
+      // Navigate to the new thread with the initial message and attachment info
+      const params = new URLSearchParams();
+      if (content.trim()) {
+        params.set('initialMessage', content);
+      }
+      if (contentType) {
+        params.set('contentType', contentType);
+      }
+      if (attachment) {
+        params.set('hasAttachment', 'true');
+      }
+
+      const queryString = params.toString();
       router.replace(
-        `/chat/${newThread.$id}?initialMessage=${encodeURIComponent(content)}`
+        `/chat/${newThread.$id}${queryString ? `?${queryString}` : ''}`
       );
     } catch (error) {
       console.error("Failed to create new thread:", error);

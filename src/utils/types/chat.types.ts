@@ -56,7 +56,8 @@ export interface ChatActions {
   // Message actions
   sendMessage: (
     content: string,
-    contentType?: ChatMessage["contentType"]
+    contentType?: ChatMessage["contentType"],
+    attachment?: File
   ) => Promise<void>;
   generateAIResponse: () => Promise<void>;
   loadMessages: (threadId: string) => Promise<void>;

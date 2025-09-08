@@ -8,6 +8,7 @@ export const appwriteConfig = {
   userCollectionId: process.env.NEXT_PUBLIC_APPWRITE_USER_COLLECTION_ID!,
   threadCollectionId: process.env.NEXT_PUBLIC_APPWRITE_THREAD_COLLECTION_ID!,
   messageCollectionId: process.env.NEXT_PUBLIC_APPWRITE_MESSAGE_COLLECTION_ID!,
+  bucketId: 'iic-bucket',
 };
 
 // Initialize Appwrite client
@@ -47,3 +48,6 @@ export const COLLECTIONS = {
 
 // Database ID
 export const DATABASE_ID = appwriteConfig.databaseId;
+
+// Bucket ID
+export const BUCKET_ID = appwriteConfig.bucketId;

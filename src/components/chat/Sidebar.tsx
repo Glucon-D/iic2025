@@ -13,7 +13,7 @@ interface SidebarProps {
 
 export function Sidebar({ onToggle }: SidebarProps) {
   const [searchQuery, setSearchQuery] = useState("");
-  const { threads, createThread, isLoading } = useChatStore();
+  const { threads, isLoading } = useChatStore();
   const router = useRouter();
   const params = useParams();
   const currentThreadId = params?.threadId as string;
@@ -30,15 +30,10 @@ export function Sidebar({ onToggle }: SidebarProps) {
     );
   }, [threads, searchQuery]);
 
-  const handleNewChat = useCallback(async () => {
-    try {
-      const newThread = await createThread("New Chat", "General farming query");
-      // Use router.replace for smoother transition without adding to history
-      router.replace(`/chat/${newThread.$id}`);
-    } catch (error: any) {
-      console.error("Failed to create thread:", error);
-    }
-  }, [createThread, router]);
+  const handleNewChat = useCallback(() => {
+    // Navigate to the main chat page with feature buttons
+    router.push("/chat");
+  }, [router]);
 
   const handleThreadSelect = useCallback(
     (threadId: string | undefined) => {
