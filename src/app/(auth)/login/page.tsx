@@ -93,7 +93,7 @@ export default function LoginPage() {
   return (
     <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
       <Navbar />
-      <div className=" flex items-center justify-center bg-gradient-to-br from-green-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-green-900/20 dark:to-gray-900 p-4 sm:p-6 lg:p-8 relative overflow-hidden">
+      <div className=" flex items-center justify-center bg-gradient-to-br from-green-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-green-900/20 dark:to-gray-900 p-4 sm:p-6 lg:pt-24 relative overflow-hidden">
         {/* Animated background particles */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -top-40 -right-40 w-80 h-80 bg-green-300/20 rounded-full blur-3xl animate-pulse"></div>
