@@ -260,7 +260,7 @@ const WeatherWidget = () => {
         <img
           src={iconUrl}
           alt={main || "Weather"}
-          className={`relative ${size} drop-shadow-2xl ${animation}`}
+          className={`relative ${size} drop-shadow-2xl `}
         />
       </div>
     ) : (
@@ -315,7 +315,7 @@ const WeatherWidget = () => {
                 className={`relative w-full max-w-6xl bg-gradient-to-br from-card/95 to-background/95 border-2 border-border/50 shadow-2xl ${
                   isMobile
                     ? "rounded-t-3xl max-h-[90vh]"
-                    : "rounded-3xl max-h-[85vh]"
+                    : "rounded-3xl max-h-[75vh]"
                 } overflow-hidden backdrop-blur-xl`}
                 onClick={(e) => e.stopPropagation()}
                 onTouchStart={handleTouchStart}
@@ -595,7 +595,7 @@ const WeatherWidget = () => {
                             <div className="w-full h-0.5 bg-gradient-to-r from-transparent via-primary/50 to-transparent rounded-full"></div>
                           </div>
 
-                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                             {data?.ui?.days?.slice(1, 6).map((day, index) => (
                               <div
                                 key={day.dateKey}
