@@ -68,7 +68,7 @@ export async function POST(request: NextRequest) {
 
     // Prepare form data for OpenAI API
     const openaiFormData = new FormData();
-    
+
     // Convert the file to a proper format for OpenAI
     // OpenAI expects specific file extensions, so we'll rename based on MIME type
     let fileName = 'audio.webm';
@@ -79,10 +79,8 @@ export async function POST(request: NextRequest) {
     else if (audioFile.type.includes('m4a')) fileName = 'audio.m4a';
     else if (audioFile.type.includes('flac')) fileName = 'audio.flac';
 
-    // Create a new File object with the correct name
-    const renamedFile = new File([audioFile], fileName, { type: audioFile.type });
-    
-    openaiFormData.append('file', renamedFile);
+    // Append the file directly with the correct filename (no need for File constructor in Node.js)
+    openaiFormData.append('file', audioFile, fileName);
     openaiFormData.append('model', 'whisper-1');
     openaiFormData.append('response_format', 'verbose_json');
     
