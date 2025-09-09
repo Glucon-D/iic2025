@@ -215,8 +215,8 @@ export const useChatStore = create<ChatStore>()(
     // Cancel any previous thread selection to prevent race conditions
     const currentState = get();
 
-    // If already on this thread, don't do anything
-    if (currentState.currentThread?.$id === threadId && currentState.messages.length > 0) {
+    // If already on this thread and messages are loaded, don't reload unless forced
+    if (currentState.currentThread?.$id === threadId && currentState.messages.length > 0 && useCache) {
       return;
     }
 
@@ -622,33 +622,51 @@ export const useChatStore = create<ChatStore>()(
     }));
 
     try {
-      // Prepare messages for AI SDK
-      const apiMessages = messages.map((msg) => {
-        if (msg.contentType === "image" && msg.attachment) {
+      // Prepare messages for AI SDK - exclude only temporary assistant messages, keep user messages
+      const apiMessages = messages
+        .filter(msg => {
+          // Exclude only temporary assistant messages (not user messages)
+          if (msg.$id && msg.$id.startsWith('temp-assistant-')) return false;
+
+          // Exclude assistant messages with empty content (but not user messages)
+          if (msg.role === 'assistant' && (!msg.content || msg.content.trim() === '')) return false;
+
+          // Include all user messages (even temporary ones from sendMessage)
+          if (msg.role === 'user') return true;
+
+          // Include assistant messages with content
+          if (msg.role === 'assistant' && msg.content && msg.content.trim()) return true;
+
+          return false;
+        })
+        .map((msg) => {
+          if (msg.contentType === "image" && msg.attachment) {
+            return {
+              role: msg.role,
+              content: [
+                {
+                  type: "text",
+                  text: msg.content || "What's in this image?",
+                },
+                {
+                  type: "image",
+                  image: msg.attachment,
+                },
+              ],
+            };
+          }
           return {
             role: msg.role,
-            content: [
-              {
-                type: "text",
-                text: msg.content || "What's in this image?",
-              },
-              {
-                type: "image",
-                image: msg.attachment,
-              },
-            ],
+            content: msg.content || "",
           };
-        }
-        return {
-          role: msg.role,
-          content: msg.content || "",
-        };
-      }).filter(msg => {
-        if (Array.isArray(msg.content)) {
-          return msg.content.length > 0;
-        }
-        return typeof msg.content === 'string' && msg.content.trim().length > 0;
-      });
+        })
+        .filter(msg => {
+          // Final filter to ensure content is valid
+          if (Array.isArray(msg.content)) {
+            return msg.content.length > 0;
+          }
+          return typeof msg.content === 'string' && msg.content.trim().length > 0;
+        });
 
       // Ensure we have at least one message
       if (apiMessages.length === 0) {
@@ -691,6 +709,8 @@ export const useChatStore = create<ChatStore>()(
         throw new Error(`API request failed: ${response.statusText}`);
       }
 
+
+
       const reader = response.body?.getReader();
       if (!reader) {
         throw new Error("No response body");
@@ -706,29 +726,28 @@ export const useChatStore = create<ChatStore>()(
 
         // Decode the chunk
         const chunk = decoder.decode(value, { stream: true });
-        
-        // Debug: Uncomment for streaming format debugging
-        // console.log('Streaming chunk:', JSON.stringify(chunk));
-        
-        // For AI SDK streaming, the response might come as plain text
-        if (chunk) {
+
+        // AI SDK toTextStreamResponse() returns plain text chunks
+        if (chunk && chunk.trim()) {
           accumulatedContent += chunk;
-          
+
           // Update the streaming message in real-time
           set((state) => ({
-            messages: state.messages.map(msg => 
-              msg.$id === tempAssistantMessage.$id 
+            messages: state.messages.map(msg =>
+              msg.$id === tempAssistantMessage.$id
                 ? { ...msg, content: accumulatedContent }
                 : msg
             ),
           }));
-          
+
           // Small delay to make streaming visible and smooth
-          await new Promise(resolve => setTimeout(resolve, 30));
+          await new Promise(resolve => setTimeout(resolve, 50));
         }
       }
 
       set({ isStreaming: false });
+
+
 
       // Save the complete message to database
       if (accumulatedContent.trim()) {
@@ -853,10 +872,19 @@ export const useChatStore = create<ChatStore>()(
   // Create thread and immediately switch to it (no navigation)
   createAndSwitchThread: async (title: string = "New Chat", description?: string) => {
     const newThread = await get().createThread(title, description);
-    
+
     // The createThread already sets it as current, so we're done
     // This method exists for clarity and potential future enhancements
     return newThread;
+  },
+
+  // Force reload messages for current thread (bypass cache and conditions)
+  forceReloadMessages: async () => {
+    const { currentThread } = get();
+    if (!currentThread || !currentThread.$id) return;
+
+    // Force reload by calling selectThread with useCache=false
+    await get().selectThread(currentThread.$id, false);
   },
     }),
     {

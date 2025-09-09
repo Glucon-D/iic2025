@@ -77,6 +77,7 @@ export interface ChatActions {
   setLoading: (loading: boolean) => void;
   reset: () => void;
   syncWithAppwrite: () => Promise<void>;
+  forceReloadMessages: () => Promise<void>;
 }
 
 export type ChatStore = ChatState & ChatActions;
